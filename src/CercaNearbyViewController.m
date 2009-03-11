@@ -79,10 +79,11 @@
 	int width = CGRectGetWidth(bounds);
 	int height = CGRectGetHeight(bounds);
 	
+	CGRect megaBounds = CGRectInset( bounds, -width/2, -height/2 );
 	NSArray *tiles = mapView.subviews;
 	for ( UIView *tile in tiles )
 	{
-		CGRect intersection = CGRectIntersection( bounds, tile.frame );
+		CGRect intersection = CGRectIntersection( megaBounds, tile.frame );
 		if ( CGRectIsNull( intersection ) )
 			[tile removeFromSuperview];
 	}
