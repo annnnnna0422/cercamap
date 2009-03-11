@@ -157,6 +157,7 @@
 		DBC1D0080F67416E0026BF9C /* CercaMapTile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CercaMapTile.m; path = src/CercaMapTile.m; sourceTree = "<group>"; };
 		DBC1D0760F6743A20026BF9C /* CercaMapViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CercaMapViewDelegate.h; path = src/CercaMapViewDelegate.h; sourceTree = "<group>"; };
 		DBC1D0BD0F6748670026BF9C /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		DBC1D2050F6767940026BF9C /* CercaMapPixel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CercaMapPixel.h; path = src/CercaMapPixel.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -212,6 +213,7 @@
 				8D1107310486CEB800E47090 /* Info.plist */,
 				DBC1CF340F673BFC0026BF9C /* Cerca_Prefix.pch */,
 				DBC1CF350F673BFC0026BF9C /* main.m */,
+				DBC1D2050F6767940026BF9C /* CercaMapPixel.h */,
 			);
 			name = Other;
 			sourceTree = "<group>";

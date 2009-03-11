@@ -8,24 +8,11 @@
 
 #import <UIKit/UIKit.h>
 #import "CercaMapViewDelegate.h"
+#import "CercaMapPixel.h"
 
 #pragma mark Forward Declarations
 @class CercaMapView;
 @class CercaMapTileCache;
-
-#pragma mark CercaMapPixel
-
-typedef struct
-{
-	int x;
-	int y;
-} CercaMapPixel;
-
-static inline CercaMapPixel CercaMapPixelMake( int x, int y )
-{
-	CercaMapPixel result = { x, y };
-	return result;
-}
 
 @interface CercaNearbyViewController : UIViewController
 	<CercaMapViewDelegate>
