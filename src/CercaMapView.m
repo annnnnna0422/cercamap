@@ -84,18 +84,25 @@
 	   {
 			if ( mode == M_ZOOMING )
 			{
-				CGPoint point1 = [[[allTouches allObjects] objectAtIndex:0] locationInView:self];
-				CGPoint point2 = [[[allTouches allObjects] objectAtIndex:1] locationInView:self];
+				CGPoint point1 = CGPointApplyAffineTransform( [[[allTouches allObjects] objectAtIndex:0] locationInView:self], self.transform );
+				CGPoint point2 = CGPointApplyAffineTransform( [[[allTouches allObjects] objectAtIndex:1] locationInView:self], self.transform );
 				CGFloat zoomEndDistance = [CercaMapView distanceFromPoint:point1 toPoint:point2];
 				if ( zoomEndDistance >= 2 * zoomStartDistance )
 				{
 					[delegate cercaMapViewDidZoomIn:self];
+					self.transform = CGAffineTransformIdentity;
 					zoomStartDistance = zoomEndDistance;
 				}
 				else if ( zoomEndDistance <= 0.5 * zoomStartDistance )
 				{
 					[delegate cercaMapViewDidZoomOut:self];
+					self.transform = CGAffineTransformIdentity;
 					zoomStartDistance = zoomEndDistance;
+				}
+				else if ( zoomStartDistance > 0.1 )
+				{
+					CGFloat zoomRatio = zoomEndDistance / zoomStartDistance;
+					self.transform = CGAffineTransformMake( zoomRatio, 0, 0, zoomRatio, 0, 0);
 				}
 			}
 			else
@@ -112,11 +119,13 @@
 -(void) touchesEnded:(NSSet*)touches withEvent:(UIEvent*)event
 {
     mode = M_NONE;
+	self.transform = CGAffineTransformIdentity;
 }
 
 -(void) touchesCanceled
 {
     mode = M_NONE;
+	self.transform = CGAffineTransformIdentity;
 }
 
 @end
