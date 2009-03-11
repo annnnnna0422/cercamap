@@ -88,10 +88,10 @@
 	}
 	tiles = mapView.subviews;
 	
-	CercaMapPixel originMapPixel = CercaMapPixelMake( center.x - width/2, center.y - height/2 );
-	for ( int y = -(originMapPixel.y%256); y < height; y += 256 )
+	CercaMapPixel originMapPixel = CercaMapPixelMake( center.x - width, center.y - height );
+	for ( int y = -(originMapPixel.y%256); y < height*2; y += 256 )
 	{
-		for ( int x = -(originMapPixel.x%256); x < width; x += 256 )
+		for ( int x = -(originMapPixel.x%256); x < width*2; x += 256 )
 		{
 			BOOL found = NO;
 			for ( UIView *tile in tiles )
@@ -107,7 +107,7 @@
 			
 			CercaMapPixel tileMapPixel = CercaMapPixelMake( originMapPixel.x+x, originMapPixel.y+y );
 			CercaMapTile *tile = [self tileForMapPixel:tileMapPixel];
-			tile.frame = CGRectMake( x, y, 256, 256 );
+			tile.frame = CGRectMake( x-width/2, y-height/2, 256, 256 );
 			[mapView addSubview:tile];
 		}
 	}
