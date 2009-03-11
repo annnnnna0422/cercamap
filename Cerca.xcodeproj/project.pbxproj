@@ -78,7 +78,7 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = DBC1CF6A0F673DA90026BF9C /* VirtualEarthKit */;
+			remoteGlobalIDString = DBC1CF6A0F673DA90026BF9C;
 			remoteInfo = VirtualEarthKit;
 		};
 /* End PBXContainerItemProxy section */

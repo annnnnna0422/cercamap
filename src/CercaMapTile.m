@@ -27,7 +27,7 @@
 {
 	if ( self = [super init] )
 	{
-		self.backgroundColor = [UIColor grayColor];
+		self.backgroundColor = [UIColor clearColor];
 	
 		activityIndicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
 		activityIndicatorView.hidesWhenStopped = YES;
