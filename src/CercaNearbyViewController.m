@@ -10,7 +10,6 @@
 #import "CercaMapView.h"
 #import "CercaMapTile.h"
 
-#import <CoreLocation/CoreLocation.h>
 #import <VirtualEarthKit/VECommonService.h>
 
 @implementation CercaNearbyViewController
@@ -114,10 +113,28 @@
 	}
 }
 
+-(void) panByDelta:(CercaMapPixel)delta
+{
+	center.x += delta.x;
+	center.y += delta.y;
+
+	NSArray *tiles = mapView.subviews;
+	for ( UIView *tile in tiles )
+	{
+		CGRect frame = tile.frame;
+		frame.origin.x -= delta.x;
+		frame.origin.y -= delta.y;
+		tile.frame = frame;
+	}
+	
+	[self refreshTiles];
+}
+
 #pragma mark Lifecycle
 
 -(void) dealloc
 {
+	[locationManager release];
 	[tileCache release];
 	[token release];
 	[mapView release];
@@ -156,21 +173,9 @@
 }
 
 -(void) cercaMapView:(CercaMapView *)overlay
-	didPanByDelta:(CGPoint)delta
+	didPanByDelta:(CercaMapPixel)delta
 {
-	center.x -= delta.x;
-	center.y -= delta.y;
-
-	NSArray *tiles = mapView.subviews;
-	for ( UIView *tile in tiles )
-	{
-		CGRect frame = tile.frame;
-		frame.origin.x += delta.x;
-		frame.origin.y += delta.y;
-		tile.frame = frame;
-	}
-	
-	[self refreshTiles];
+	[self panByDelta:delta];
 }
 	
 -(void) cercaMapViewDidZoomIn:(CercaMapView *)cercaMapView
@@ -194,6 +199,41 @@
 		center.x /= 2;
 		center.y /= 2;
 		[self refreshTiles];
+	}
+}
+
+#pragma mark CLLocationManagerDelegate
+
+- (void)locationManager:(CLLocationManager *)manager
+	didUpdateToLocation:(CLLocation *)newLocation
+	fromLocation:(CLLocation *)oldLocation
+{
+	CercaMapPixel newCenter = [self pixelForCoordinates:newLocation.coordinate];
+	CercaMapPixel delta = CercaMapPixelMake( newCenter.x - center.x, newCenter.y - center.y );
+	[self panByDelta:delta];
+}
+
+- (void)locationManager:(CLLocationManager *)manager
+	didFailWithError:(NSError *)error
+{
+}
+
+#pragma mark Actions
+
+-(void) gpsButtonTapped:(id)sender
+{
+	if ( gpsBarButtonItem.style == UIBarButtonItemStyleDone )
+	{
+		[locationManager release];
+		locationManager = nil;
+		gpsBarButtonItem.style = UIBarButtonItemStyleBordered;
+	}
+	else
+	{
+		locationManager = [[CLLocationManager alloc] init];
+		locationManager.delegate = self;
+		[locationManager startUpdatingLocation];
+		gpsBarButtonItem.style = UIBarButtonItemStyleDone;
 	}
 }
 

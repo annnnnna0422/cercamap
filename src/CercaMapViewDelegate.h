@@ -6,6 +6,8 @@
  *  Copyright 2009 __MyCompanyName__. All rights reserved.
  *
  */
+
+#import "CercaMapPixel.h"
  
 #pragma mark Forward Declarations
 @class CercaMapView;
@@ -16,7 +18,7 @@
 
 -(void) cercaMapViewDidResize:(CercaMapView *)circaMapView;
 -(void) cercaMapView:(CercaMapView *)overlay
-	didPanByDelta:(CGPoint)delta;
+	didPanByDelta:(CercaMapPixel)delta;
 -(void) cercaMapViewDidZoomIn:(CercaMapView *)cercaMapView;
 -(void) cercaMapViewDidZoomOut:(CercaMapView *)cercaMapView;
 

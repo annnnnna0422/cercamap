@@ -71,7 +71,7 @@
             if ( mode == M_PANNING )
 			{
 				CGPoint panEndPoint = [[[allTouches allObjects] objectAtIndex:0] locationInView:self];
-				CGPoint delta = CGPointMake( panEndPoint.x-panStartPoint.x, panEndPoint.y-panStartPoint.y );
+				CercaMapPixel delta = CercaMapPixelMake( roundf(panStartPoint.x-panEndPoint.x), roundf(panStartPoint.y-panEndPoint.y) );
 				[delegate cercaMapView:self didPanByDelta:delta];
 				panStartPoint = panEndPoint;
 			}
