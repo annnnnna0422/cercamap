@@ -87,12 +87,12 @@
 				CGPoint point1 = [[[allTouches allObjects] objectAtIndex:0] locationInView:self];
 				CGPoint point2 = [[[allTouches allObjects] objectAtIndex:1] locationInView:self];
 				CGFloat zoomEndDistance = [CercaMapView distanceFromPoint:point1 toPoint:point2];
-				if ( zoomEndDistance > 1.5 * zoomStartDistance )
+				if ( zoomEndDistance >= 2 * zoomStartDistance )
 				{
 					[delegate cercaMapViewDidZoomIn:self];
 					zoomStartDistance = zoomEndDistance;
 				}
-				else if ( zoomEndDistance < .67 * zoomStartDistance )
+				else if ( zoomEndDistance <= 0.5 * zoomStartDistance )
 				{
 					[delegate cercaMapViewDidZoomOut:self];
 					zoomStartDistance = zoomEndDistance;
