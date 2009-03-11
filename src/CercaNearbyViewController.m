@@ -59,6 +59,13 @@
 	return [NSURL URLWithString:tileURLString];
 }
 
+-(void) clearTiles
+{
+	NSArray *tiles = mapView.subviews;
+	for ( UIView *tile in tiles )
+		[tile removeFromSuperview];
+}
+
 -(void) refreshTiles
 {
 	CGRect bounds = mapView.bounds;
@@ -123,14 +130,43 @@
 -(void) cercaMapView:(CercaMapView *)overlay
 	didPanByDelta:(CGPoint)delta
 {
+	centerX -= delta.x;
+	centerY -= delta.y;
+
+	NSArray *tiles = mapView.subviews;
+	for ( UIView *tile in tiles )
+	{
+		CGRect frame = tile.frame;
+		frame.origin.x += delta.x;
+		frame.origin.y += delta.y;
+		tile.frame = frame;
+	}
+	
+	[self refreshTiles];
 }
 	
 -(void) cercaMapViewDidZoomIn:(CercaMapView *)cercaMapView
 {
+	if ( zoomLevel < 19 )
+	{
+		[self clearTiles];
+		++zoomLevel;
+		centerX *= 2;
+		centerY *= 2;
+		[self refreshTiles];
+	}
 }
 
 -(void) cercaMapViewDidZoomOut:(CercaMapView *)cercaMapView
 {
+	if ( zoomLevel > 1 )
+	{
+		[self clearTiles];
+		--zoomLevel;
+		centerX /= 2;
+		centerY /= 2;
+		[self refreshTiles];
+	}
 }
 
 @end
