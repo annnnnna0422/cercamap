@@ -118,7 +118,31 @@
 
 -(void) touchesEnded:(NSSet*)touches withEvent:(UIEvent*)event
 {
-    mode = M_NONE;
+    NSSet *allTouches = [event allTouches];
+    
+    switch ( [allTouches count] )
+	{
+       case 2:
+	   {
+			if ( mode == M_ZOOMING )
+			{
+				CGPoint point1 = CGPointApplyAffineTransform( [[[allTouches allObjects] objectAtIndex:0] locationInView:self], self.transform );
+				CGPoint point2 = CGPointApplyAffineTransform( [[[allTouches allObjects] objectAtIndex:1] locationInView:self], self.transform );
+				CGFloat zoomEndDistance = [CercaMapView distanceFromPoint:point1 toPoint:point2];
+				if ( zoomEndDistance >= 1.4142 * zoomStartDistance )
+				{
+					[delegate cercaMapViewDidZoomIn:self];
+				}
+				else if ( zoomEndDistance <= 0.707 * zoomStartDistance )
+				{
+					[delegate cercaMapViewDidZoomOut:self];
+				}
+			}
+        }
+		break;
+    }
+
+	mode = M_NONE;
 	self.transform = CGAffineTransformIdentity;
 }
 
