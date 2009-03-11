@@ -195,6 +195,7 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
+				DBC1D1310F6750030026BF9C /* Model */,
 				DBC1CF200F673BAB0026BF9C /* Controllers */,
 				DBC1CF2C0F673BD20026BF9C /* Views */,
 				29B97317FDCFA39411CA2CEA /* Other */,
@@ -325,6 +326,13 @@
 				DBC1D0080F67416E0026BF9C /* CercaMapTile.m */,
 			);
 			name = "Map View";
+			sourceTree = "<group>";
+		};
+		DBC1D1310F6750030026BF9C /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

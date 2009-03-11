@@ -11,6 +11,21 @@
 
 #pragma mark Forward Declarations
 @class CercaMapView;
+@class CercaMapTileCache;
+
+#pragma mark CercaMapPixel
+
+typedef struct
+{
+	int x;
+	int y;
+} CercaMapPixel;
+
+static inline CercaMapPixel CercaMapPixelMake( int x, int y )
+{
+	CercaMapPixel result = { x, y };
+	return result;
+}
 
 @interface CercaNearbyViewController : UIViewController
 	<CercaMapViewDelegate>
@@ -18,8 +33,8 @@
 @private
 	IBOutlet CercaMapView *mapView;
 	NSString *token;
-	int centerX;
-	int centerY;
+	NSMutableDictionary *tileCache;
+	CercaMapPixel center;
 	int zoomLevel;
 }
 

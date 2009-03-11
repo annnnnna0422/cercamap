@@ -17,38 +17,33 @@
 
 #pragma mark Private
 
--(void) forLocation:(CLLocationCoordinate2D)location
-	getPixelX:(int *)pixelX
-	pixelY:(int *)pixelY
+-(CercaMapPixel) pixelForCoordinates:(CLLocationCoordinate2D)coordinates
 {
-	if ( pixelX != NULL )
-		*pixelX = (int)roundf( ((location.longitude + 180) / 360) * (1<<(zoomLevel+8)) );
-	if ( pixelY != NULL )
-	{
-		float sinLatitude = sinf( location.latitude * M_PI / 180 );
-		float div = (1 + sinLatitude) / (1 - sinLatitude);
-		*pixelY = (int)roundf( (0.5 - log(div) / (4 * M_PI)) * (1<<(zoomLevel+8)) );
-	}
+	CercaMapPixel pixel;
+	pixel.x = (int)roundf( ((coordinates.longitude + 180) / 360) * (1<<(zoomLevel+8)) );
+	float sinLatitude = sinf( coordinates.latitude * M_PI / 180 );
+	float div = (1 + sinLatitude) / (1 - sinLatitude);
+	pixel.y = (int)roundf( (0.5 - log(div) / (4 * M_PI)) * (1<<(zoomLevel+8)) );
+	return pixel;
 }
 
--(NSURL *) getTileURLForPixelX:(int)pixelX
-	pixelY:(int)pixelY
+-(NSString *) tileURLStringForPixel:(CercaMapPixel)pixel
 {
 	NSMutableString *tileURLString = [NSMutableString stringWithString:@"http://r0.ortho.tiles.virtualearth.net/tiles/r"];
 	int mask = 1 << zoomLevel;
 	while ( mask != 1 )
 	{
 		mask = mask >> 1;
-		if ( pixelY & (mask<<8) )
+		if ( pixel.y & (mask<<8) )
 		{
-			if ( pixelX & (mask<<8) )
+			if ( pixel.x & (mask<<8) )
 				[tileURLString appendString:@"3"];
 			else
 				[tileURLString appendString:@"2"];
 		}
 		else
 		{
-			if ( pixelX & (mask<<8) )
+			if ( pixel.x & (mask<<8) )
 				[tileURLString appendString:@"1"];
 			else
 				[tileURLString appendString:@"0"];
@@ -56,7 +51,20 @@
 	}
 	[tileURLString appendString:@".jpeg?g=131&token="];
 	[tileURLString appendString:token];
-	return [NSURL URLWithString:tileURLString];
+	return tileURLString;
+}
+
+-(CercaMapTile *) tileForPixel:(CercaMapPixel)pixel
+{
+	NSString *tileURLString = [self tileURLStringForPixel:pixel];
+	CercaMapTile *tile = [tileCache objectForKey:tileURLString];
+	if ( tile == nil )
+	{
+		NSURL *tileURL = [NSURL URLWithString:tileURLString];
+		tile = [CercaMapTile tileWithURL:tileURL];
+		[tileCache setObject:tile forKey:tileURLString];
+	}
+	return tile;
 }
 
 -(void) clearTiles
@@ -81,7 +89,7 @@
 	}
 	tiles = mapView.subviews;
 	
-	int originX = centerX - width/2, originY = centerY - height/2;
+	int originX = center.x - width/2, originY = center.y - height/2;
 	int offsetX = originX % 256, offsetY = originY % 256;
 	for ( int y = -offsetY; y < height; y += 256 )
 	{
@@ -99,12 +107,21 @@
 			if ( found )
 				continue;
 				
-			NSURL *tileURL = [self getTileURLForPixelX:originX+x pixelY:originY+y];
-			CercaMapTile *tile = [CercaMapTile tileWithURL:tileURL];
+			CercaMapTile *tile = [self tileForPixel:CercaMapPixelMake( originX+x, originY+y )];
 			tile.frame = CGRectMake( x, y, 256, 256 );
 			[mapView addSubview:tile];
 		}
 	}
+}
+
+#pragma mark Lifecycle
+
+-(void) dealloc
+{
+	[tileCache release];
+	[token release];
+	[mapView release];
+	[super dealloc];
 }
 
 #pragma mark UIViewController
@@ -115,14 +132,21 @@
 	[commonService getToken:&token forUserID:@"137913" password:@"!panChr0mat1c7" ipAddress:@"192.168.0.1"];
 	[token retain];
 	
+	tileCache = [[NSMutableDictionary alloc] init];
+	
 	CLLocationCoordinate2D coordinates;
 	coordinates.latitude = 44.23;
 	coordinates.longitude = -76.5;
-	
+
 	zoomLevel = 14;
-	[self forLocation:coordinates getPixelX:&centerX pixelY:&centerY];
+	center = [self pixelForCoordinates:coordinates];
 	
 	[self refreshTiles];
+}
+
+-(void) didReceiveMemoryWarning
+{
+	[tileCache removeAllObjects];
 }
 
 #pragma mark CercaMapViewController
@@ -130,8 +154,8 @@
 -(void) cercaMapView:(CercaMapView *)overlay
 	didPanByDelta:(CGPoint)delta
 {
-	centerX -= delta.x;
-	centerY -= delta.y;
+	center.x -= delta.x;
+	center.y -= delta.y;
 
 	NSArray *tiles = mapView.subviews;
 	for ( UIView *tile in tiles )
@@ -151,8 +175,8 @@
 	{
 		[self clearTiles];
 		++zoomLevel;
-		centerX *= 2;
-		centerY *= 2;
+		center.x *= 2;
+		center.y *= 2;
 		[self refreshTiles];
 	}
 }
@@ -163,8 +187,8 @@
 	{
 		[self clearTiles];
 		--zoomLevel;
-		centerX /= 2;
-		centerY /= 2;
+		center.x /= 2;
+		center.y /= 2;
 		[self refreshTiles];
 	}
 }
