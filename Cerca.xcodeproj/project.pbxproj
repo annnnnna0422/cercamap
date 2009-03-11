@@ -1,0 +1,273 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 45;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
+		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
+		2892E4100DC94CBA00A64D0F /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2892E40F0DC94CBA00A64D0F /* CoreGraphics.framework */; };
+		DBC1CF220F673BBB0026BF9C /* CercaControllers.xib in Resources */ = {isa = PBXBuildFile; fileRef = DBC1CF210F673BBB0026BF9C /* CercaControllers.xib */; };
+		DBC1CF290F673BCA0026BF9C /* CercaAppController.m in Sources */ = {isa = PBXBuildFile; fileRef = DBC1CF240F673BCA0026BF9C /* CercaAppController.m */; };
+		DBC1CF2A0F673BCA0026BF9C /* CercaNearbyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DBC1CF260F673BCA0026BF9C /* CercaNearbyViewController.m */; };
+		DBC1CF2B0F673BCA0026BF9C /* CercaServicesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DBC1CF280F673BCA0026BF9C /* CercaServicesViewController.m */; };
+		DBC1CF2F0F673BE00026BF9C /* CercaMapView.m in Sources */ = {isa = PBXBuildFile; fileRef = DBC1CF2E0F673BE00026BF9C /* CercaMapView.m */; };
+		DBC1CF320F673BEB0026BF9C /* CercaNearbyView.xib in Resources */ = {isa = PBXBuildFile; fileRef = DBC1CF300F673BEB0026BF9C /* CercaNearbyView.xib */; };
+		DBC1CF330F673BEB0026BF9C /* CercaServicesView.xib in Resources */ = {isa = PBXBuildFile; fileRef = DBC1CF310F673BEB0026BF9C /* CercaServicesView.xib */; };
+		DBC1CF360F673BFC0026BF9C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = DBC1CF350F673BFC0026BF9C /* main.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		1D30AB110D05D00D00671497 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		1D6058910D05DD3D006BFB54 /* Cerca.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Cerca.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		1DF5F4DF0D08C38300B7A737 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		2892E40F0DC94CBA00A64D0F /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		DBC1CF210F673BBB0026BF9C /* CercaControllers.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = CercaControllers.xib; path = rsrc/CercaControllers.xib; sourceTree = "<group>"; };
+		DBC1CF230F673BCA0026BF9C /* CercaAppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CercaAppController.h; path = src/CercaAppController.h; sourceTree = "<group>"; };
+		DBC1CF240F673BCA0026BF9C /* CercaAppController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CercaAppController.m; path = src/CercaAppController.m; sourceTree = "<group>"; };
+		DBC1CF250F673BCA0026BF9C /* CercaNearbyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CercaNearbyViewController.h; path = src/CercaNearbyViewController.h; sourceTree = "<group>"; };
+		DBC1CF260F673BCA0026BF9C /* CercaNearbyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CercaNearbyViewController.m; path = src/CercaNearbyViewController.m; sourceTree = "<group>"; };
+		DBC1CF270F673BCA0026BF9C /* CercaServicesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CercaServicesViewController.h; path = src/CercaServicesViewController.h; sourceTree = "<group>"; };
+		DBC1CF280F673BCA0026BF9C /* CercaServicesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CercaServicesViewController.m; path = src/CercaServicesViewController.m; sourceTree = "<group>"; };
+		DBC1CF2D0F673BE00026BF9C /* CercaMapView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CercaMapView.h; path = src/CercaMapView.h; sourceTree = "<group>"; };
+		DBC1CF2E0F673BE00026BF9C /* CercaMapView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CercaMapView.m; path = src/CercaMapView.m; sourceTree = "<group>"; };
+		DBC1CF300F673BEB0026BF9C /* CercaNearbyView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = CercaNearbyView.xib; path = rsrc/CercaNearbyView.xib; sourceTree = "<group>"; };
+		DBC1CF310F673BEB0026BF9C /* CercaServicesView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = CercaServicesView.xib; path = rsrc/CercaServicesView.xib; sourceTree = "<group>"; };
+		DBC1CF340F673BFC0026BF9C /* Cerca_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Cerca_Prefix.pch; sourceTree = "<group>"; };
+		DBC1CF350F673BFC0026BF9C /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = src/main.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		1D60588F0D05DD3D006BFB54 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */,
+				1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */,
+				2892E4100DC94CBA00A64D0F /* CoreGraphics.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		19C28FACFE9D520D11CA2CBB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				1D6058910D05DD3D006BFB54 /* Cerca.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
+			isa = PBXGroup;
+			children = (
+				DBC1CF200F673BAB0026BF9C /* Controllers */,
+				DBC1CF2C0F673BD20026BF9C /* Views */,
+				29B97317FDCFA39411CA2CEA /* Other */,
+				29B97323FDCFA39411CA2CEA /* Frameworks */,
+				19C28FACFE9D520D11CA2CBB /* Products */,
+			);
+			name = CustomTemplate;
+			sourceTree = "<group>";
+		};
+		29B97317FDCFA39411CA2CEA /* Other */ = {
+			isa = PBXGroup;
+			children = (
+				8D1107310486CEB800E47090 /* Info.plist */,
+				DBC1CF340F673BFC0026BF9C /* Cerca_Prefix.pch */,
+				DBC1CF350F673BFC0026BF9C /* main.m */,
+			);
+			name = Other;
+			sourceTree = "<group>";
+		};
+		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				1DF5F4DF0D08C38300B7A737 /* UIKit.framework */,
+				1D30AB110D05D00D00671497 /* Foundation.framework */,
+				2892E40F0DC94CBA00A64D0F /* CoreGraphics.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		DBC1CF200F673BAB0026BF9C /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				DBC1CF210F673BBB0026BF9C /* CercaControllers.xib */,
+				DBC1CF230F673BCA0026BF9C /* CercaAppController.h */,
+				DBC1CF240F673BCA0026BF9C /* CercaAppController.m */,
+				DBC1CF250F673BCA0026BF9C /* CercaNearbyViewController.h */,
+				DBC1CF260F673BCA0026BF9C /* CercaNearbyViewController.m */,
+				DBC1CF270F673BCA0026BF9C /* CercaServicesViewController.h */,
+				DBC1CF280F673BCA0026BF9C /* CercaServicesViewController.m */,
+			);
+			name = Controllers;
+			sourceTree = "<group>";
+		};
+		DBC1CF2C0F673BD20026BF9C /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				DBC1CF300F673BEB0026BF9C /* CercaNearbyView.xib */,
+				DBC1CF310F673BEB0026BF9C /* CercaServicesView.xib */,
+				DBC1CF2D0F673BE00026BF9C /* CercaMapView.h */,
+				DBC1CF2E0F673BE00026BF9C /* CercaMapView.m */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		1D6058900D05DD3D006BFB54 /* Cerca */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1D6058960D05DD3E006BFB54 /* Build configuration list for PBXNativeTarget "Cerca" */;
+			buildPhases = (
+				1D60588D0D05DD3D006BFB54 /* Resources */,
+				1D60588E0D05DD3D006BFB54 /* Sources */,
+				1D60588F0D05DD3D006BFB54 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Cerca;
+			productName = Cerca;
+			productReference = 1D6058910D05DD3D006BFB54 /* Cerca.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		29B97313FDCFA39411CA2CEA /* Project object */ = {
+			isa = PBXProject;
+			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "Cerca" */;
+			compatibilityVersion = "Xcode 3.1";
+			hasScannedForEncodings = 1;
+			knownRegions = (
+				English,
+				Japanese,
+				French,
+				German,
+				en,
+			);
+			mainGroup = 29B97314FDCFA39411CA2CEA /* CustomTemplate */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				1D6058900D05DD3D006BFB54 /* Cerca */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		1D60588D0D05DD3D006BFB54 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DBC1CF220F673BBB0026BF9C /* CercaControllers.xib in Resources */,
+				DBC1CF320F673BEB0026BF9C /* CercaNearbyView.xib in Resources */,
+				DBC1CF330F673BEB0026BF9C /* CercaServicesView.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		1D60588E0D05DD3D006BFB54 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DBC1CF290F673BCA0026BF9C /* CercaAppController.m in Sources */,
+				DBC1CF2A0F673BCA0026BF9C /* CercaNearbyViewController.m in Sources */,
+				DBC1CF2B0F673BCA0026BF9C /* CercaServicesViewController.m in Sources */,
+				DBC1CF2F0F673BE00026BF9C /* CercaMapView.m in Sources */,
+				DBC1CF360F673BFC0026BF9C /* main.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		1D6058940D05DD3E006BFB54 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = Cerca_Prefix.pch;
+				INFOPLIST_FILE = Info.plist;
+				PRODUCT_NAME = Cerca;
+			};
+			name = Debug;
+		};
+		1D6058950D05DD3E006BFB54 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = Cerca_Prefix.pch;
+				INFOPLIST_FILE = Info.plist;
+				PRODUCT_NAME = Cerca;
+			};
+			name = Release;
+		};
+		C01FCF4F08A954540054247B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PREBINDING = NO;
+				SDKROOT = iphoneos2.0;
+			};
+			name = Debug;
+		};
+		C01FCF5008A954540054247B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				PREBINDING = NO;
+				SDKROOT = iphoneos2.0;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		1D6058960D05DD3E006BFB54 /* Build configuration list for PBXNativeTarget "Cerca" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1D6058940D05DD3E006BFB54 /* Debug */,
+				1D6058950D05DD3E006BFB54 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C01FCF4E08A954540054247B /* Build configuration list for PBXProject "Cerca" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C01FCF4F08A954540054247B /* Debug */,
+				C01FCF5008A954540054247B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 29B97313FDCFA39411CA2CEA /* Project object */;
+}
