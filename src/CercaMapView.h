@@ -8,8 +8,16 @@
 
 #import <UIKit/UIKit.h>
 
+#pragma mark Forward Declarations
+@protocol CercaMapViewDelegate;
+
 @interface CercaMapView : UIView
 {
+@private
+	IBOutlet id <CercaMapViewDelegate> delegate;
+	enum { M_NONE, M_PANNING, M_ZOOMING } mode;
+	CGPoint panStartPoint;
+	float zoomStartDistance;
 }
 
 @end

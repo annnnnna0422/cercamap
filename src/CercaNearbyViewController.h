@@ -7,8 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "CercaMapViewDelegate.h"
 
 @interface CercaNearbyViewController : UIViewController
+	<CercaMapViewDelegate>
 {
 @private
 }

@@ -10,4 +10,19 @@
 
 @implementation CercaNearbyViewController
 
+#pragma mark CercaMapViewController
+
+-(void) cercaMapView:(CercaMapView *)overlay
+	didPanByDelta:(CGPoint)delta
+{
+}
+	
+-(void) cercaMapViewDidZoomIn:(CercaMapView *)cercaMapView
+{
+}
+
+-(void) cercaMapViewDidZoomOut:(CercaMapView *)cercaMapView
+{
+}
+
 @end
