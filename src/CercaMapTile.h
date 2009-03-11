@@ -11,6 +11,7 @@
 @interface CercaMapTile : UIImageView 
 {
 @private
+	UIActivityIndicatorView *activityIndicatorView;
 	NSURLConnection *connection;
 	NSMutableData *imageData;
 }

@@ -10,14 +10,32 @@
 
 @implementation CercaMapTile
 
+#pragma mark Private
+
+-(void) cleanupConnection
+{
+	[imageData release];
+	imageData = nil;
+	[connection autorelease];
+	connection = nil;
+	[activityIndicatorView stopAnimating];
+}
+
 #pragma mark Lifecycle
 
 -(id) initWithTileURL:(NSURL *)tileURL
 {
 	if ( self = [super init] )
 	{
+		self.backgroundColor = [UIColor grayColor];
+	
+		activityIndicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
+		activityIndicatorView.hidesWhenStopped = YES;
+		[self addSubview:activityIndicatorView];
+		
 		NSURLRequest *urlRequest = [NSURLRequest requestWithURL:tileURL];
 		connection = [[NSURLConnection connectionWithRequest:urlRequest delegate:self] retain];
+		[activityIndicatorView startAnimating];
 	}
 	return self;
 }
@@ -32,8 +50,17 @@
 	[connection cancel];
 	[connection release];
 	[imageData release];
+	[activityIndicatorView release];
 	[super dealloc];
 }
+
+#pragma mark UIView
+
+-(void) layoutSubviews
+{
+	[super layoutSubviews];
+	activityIndicatorView.center = self.center;
+}	
 
 #pragma mark NSURLConnection Delegate
 
@@ -50,18 +77,12 @@
 - (void)connectionDidFinishLoading:(NSURLConnection *)_
 {
 	self.image = [UIImage imageWithData:imageData];
-	[imageData release];
-	imageData = nil;
-	[connection autorelease];
-	connection = nil;
+	[self cleanupConnection];
 }
 
 - (void)connection:(NSURLConnection *)_ didFailWithError:(NSError *)error
 {
-	[imageData release];
-	imageData = nil;
-	[connection autorelease];
-	connection = nil;
+	[self cleanupConnection];
 }
 
 @end
