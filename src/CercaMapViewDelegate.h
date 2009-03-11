@@ -14,6 +14,7 @@
 
 @required
 
+-(void) cercaMapViewDidResize:(CercaMapView *)circaMapView;
 -(void) cercaMapView:(CercaMapView *)overlay
 	didPanByDelta:(CGPoint)delta;
 -(void) cercaMapViewDidZoomIn:(CercaMapView *)cercaMapView;

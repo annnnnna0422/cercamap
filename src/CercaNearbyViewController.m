@@ -54,7 +54,7 @@
 	return tileURLString;
 }
 
--(CercaMapTile *) tileForPixel:(CercaMapPixel)pixel
+-(CercaMapTile *) tileForMapPixel:(CercaMapPixel)pixel
 {
 	NSString *tileURLString = [self tileURLStringForPixel:pixel];
 	CercaMapTile *tile = [tileCache objectForKey:tileURLString];
@@ -89,16 +89,15 @@
 	}
 	tiles = mapView.subviews;
 	
-	int originX = center.x - width/2, originY = center.y - height/2;
-	int offsetX = originX % 256, offsetY = originY % 256;
-	for ( int y = -offsetY; y < height; y += 256 )
+	CercaMapPixel originMapPixel = CercaMapPixelMake( center.x - width/2, center.y - height/2 );
+	for ( int y = -(originMapPixel.y%256); y < height; y += 256 )
 	{
-		for ( int x = -offsetX; x < CGRectGetWidth(bounds); x += 256 )
+		for ( int x = -(originMapPixel.x%256); x < width; x += 256 )
 		{
 			BOOL found = NO;
 			for ( UIView *tile in tiles )
 			{
-				if ( CGRectContainsPoint( tile.frame, CGPointMake(x,y) ) )
+				if ( CGRectContainsPoint( tile.frame, CGPointMake( x, y ) ) )
 				{
 					found = YES;
 					break;
@@ -106,8 +105,9 @@
 			}
 			if ( found )
 				continue;
-				
-			CercaMapTile *tile = [self tileForPixel:CercaMapPixelMake( originX+x, originY+y )];
+			
+			CercaMapPixel tileMapPixel = CercaMapPixelMake( originMapPixel.x+x, originMapPixel.y+y );
+			CercaMapTile *tile = [self tileForMapPixel:tileMapPixel];
 			tile.frame = CGRectMake( x, y, 256, 256 );
 			[mapView addSubview:tile];
 		}
@@ -140,8 +140,6 @@
 
 	zoomLevel = 14;
 	center = [self pixelForCoordinates:coordinates];
-	
-	[self refreshTiles];
 }
 
 -(void) didReceiveMemoryWarning
@@ -150,6 +148,12 @@
 }
 
 #pragma mark CercaMapViewController
+
+-(void) cercaMapViewDidResize:(CercaMapView *)circaMapView
+{
+	[self clearTiles];
+	[self refreshTiles];
+}
 
 -(void) cercaMapView:(CercaMapView *)overlay
 	didPanByDelta:(CGPoint)delta

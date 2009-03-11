@@ -11,14 +11,25 @@
 
 @implementation CercaMapView
 
+#pragma mark Private
+
++(CGFloat) distanceFromPoint:(CGPoint)point1 toPoint:(CGPoint)point2
+{
+	return sqrt( (point2.x - point1.x) * (point2.x - point1.x) + (point2.y - point1.y) * (point2.y - point1.y) );
+}
+
+#pragma mark Lifecycle
+
 -(void) awakeFromNib
 {
 	mode = M_NONE;
 }
 
-+(CGFloat) distanceFromPoint:(CGPoint)point1 toPoint:(CGPoint)point2
+#pragma mark UIView
+
+-(void) layoutSubviews
 {
-	return sqrt( (point2.x - point1.x) * (point2.x - point1.x) + (point2.y - point1.y) * (point2.y - point1.y) );
+	[delegate cercaMapViewDidResize:self];
 }
 
 -(void) touchesBegan:(NSSet*)touches withEvent:(UIEvent*)event
