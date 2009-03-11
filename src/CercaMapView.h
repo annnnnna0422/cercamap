@@ -17,7 +17,8 @@
 	IBOutlet id <CercaMapViewDelegate> delegate;
 	enum { M_NONE, M_PANNING, M_ZOOMING } mode;
 	CGPoint panStartPoint;
-	float zoomStartDistance;
+	CGFloat zoomStartDistance;
+	CGFloat zoomStartScale;
 }
 
 @end

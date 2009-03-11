@@ -41,16 +41,17 @@
         case 1:
 		{
 			mode = M_PANNING;
-			panStartPoint = [[[allTouches allObjects] objectAtIndex:0] locationInView:self];
+			panStartPoint = CGPointApplyAffineTransform( [[[allTouches allObjects] objectAtIndex:0] locationInView:self], self.transform );
         }
 		break;
 		
         case 2:
 		{
 			mode = M_ZOOMING;
-            CGPoint point1 = [[[allTouches allObjects] objectAtIndex:0] locationInView:self];
-            CGPoint point2 = [[[allTouches allObjects] objectAtIndex:1] locationInView:self];
+            CGPoint point1 = CGPointApplyAffineTransform( [[[allTouches allObjects] objectAtIndex:0] locationInView:self], self.transform );
+            CGPoint point2 = CGPointApplyAffineTransform( [[[allTouches allObjects] objectAtIndex:1] locationInView:self], self.transform );
             zoomStartDistance = [CercaMapView distanceFromPoint:point1 toPoint:point2];
+			zoomStartScale = self.transform.a;
         }
 		break;
 		
@@ -70,7 +71,7 @@
 		{
             if ( mode == M_PANNING )
 			{
-				CGPoint panEndPoint = [[[allTouches allObjects] objectAtIndex:0] locationInView:self];
+				CGPoint panEndPoint = CGPointApplyAffineTransform( [[[allTouches allObjects] objectAtIndex:0] locationInView:self], self.transform );
 				CercaMapPixel delta = CercaMapPixelMake( roundf(panStartPoint.x-panEndPoint.x), roundf(panStartPoint.y-panEndPoint.y) );
 				[delegate cercaMapView:self didPanByDelta:delta];
 				panStartPoint = panEndPoint;
@@ -87,23 +88,20 @@
 				CGPoint point1 = CGPointApplyAffineTransform( [[[allTouches allObjects] objectAtIndex:0] locationInView:self], self.transform );
 				CGPoint point2 = CGPointApplyAffineTransform( [[[allTouches allObjects] objectAtIndex:1] locationInView:self], self.transform );
 				CGFloat zoomEndDistance = [CercaMapView distanceFromPoint:point1 toPoint:point2];
-				if ( zoomEndDistance >= 2 * zoomStartDistance )
+				CGFloat zoomEndScale = zoomStartScale * zoomEndDistance / zoomStartDistance;
+				if ( zoomEndScale >= 1.4142 )
 				{
 					[delegate cercaMapViewDidZoomIn:self];
-					self.transform = CGAffineTransformIdentity;
-					zoomStartDistance = zoomEndDistance;
+					zoomEndScale /= 2;
+					zoomStartScale /= 2;
 				}
-				else if ( zoomEndDistance <= 0.5 * zoomStartDistance )
+				else if ( zoomEndScale <= 0.5 )
 				{
 					[delegate cercaMapViewDidZoomOut:self];
-					self.transform = CGAffineTransformIdentity;
-					zoomStartDistance = zoomEndDistance;
+					zoomEndScale *= 2;
+					zoomStartScale *= 2;
 				}
-				else if ( zoomStartDistance > 0.1 )
-				{
-					CGFloat zoomRatio = zoomEndDistance / zoomStartDistance;
-					self.transform = CGAffineTransformMake( zoomRatio, 0, 0, zoomRatio, 0, 0);
-				}
+				self.transform = CGAffineTransformMake( zoomEndScale, 0, 0, zoomEndScale, 0, 0);
 			}
 			else
 				mode = M_NONE;
@@ -118,32 +116,7 @@
 
 -(void) touchesEnded:(NSSet*)touches withEvent:(UIEvent*)event
 {
-    NSSet *allTouches = [event allTouches];
-    
-    switch ( [allTouches count] )
-	{
-       case 2:
-	   {
-			if ( mode == M_ZOOMING )
-			{
-				CGPoint point1 = CGPointApplyAffineTransform( [[[allTouches allObjects] objectAtIndex:0] locationInView:self], self.transform );
-				CGPoint point2 = CGPointApplyAffineTransform( [[[allTouches allObjects] objectAtIndex:1] locationInView:self], self.transform );
-				CGFloat zoomEndDistance = [CercaMapView distanceFromPoint:point1 toPoint:point2];
-				if ( zoomEndDistance >= 1.4142 * zoomStartDistance )
-				{
-					[delegate cercaMapViewDidZoomIn:self];
-				}
-				else if ( zoomEndDistance <= 0.707 * zoomStartDistance )
-				{
-					[delegate cercaMapViewDidZoomOut:self];
-				}
-			}
-        }
-		break;
-    }
-
 	mode = M_NONE;
-	self.transform = CGAffineTransformIdentity;
 }
 
 -(void) touchesCanceled
