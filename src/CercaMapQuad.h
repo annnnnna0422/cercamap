@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <CoreLocation/CoreLocation.h>
 #import "CercaMapRect.h"
 #import "CercaMapType.h"
 
@@ -39,5 +40,7 @@
 	mapType:(CercaMapType)mapType;
 
 -(void) didReceiveMemoryWarning;
+
++(CercaMapPoint) mapPointForCoordinate:(CLLocationCoordinate2D)coordinates;
 
 @end

@@ -9,20 +9,9 @@
 #import "CercaNearbyViewController.h"
 #import "CercaMapView.h"
 #import "CercaMapQuad.h"
+#import <CoreLocation/CoreLocation.h>
 
 @implementation CercaNearbyViewController
-
-#pragma mark Private
-
--(CercaMapPoint) pixelForCoordinates:(CLLocationCoordinate2D)coordinates
-{
-	CercaMapPoint pixel;
-	pixel.x = (int)roundf( ((coordinates.longitude + 180) / 360) * (1<<27) );
-	float sinLatitude = sinf( coordinates.latitude * M_PI / 180 );
-	float div = (1 + sinLatitude) / (1 - sinLatitude);
-	pixel.y = (int)roundf( (0.5 - log(div) / (4 * M_PI)) * (1<<27) );
-	return pixel;
-}
 
 #pragma mark Lifecycle
 
@@ -45,7 +34,7 @@
 	coordinates.longitude = -76.5;
 
 	zoomLevel = 1 << 14;
-	center = [self pixelForCoordinates:coordinates];
+	center = [CercaMapQuad mapPointForCoordinate:coordinates];
 }
 
 -(void) didReceiveMemoryWarning
@@ -90,7 +79,7 @@
 	didUpdateToLocation:(CLLocation *)newLocation
 	fromLocation:(CLLocation *)oldLocation
 {
-	center = [self pixelForCoordinates:newLocation.coordinate];
+	center = [CercaMapQuad mapPointForCoordinate:newLocation.coordinate];
 	zoomLevel = 1<<14;
 	[mapView setNeedsDisplay];
 }

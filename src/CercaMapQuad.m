@@ -205,6 +205,16 @@ typedef struct { unsigned char r, g, b, a; } RGBA;
 	}
 }
 
++(CercaMapPoint) mapPointForCoordinate:(CLLocationCoordinate2D)coordinates
+{
+	CercaMapPoint pixel;
+	pixel.x = (int)roundf( ((coordinates.longitude + 180) / 360) * (1<<27) );
+	float sinLatitude = sinf( coordinates.latitude * M_PI / 180 );
+	float div = (1 + sinLatitude) / (1 - sinLatitude);
+	pixel.y = (int)roundf( (0.5 - log(div) / (4 * M_PI)) * (1<<27) );
+	return pixel;
+}
+
 #pragma mark NSURLConnection Delegate
 
 -(void) connection:(NSURLConnection *)connection
