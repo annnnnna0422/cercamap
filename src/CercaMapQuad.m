@@ -62,6 +62,24 @@ typedef struct { unsigned char r, g, b, a; } RGBA;
 	return result;
 }
 
+-(CercaMapQuad *) childQuadAtRow:(int)i col:(int)j
+{
+	CercaMapRect childCoverage = CercaMapRectMake(
+		coverage.origin.x + j*coverage.size.width/2,
+		coverage.origin.y + i*coverage.size.height/2,
+		coverage.size.width/2,
+		coverage.size.height/2
+		);
+	static NSString *childURLBaseSuffixStrings[2][2] = { { @"0", @"1" }, { @"2", @"3" } };
+	NSString *childURLBaseString = [NSString stringWithFormat:@"%@%@", urlBaseString, childURLBaseSuffixStrings[i][j]];
+	return [[[CercaMapQuad alloc] initWithDelegate:delegate
+		parentQuad:self
+		coverage:childCoverage
+		token:token
+		urlBaseString:childURLBaseString
+		logZoom:logZoom+1] autorelease];
+}
+
 -(void) inwardDrawToDstRect:(CGRect)dstRect
 	srcRect:(CercaMapRect)srcRect
 	zoomLevel:(CGFloat)zoomLevel
@@ -83,10 +101,10 @@ typedef struct { unsigned char r, g, b, a; } RGBA;
 			if ( quad->images[mapType] != nil )
 			{
 				CGRect subImageRect = CGRectMake(
-					(srcRect.origin.x - coverage.origin.x) >> (19-logZoom),
-					(srcRect.origin.y - coverage.origin.y) >> (19-logZoom),
-					srcRect.size.width >> (19-logZoom),
-					srcRect.size.height >> (19-logZoom)
+					(srcRect.origin.x - coverage.origin.x) >> (19-quad->logZoom),
+					(srcRect.origin.y - coverage.origin.y) >> (19-quad->logZoom),
+					srcRect.size.width >> (19-quad->logZoom),
+					srcRect.size.height >> (19-quad->logZoom)
 					);
 				CGImageRef subImage = CGImageCreateWithImageInRect( [quad->images[mapType] CGImage], subImageRect );
 				[[UIImage imageWithCGImage:subImage] drawInRect:dstRect];
@@ -104,62 +122,7 @@ typedef struct { unsigned char r, g, b, a; } RGBA;
 			{
 				CercaMapQuad *childQuad = childQuads[i][j];
 				if ( childQuad == nil )
-				{
-					CercaMapRect childCoverage;
-					NSString *childURLBaseString;
-					if ( i==0 )
-					{
-						if ( j==0 )
-						{
-							childCoverage = CercaMapRectMake(
-								coverage.origin.x,
-								coverage.origin.y,
-								coverage.size.width/2,
-								coverage.size.height/2
-								);
-							childURLBaseString = [NSString stringWithFormat:@"%@0", urlBaseString];
-						}
-						else
-						{
-							childCoverage = CercaMapRectMake(
-								coverage.origin.x + coverage.size.width/2,
-								coverage.origin.y,
-								coverage.size.width/2,
-								coverage.size.height/2
-								);
-							childURLBaseString = [NSString stringWithFormat:@"%@1", urlBaseString];
-						}
-					}
-					else
-					{
-						if ( j==0 )
-						{
-							childCoverage = CercaMapRectMake(
-								coverage.origin.x,
-								coverage.origin.y + coverage.size.height/2,
-								coverage.size.width/2,
-								coverage.size.height/2
-								);
-							childURLBaseString = [NSString stringWithFormat:@"%@2", urlBaseString];
-						}
-						else
-						{
-							childCoverage = CercaMapRectMake(
-								coverage.origin.x + coverage.size.width/2,
-								coverage.origin.y + coverage.size.height/2,
-								coverage.size.width/2,
-								coverage.size.height/2
-								);
-							childURLBaseString = [NSString stringWithFormat:@"%@3", urlBaseString];
-						}
-					}
-					childQuad = childQuads[i][j] = [[CercaMapQuad alloc] initWithDelegate:delegate
-						parentQuad:self
-						coverage:childCoverage
-						token:token
-						urlBaseString:childURLBaseString
-						logZoom:logZoom+1];
-				}
+					childQuad = childQuads[i][j] = [[self childQuadAtRow:i col:j] retain];
 				CercaMapRect childSrcRect = CercaMapRectIntersect( srcRect, childQuad->coverage );
 				if ( CercaMapRectIsNonEmpty( childSrcRect ) )
 				{
