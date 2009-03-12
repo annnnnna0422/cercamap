@@ -24,14 +24,6 @@
 	return pixel;
 }
 
--(void) panByDelta:(CercaMapPoint)delta
-{
-	center.x += (1<<18)/zoomLevel*delta.x;
-	center.y += (1<<18)/zoomLevel*delta.y;
-
-	[mapView setNeedsDisplay];
-}
-
 #pragma mark Lifecycle
 
 -(void) dealloc
@@ -72,9 +64,12 @@
 }
 
 -(void) cercaMapView:(CercaMapView *)overlay
-	didPanByDelta:(CercaMapPoint)delta
+	didPanByDelta:(CGPoint)delta
 {
-	[self panByDelta:delta];
+	center.x += (1<<18)*delta.x/zoomLevel;
+	center.y += (1<<18)*delta.y/zoomLevel;
+
+	[mapView setNeedsDisplay];
 }
 	
 -(void) cercaMapView:(CercaMapView *)cercaMapView

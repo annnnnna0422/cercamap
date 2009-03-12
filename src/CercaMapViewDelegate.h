@@ -20,7 +20,7 @@
 	drawToDstRect:(CGRect)dstRect;
 
 -(void) cercaMapView:(CercaMapView *)cercaMapView
-	didPanByDelta:(CercaMapPoint)delta;
+	didPanByDelta:(CGPoint)delta;
 -(void) cercaMapView:(CercaMapView *)cercaMapView
 	didZoomByScale:(CGFloat)scale;
 

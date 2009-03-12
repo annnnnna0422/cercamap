@@ -18,11 +18,19 @@
 	return sqrt( (point2.x - point1.x) * (point2.x - point1.x) + (point2.y - point1.y) * (point2.y - point1.y) );
 }
 
-#pragma mark Lifecycle
-
--(void) awakeFromNib
++(CGPoint) midpointBetweenPoint:(CGPoint)point1 andPoint:(CGPoint)point2
 {
-	mode = M_NONE;
+	return CGPointMake( (point1.x + point2.x)/2, (point1.y + point2.y)/2 );
+}
+
++(CGPoint) closestPointToPoint:(CGPoint)point betweenPoint:(CGPoint)point1 andPoint:(CGPoint)point2
+{
+	CGFloat point1Dist = [self distanceFromPoint:point toPoint:point1];
+	CGFloat point2Dist = [self distanceFromPoint:point toPoint:point2];
+	if ( point1Dist < point2Dist )
+		return point1;
+	else
+		return point2;
 }
 
 #pragma mark UIView
@@ -35,81 +43,70 @@
 
 -(void) touchesBegan:(NSSet*)touches withEvent:(UIEvent*)event
 {
-    NSSet *allTouches = [event allTouches];
-    
-    switch ( [allTouches count] )
+	numPoints = 0;
+	for ( UITouch *touch in touches )
 	{
-        case 1:
-		{
-			mode = M_PANNING;
-			panStartPoint = [[[allTouches allObjects] objectAtIndex:0] locationInView:self];
-        }
-		break;
-		
-        case 2:
-		{
-			mode = M_ZOOMING;
-            CGPoint point1 = [[[allTouches allObjects] objectAtIndex:0] locationInView:self];
-            CGPoint point2 = [[[allTouches allObjects] objectAtIndex:1] locationInView:self];
-            zoomStartDistance = [CercaMapView distanceFromPoint:point1 toPoint:point2];
-        }
-		break;
-		
-        default:
-            mode = M_NONE;
-            break;
-    }
+		points[numPoints++] = [touch locationInView:self];
+		if ( numPoints == 2 )
+			break;
+	}
 }
 
 -(void) touchesMoved:(NSSet*)touches withEvent:(UIEvent*)event
 {
-    NSSet *allTouches = [event allTouches];
-    
-    switch ( [allTouches count] )
+	int newNumPoints = 0;
+	CGPoint newPoints[2];
+	for ( UITouch *touch in [event allTouches] )
 	{
-        case 1:
+		newPoints[newNumPoints++] = [touch locationInView:self];
+		if ( newNumPoints == 2 )
+			break;
+	}
+	
+	if ( newNumPoints >= 1 && numPoints >= 1 )
+	{
+		CGPoint startPoint, endPoint;
+		if ( numPoints == 2 )
 		{
-            if ( mode == M_PANNING )
+			if ( newNumPoints == 2 )
 			{
-				CGPoint panEndPoint = [[[allTouches allObjects] objectAtIndex:0] locationInView:self];
-				CercaMapPoint delta = CercaMapPointMake( roundf(panStartPoint.x-panEndPoint.x), roundf(panStartPoint.y-panEndPoint.y) );
-				[delegate cercaMapView:self didPanByDelta:delta];
-				panStartPoint = panEndPoint;
+				startPoint = [CercaMapView midpointBetweenPoint:points[0] andPoint:points[1]];
+				endPoint = [CercaMapView midpointBetweenPoint:newPoints[0] andPoint:newPoints[1]];
 			}
 			else
-				mode = M_NONE;
-        }
-		break;
-        
-       case 2:
-	   {
-			if ( mode == M_ZOOMING )
 			{
-				CGPoint point1 = [[[allTouches allObjects] objectAtIndex:0] locationInView:self];
-				CGPoint point2 = [[[allTouches allObjects] objectAtIndex:1] locationInView:self];
-				CGFloat zoomEndDistance = [CercaMapView distanceFromPoint:point1 toPoint:point2];
-				[delegate cercaMapView:self didZoomByScale:zoomEndDistance/zoomStartDistance];
-				zoomStartDistance = zoomEndDistance;
+				startPoint = [CercaMapView closestPointToPoint:newPoints[0] betweenPoint:points[0] andPoint:points[1]];
+				endPoint = newPoints[0];
+			}
+		}
+		else
+		{
+			if ( newNumPoints == 2 )
+			{
+				startPoint = points[0];
+				endPoint = [CercaMapView closestPointToPoint:points[0] betweenPoint:newPoints[0] andPoint:newPoints[1]];
 			}
 			else
-				mode = M_NONE;
-        }
-		break;
-		
-        default:
-            mode = M_NONE;
-            break;
-    }
-}
+			{
+				startPoint = points[0];
+				endPoint = newPoints[0];
+			}
+		}
+		CGPoint delta = CGPointMake( startPoint.x - endPoint.x, startPoint.y - endPoint.y );
+		[delegate cercaMapView:self didPanByDelta:delta];
+	}
+	
+	if ( newNumPoints == 2 && numPoints == 2 )
+	{
+		CGFloat startDistance = [CercaMapView distanceFromPoint:points[0] toPoint:points[1]];
+		CGFloat endDistance = [CercaMapView distanceFromPoint:newPoints[0] toPoint:newPoints[1]];
+		if ( startDistance > 1 )
+			[delegate cercaMapView:self didZoomByScale:endDistance/startDistance];
+	}
 
--(void) touchesEnded:(NSSet*)touches withEvent:(UIEvent*)event
-{
-	mode = M_NONE;
-}
-
--(void) touchesCanceled
-{
-    mode = M_NONE;
+	numPoints = newNumPoints;
+	for ( int i=0; i<numPoints; ++i )
+		points[i] = newPoints[i];
 }
 
 @end
