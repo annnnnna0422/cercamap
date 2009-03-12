@@ -74,9 +74,33 @@
 
 #pragma mark CercaMapView
 
-@synthesize virtualEarthKitUsername;
+@dynamic virtualEarthKitUsername;
 
-@synthesize virtualEarthKitPassword;
+-(NSString *) virtualEarthKitUsername
+{
+	return virtualEarthKitUsername;
+}
+
+-(void) setVirtualEarthKitUsername:(NSString *)_
+{
+	[virtualEarthKitUsername release];
+	virtualEarthKitUsername = [_ retain];
+	[self setNeedsDisplay];
+}
+
+@dynamic virtualEarthKitPassword;
+
+-(NSString *) virtualEarthKitPassword
+{
+	return virtualEarthKitPassword;
+}
+
+-(void) setVirtualEarthKitPassword:(NSString *)_
+{
+	[virtualEarthKitPassword release];
+	virtualEarthKitPassword = [_ retain];
+	[self setNeedsDisplay];
+}
 
 @dynamic centerPoint;
 
@@ -121,12 +145,13 @@
 
 -(void) drawRect:(CGRect)rect
 {
-	[CercaMapGenerator drawToDstRect:self.bounds
-		centerPoint:centerPoint
-		zoomLevel:zoomLevel
-		mapType:mapType
-		virtualEarthKitUsername:virtualEarthKitUsername
-		virtualEarthKitPassword:virtualEarthKitPassword];
+	if ( virtualEarthKitUsername != nil && virtualEarthKitPassword != nil )
+		[CercaMapGenerator drawToDstRect:self.bounds
+			centerPoint:centerPoint
+			zoomLevel:zoomLevel
+			mapType:mapType
+			virtualEarthKitUsername:virtualEarthKitUsername
+			virtualEarthKitPassword:virtualEarthKitPassword];
 }
 
 -(void) touchesBegan:(NSSet*)touches withEvent:(UIEvent*)event
