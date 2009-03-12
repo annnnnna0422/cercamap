@@ -43,16 +43,30 @@ typedef struct { unsigned char r, g, b, a; } RGBA;
 	return self;
 }	
 
--(NSString *) urlString
+-(NSString *) urlStringForMapType:(CercaMapType)mapType
 {
-	NSString *result = [NSString stringWithFormat:@"%@%@%@", urlBaseString, @".jpeg?g=131&token=", token];
+	NSString *prefix;
+	switch ( mapType )
+	{
+		case CMT_ROADS:
+			prefix = @"http://r0.ortho.tiles.virtualearth.net/tiles/r";
+			break;
+		case CMT_ARIAL:
+			prefix = @"http://a0.ortho.tiles.virtualearth.net/tiles/a";
+			break;
+		case CMT_HYBRID:
+			prefix = @"http://h0.ortho.tiles.virtualearth.net/tiles/h";
+			break;
+	}
+	NSString *result = [NSString stringWithFormat:@"%@%@%@%@", prefix, urlBaseString, @".jpeg?g=131&token=", token];
 	return result;
 }
 
 -(void) outwardDrawToDstRect:(CGRect)dstRect
 	srcRect:(CercaMapRect)srcRect
+	mapType:(CercaMapType)mapType
 {
-	if ( image != nil )
+	if ( images[mapType] != nil )
 	{
 		CGRect subImageRect = CGRectMake(
 			(srcRect.origin.x - coverage.origin.x) >> (19-logZoom),
@@ -60,29 +74,30 @@ typedef struct { unsigned char r, g, b, a; } RGBA;
 			srcRect.size.width >> (19-logZoom),
 			srcRect.size.height >> (19-logZoom)
 			);
-		CGImageRef subImage = CGImageCreateWithImageInRect( [image CGImage], subImageRect );
+		CGImageRef subImage = CGImageCreateWithImageInRect( [images[mapType] CGImage], subImageRect );
 		[[UIImage imageWithCGImage:subImage] drawInRect:dstRect];
 		CGImageRelease( subImage );
 	}
 	else
-		[parentQuad outwardDrawToDstRect:dstRect srcRect:srcRect];
+		[parentQuad outwardDrawToDstRect:dstRect srcRect:srcRect mapType:mapType];
 }
 
 -(void) inwardDrawToDstRect:(CGRect)dstRect
 	srcRect:(CercaMapRect)srcRect
 	zoomLevel:(CGFloat)zoomLevel
+	mapType:(CercaMapType)mapType
 {
-	if ( parentQuad != nil && image == nil && connection == nil )
+	if ( parentQuad != nil && images[mapType] == nil && connections[mapType] == nil )
 	{
-		NSString *urlString = [self urlString];
+		NSString *urlString = [self urlStringForMapType:mapType];
 		NSURL *url = [NSURL URLWithString:urlString];
 		NSURLRequest *urlRequest = [NSURLRequest requestWithURL:url];
-		connection = [[NSURLConnection connectionWithRequest:urlRequest delegate:self] retain];
+		connections[mapType] = [[NSURLConnection connectionWithRequest:urlRequest delegate:self] retain];
 	}
 		
 	if ( zoomLevel >= zoomMin && zoomLevel < zoomMax )
 	{
-		if ( image != nil )
+		if ( images[mapType] != nil )
 		{
 			CGRect subImageRect = CGRectMake(
 				(srcRect.origin.x - coverage.origin.x) >> (19-logZoom),
@@ -90,14 +105,13 @@ typedef struct { unsigned char r, g, b, a; } RGBA;
 				srcRect.size.width >> (19-logZoom),
 				srcRect.size.height >> (19-logZoom)
 				);
-			CGImageRef subImage = CGImageCreateWithImageInRect( [image CGImage], subImageRect );
+			CGImageRef subImage = CGImageCreateWithImageInRect( [images[mapType] CGImage], subImageRect );
 			[[UIImage imageWithCGImage:subImage] drawInRect:dstRect];
 			CGImageRelease( subImage );
 		}
 		else if ( parentQuad != nil )
 		{
-			[parentQuad outwardDrawToDstRect:(CGRect)dstRect
-				srcRect:(CercaMapRect)srcRect];
+			[parentQuad outwardDrawToDstRect:dstRect srcRect:srcRect mapType:mapType];
 		}
 	}
 	else
@@ -175,13 +189,19 @@ typedef struct { unsigned char r, g, b, a; } RGBA;
 						dstRect.size.width * childSrcRect.size.width / srcRect.size.width,
 						dstRect.size.height * childSrcRect.size.height / srcRect.size.height
 						);
-					[childQuad inwardDrawToDstRect:childDstRect
-						srcRect:childSrcRect
-						zoomLevel:zoomLevel];
+					[childQuad inwardDrawToDstRect:childDstRect srcRect:childSrcRect zoomLevel:zoomLevel mapType:mapType];
 				}
 			}
 		}
 	}
+}
+
+-(CercaMapType) mapTypeForConnection:(NSURLConnection *)connection
+{
+	for ( CercaMapType i=0; i<CMT_NUM_TYPES; ++i )
+		if ( connections[i] == connection )
+			return i;
+	return -1;
 }
 
 #pragma mark Lifecycle
@@ -195,15 +215,18 @@ typedef struct { unsigned char r, g, b, a; } RGBA;
 		parentQuad:nil
 		coverage:CercaMapRectMake( 0, 0, 1<<27, 1<<27 )
 		token:token
-		urlBaseString:@"http://r0.ortho.tiles.virtualearth.net/tiles/r"
+		urlBaseString:@""
 		logZoom:0];
 }
 
 -(void) dealloc
 {
-	[imageData release];
-	[connection release];
-	[image release];
+	for ( CercaMapType i=0; i<CMT_NUM_TYPES; ++i )
+	{
+		[imageDatas[i] release];
+		[connections[i] release];
+		[images[i] release];
+	}
 	[urlBaseString release];
 	for ( int i=0; i<2; ++i )
 		for ( int j=0; j<2; ++j )
@@ -216,12 +239,13 @@ typedef struct { unsigned char r, g, b, a; } RGBA;
 -(void) drawToDstRect:(CGRect)dstRect
 	centerPoint:(CercaMapPoint)centerPoint
 	zoomLevel:(CGFloat)zoomLevel
+	mapType:(CercaMapType)mapType
 {
 	CGFloat mult = (1<<18) / zoomLevel;
 	CGSize srcSize = CGSizeMake( CGRectGetWidth(dstRect)*mult, CGRectGetHeight(dstRect)*mult );
 	CercaMapRect srcRect = CercaMapRectMake( roundf( centerPoint.x - srcSize.width/2 ), roundf( centerPoint.y - srcSize.height/2 ),
 		roundf( srcSize.width ), roundf( srcSize.height ) );
-	[self inwardDrawToDstRect:dstRect srcRect:srcRect zoomLevel:zoomLevel];
+	[self inwardDrawToDstRect:dstRect srcRect:srcRect zoomLevel:zoomLevel mapType:mapType];
 }
 
 -(void) didReceiveMemoryWarning
@@ -241,38 +265,44 @@ typedef struct { unsigned char r, g, b, a; } RGBA;
 -(void) connection:(NSURLConnection *)connection
 	didReceiveResponse:(NSURLResponse *)response
 {
-	imageData = [[NSMutableData alloc] init];
+	CercaMapType mapType = [self mapTypeForConnection:connection];
+	imageDatas[mapType] = [[NSMutableData alloc] init];
 }
 
 -(void) connection:(NSURLConnection *)connection
 	didReceiveData:(NSData *)data
 {
-	[imageData appendData:data];
+	CercaMapType mapType = [self mapTypeForConnection:connection];
+	[imageDatas[mapType] appendData:data];
 }
 
-- (void)connectionDidFinishLoading:(NSURLConnection *)_
+- (void)connectionDidFinishLoading:(NSURLConnection *)connection
 {
-	[connection autorelease];
-	connection = nil;
+	CercaMapType mapType = [self mapTypeForConnection:connection];
 
-	UIImage *origImage = [UIImage imageWithData:imageData];
-	[imageData release];
-	imageData = nil;
+	[connections[mapType] autorelease];
+	connections[mapType] = nil;
+
+	UIImage *origImage = [UIImage imageWithData:imageDatas[mapType]];
+	[imageDatas[mapType] release];
+	imageDatas[mapType] = nil;
 	
 	UIGraphicsBeginImageContext(origImage.size);
 	[origImage drawAtPoint:CGPointMake(0,0)];
-	image = [UIGraphicsGetImageFromCurrentImageContext() retain];
+	images[mapType] = [UIGraphicsGetImageFromCurrentImageContext() retain];
 	UIGraphicsEndImageContext();
 		
 	[delegate cercaMapQuadDidFinishLoading:self];
 }
 
-- (void)connection:(NSURLConnection *)_ didFailWithError:(NSError *)error
+- (void)connection:(NSURLConnection *)connection
+	didFailWithError:(NSError *)error
 {
-	[imageData release];
-	imageData = nil;
-	[connection autorelease];
-	connection = nil;
+	CercaMapType mapType = [self mapTypeForConnection:connection];
+	[imageDatas[mapType] release];
+	imageDatas[mapType] = nil;
+	[connections[mapType] autorelease];
+	connections[mapType] = nil;
 }
 
 @end

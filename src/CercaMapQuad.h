@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "CercaMapRect.h"
+#import "CercaMapType.h"
 
 #pragma mark Forward Declarations
 @protocol CercaMapQuadDelegate;
@@ -23,9 +24,9 @@
 	NSString *urlBaseString;
 	CGFloat zoomMin, zoomMax;
 	int logZoom;
-	UIImage *image;
-	NSURLConnection *connection;
-	NSMutableData *imageData;
+	UIImage *images[CMT_NUM_TYPES];
+	NSURLConnection *connections[CMT_NUM_TYPES];
+	NSMutableData *imageDatas[CMT_NUM_TYPES];
 }
 
 #pragma mark Public
@@ -34,7 +35,8 @@
 
 -(void) drawToDstRect:(CGRect)dstRect
 	centerPoint:(CercaMapPoint)centerPoint
-	zoomLevel:(CGFloat)zoomLevel;
+	zoomLevel:(CGFloat)zoomLevel
+	mapType:(CercaMapType)mapType;
 
 -(void) didReceiveMemoryWarning;
 

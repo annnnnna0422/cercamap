@@ -60,7 +60,8 @@
 {
 	[rootMapQuad drawToDstRect:dstRect
 		centerPoint:center
-		zoomLevel:zoomLevel];
+		zoomLevel:zoomLevel
+		mapType:mapType];
 }
 
 -(void) cercaMapView:(CercaMapView *)overlay
@@ -116,6 +117,12 @@
 		[locationManager startUpdatingLocation];
 		gpsBarButtonItem.style = UIBarButtonItemStyleDone;
 	}
+}
+
+-(void) segmentedControlTapped:(id)sender
+{
+	mapType = segmentedControl.selectedSegmentIndex;
+	[mapView setNeedsDisplay];
 }
 
 #pragma mark CercaMapQuadDelegate

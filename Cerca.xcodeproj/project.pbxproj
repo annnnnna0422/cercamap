@@ -94,6 +94,7 @@
 		DBA4D6110F685C2D001DC2A2 /* CercaMapSize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CercaMapSize.h; path = src/CercaMapSize.h; sourceTree = "<group>"; };
 		DBA4D6120F685C62001DC2A2 /* CercaMapRect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CercaMapRect.h; path = src/CercaMapRect.h; sourceTree = "<group>"; };
 		DBA4D7510F688DB1001DC2A2 /* CercaMapQuadDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CercaMapQuadDelegate.h; path = src/CercaMapQuadDelegate.h; sourceTree = "<group>"; };
+		DBA4D9E30F68E064001DC2A2 /* CercaMapType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CercaMapType.h; path = src/CercaMapType.h; sourceTree = "<group>"; };
 		DBC1CF210F673BBB0026BF9C /* CercaControllers.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = CercaControllers.xib; path = rsrc/CercaControllers.xib; sourceTree = "<group>"; };
 		DBC1CF230F673BCA0026BF9C /* CercaAppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CercaAppController.h; path = src/CercaAppController.h; sourceTree = "<group>"; };
 		DBC1CF240F673BCA0026BF9C /* CercaAppController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CercaAppController.m; path = src/CercaAppController.m; sourceTree = "<group>"; };
@@ -219,6 +220,7 @@
 				DBC1D2050F6767940026BF9C /* CercaMapPoint.h */,
 				DBA4D6110F685C2D001DC2A2 /* CercaMapSize.h */,
 				DBA4D6120F685C62001DC2A2 /* CercaMapRect.h */,
+				DBA4D9E30F68E064001DC2A2 /* CercaMapType.h */,
 			);
 			name = Other;
 			sourceTree = "<group>";
