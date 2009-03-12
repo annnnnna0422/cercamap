@@ -11,13 +11,9 @@
 #import "CercaMapRect.h"
 #import "CercaMapType.h"
 
-#pragma mark Forward Declarations
-@protocol CercaMapQuadDelegate;
-
 @interface CercaMapQuad : NSObject
 {
 @private
-	id <CercaMapQuadDelegate> delegate;
 	CercaMapQuad *parentQuad;
 	CercaMapQuad *childQuads[2][2];
 	CercaMapRect coverage;
@@ -32,15 +28,15 @@
 
 #pragma mark Public
 
--(id) initWithDelegate:(id <CercaMapQuadDelegate>)delegate;
+-(id) initWithParentQuad:(CercaMapQuad *)_parentQuad
+	coverage:(CercaMapRect)_coverage
+	token:(NSString *)_token
+	urlBaseString:(NSString *)_urlBaseString
+	logZoom:(CGFloat)_logZoom;
 
 -(void) drawToDstRect:(CGRect)dstRect
-	centerPoint:(CercaMapPoint)centerPoint
+	srcRect:(CercaMapRect)srcRect
 	zoomLevel:(CGFloat)zoomLevel
 	mapType:(CercaMapType)mapType;
-
--(void) didReceiveMemoryWarning;
-
-+(CercaMapPoint) mapPointForCoordinate:(CLLocationCoordinate2D)coordinates;
 
 @end

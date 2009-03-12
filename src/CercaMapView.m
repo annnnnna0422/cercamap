@@ -7,11 +7,17 @@
 //
 
 #import "CercaMapView.h"
-#import "CercaMapViewDelegate.h"
+#import "CercaMapGenerator.h"
+#import "CercaMapHelper.h"
 
 @implementation CercaMapView
 
 #pragma mark Private
+
+-(void) cercaMapGeneratorDidRefresh:(id)sender
+{
+	[self setNeedsDisplay];
+}
 
 +(CGFloat) distanceFromPoint:(CGPoint)point1 toPoint:(CGPoint)point2
 {
@@ -33,12 +39,88 @@
 		return point2;
 }
 
+-(void) initialize
+{
+	[CercaMapGenerator addRefreshObserver:self selector:@selector(cercaMapGeneratorDidRefresh:)];
+	
+	CLLocationCoordinate2D coordinates;
+	coordinates.latitude = 44.23;
+	coordinates.longitude = -76.5;
+
+	zoomLevel = 1 << 14;
+	centerPoint = [CercaMapHelper mapPointForCoordinate:coordinates];
+	mapType = CMT_ROADS;
+}
+
+#pragma mark Lifecycle
+
+-(id) init
+{
+	if ( self == [super init] )
+		[self initialize];
+	return self;
+}
+
+-(void) awakeFromNib
+{
+	[self initialize];
+}
+
+-(void) dealloc
+{
+	[CercaMapGenerator removeRefreshObserver:self];
+	[super dealloc];
+}
+
+#pragma mark CercaMapView
+
+@dynamic centerPoint;
+
+-(CercaMapPoint) centerPoint
+{
+	return centerPoint;
+}
+
+-(void) setCenterPoint:(CercaMapPoint)_
+{
+	centerPoint = _;
+	[self setNeedsDisplay];
+}
+
+@dynamic zoomLevel;
+
+-(CGFloat) zoomLevel
+{
+	return zoomLevel;
+}
+
+-(void) setZoomLevel:(CGFloat)_
+{
+	zoomLevel = _;
+	[self setNeedsDisplay];
+}
+
+@dynamic mapType;
+
+-(CercaMapType) mapType
+{
+	return mapType;
+}
+
+-(void) setMapType:(CercaMapType)_
+{
+	mapType = _;
+	[self setNeedsDisplay];
+}
+
 #pragma mark UIView
 
 -(void) drawRect:(CGRect)rect
 {
-	[delegate cercaMapView:self
-		drawToDstRect:self.bounds];
+	[CercaMapGenerator drawToDstRect:self.bounds
+		centerPoint:centerPoint
+		zoomLevel:zoomLevel
+		mapType:mapType];
 }
 
 -(void) touchesBegan:(NSSet*)touches withEvent:(UIEvent*)event
@@ -93,7 +175,11 @@
 			}
 		}
 		CGPoint delta = CGPointMake( startPoint.x - endPoint.x, startPoint.y - endPoint.y );
-		[delegate cercaMapView:self didPanByDelta:delta];
+		if ( delta.x != 0 || delta.y != 0 )
+		{
+			centerPoint = [CercaMapHelper mapPoint:centerPoint pannedByPixelDelta:delta atZoomLevel:zoomLevel];
+			[self setNeedsDisplay];
+		}
 	}
 	
 	if ( newNumPoints == 2 && numPoints == 2 )
@@ -101,7 +187,11 @@
 		CGFloat startDistance = [CercaMapView distanceFromPoint:points[0] toPoint:points[1]];
 		CGFloat endDistance = [CercaMapView distanceFromPoint:newPoints[0] toPoint:newPoints[1]];
 		if ( startDistance > 1 )
-			[delegate cercaMapView:self didZoomByScale:endDistance/startDistance];
+		{
+			CGFloat scale = endDistance/startDistance;
+			zoomLevel = [CercaMapHelper mapZoomLevel:zoomLevel scaleByFactor:scale];
+			[self setNeedsDisplay];
+		}
 	}
 
 	numPoints = newNumPoints;

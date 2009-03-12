@@ -7,41 +7,13 @@
 //
 
 #import "CercaMapQuad.h"
-#import "CercaMapQuadDelegate.h"
-#import <VirtualEarthKit/VECommonService.h>
+#import "CercaMapGenerator.h"
 
 typedef struct { unsigned char r, g, b, a; } RGBA;
 
 @implementation CercaMapQuad
 
 #pragma mark Private
-
--(id) initWithDelegate:(id <CercaMapQuadDelegate>)_delegate
-	parentQuad:(CercaMapQuad *)_parentQuad
-	coverage:(CercaMapRect)_coverage
-	token:(NSString *)_token
-	urlBaseString:(NSString *)_urlBaseString
-	logZoom:(CGFloat)_logZoom
-{
-	if ( self = [super init] )
-	{
-		// [pzion 20090311] Assign here rather than retain, otherwise
-		// we get a reference loop
-		delegate = _delegate;
-		parentQuad = _parentQuad;
-		
-		coverage = _coverage;
-		
-		token = [_token retain];
-		
-		urlBaseString = [_urlBaseString retain];
-		
-		logZoom = _logZoom;
-		zoomMin = powf( 2, logZoom-1 );
-		zoomMax = 2 * zoomMin;
-	}
-	return self;
-}	
 
 -(NSString *) urlStringForMapType:(CercaMapType)mapType
 {
@@ -72,15 +44,66 @@ typedef struct { unsigned char r, g, b, a; } RGBA;
 		);
 	static NSString *childURLBaseSuffixStrings[2][2] = { { @"0", @"1" }, { @"2", @"3" } };
 	NSString *childURLBaseString = [NSString stringWithFormat:@"%@%@", urlBaseString, childURLBaseSuffixStrings[i][j]];
-	return [[[CercaMapQuad alloc] initWithDelegate:delegate
-		parentQuad:self
+	return [[[CercaMapQuad alloc] initWithParentQuad:self
 		coverage:childCoverage
 		token:token
 		urlBaseString:childURLBaseString
 		logZoom:logZoom+1] autorelease];
 }
 
--(void) inwardDrawToDstRect:(CGRect)dstRect
+-(CercaMapType) mapTypeForConnection:(NSURLConnection *)connection
+{
+	for ( CercaMapType i=0; i<CMT_NUM_TYPES; ++i )
+		if ( connections[i] == connection )
+			return i;
+	return -1;
+}
+
+#pragma mark Lifecycle
+
+-(id) initWithParentQuad:(CercaMapQuad *)_parentQuad
+	coverage:(CercaMapRect)_coverage
+	token:(NSString *)_token
+	urlBaseString:(NSString *)_urlBaseString
+	logZoom:(CGFloat)_logZoom
+{
+	if ( self = [super init] )
+	{
+		// [pzion 20090311] Assign here rather than retain, otherwise
+		// we get a reference loop
+		parentQuad = _parentQuad;
+		
+		coverage = _coverage;
+		
+		token = [_token retain];
+		
+		urlBaseString = [_urlBaseString retain];
+		
+		logZoom = _logZoom;
+		zoomMin = powf( 2, logZoom-1 );
+		zoomMax = 2 * zoomMin;
+	}
+	return self;
+}	
+
+-(void) dealloc
+{
+	for ( CercaMapType i=0; i<CMT_NUM_TYPES; ++i )
+	{
+		[imageDatas[i] release];
+		[connections[i] release];
+		[images[i] release];
+	}
+	[urlBaseString release];
+	for ( int i=0; i<2; ++i )
+		for ( int j=0; j<2; ++j )
+			[childQuads[i][j] release];
+	[super dealloc];
+}
+
+#pragma mark CercaMapQuad
+
+-(void) drawToDstRect:(CGRect)dstRect
 	srcRect:(CercaMapRect)srcRect
 	zoomLevel:(CGFloat)zoomLevel
 	mapType:(CercaMapType)mapType
@@ -134,85 +157,11 @@ typedef struct { unsigned char r, g, b, a; } RGBA;
 						dstRect.size.width * childSrcRect.size.width / srcRect.size.width,
 						dstRect.size.height * childSrcRect.size.height / srcRect.size.height
 						);
-					[childQuad inwardDrawToDstRect:childDstRect srcRect:childSrcRect zoomLevel:zoomLevel mapType:mapType];
+					[childQuad drawToDstRect:childDstRect srcRect:childSrcRect zoomLevel:zoomLevel mapType:mapType];
 				}
 			}
 		}
 	}
-}
-
--(CercaMapType) mapTypeForConnection:(NSURLConnection *)connection
-{
-	for ( CercaMapType i=0; i<CMT_NUM_TYPES; ++i )
-		if ( connections[i] == connection )
-			return i;
-	return -1;
-}
-
-#pragma mark Lifecycle
-
--(id) initWithDelegate:(id <CercaMapQuadDelegate>)_delegate
-{
-	VECommonService *commonService = [[[VECommonService alloc] init] autorelease];
-	[commonService getToken:&token forUserID:@"137913" password:@"!panChr0mat1c7" ipAddress:@"192.168.0.1"];
-	
-	return [self initWithDelegate:_delegate
-		parentQuad:nil
-		coverage:CercaMapRectMake( 0, 0, 1<<27, 1<<27 )
-		token:token
-		urlBaseString:@""
-		logZoom:0];
-}
-
--(void) dealloc
-{
-	for ( CercaMapType i=0; i<CMT_NUM_TYPES; ++i )
-	{
-		[imageDatas[i] release];
-		[connections[i] release];
-		[images[i] release];
-	}
-	[urlBaseString release];
-	for ( int i=0; i<2; ++i )
-		for ( int j=0; j<2; ++j )
-			[childQuads[i][j] release];
-	[super dealloc];
-}
-
-#pragma mark Public
-
--(void) drawToDstRect:(CGRect)dstRect
-	centerPoint:(CercaMapPoint)centerPoint
-	zoomLevel:(CGFloat)zoomLevel
-	mapType:(CercaMapType)mapType
-{
-	CGFloat mult = (1<<18) / zoomLevel;
-	CGSize srcSize = CGSizeMake( CGRectGetWidth(dstRect)*mult, CGRectGetHeight(dstRect)*mult );
-	CercaMapRect srcRect = CercaMapRectMake( roundf( centerPoint.x - srcSize.width/2 ), roundf( centerPoint.y - srcSize.height/2 ),
-		roundf( srcSize.width ), roundf( srcSize.height ) );
-	[self inwardDrawToDstRect:dstRect srcRect:srcRect zoomLevel:zoomLevel mapType:mapType];
-}
-
--(void) didReceiveMemoryWarning
-{
-	for ( int i=0; i<2; ++i )
-	{
-		for ( int j=0; j<2; ++j )
-		{
-			[childQuads[i][j] release];
-			childQuads[i][j] = nil;
-		}
-	}
-}
-
-+(CercaMapPoint) mapPointForCoordinate:(CLLocationCoordinate2D)coordinates
-{
-	CercaMapPoint pixel;
-	pixel.x = (int)roundf( ((coordinates.longitude + 180) / 360) * (1<<27) );
-	float sinLatitude = sinf( coordinates.latitude * M_PI / 180 );
-	float div = (1 + sinLatitude) / (1 - sinLatitude);
-	pixel.y = (int)roundf( (0.5 - log(div) / (4 * M_PI)) * (1<<27) );
-	return pixel;
 }
 
 #pragma mark NSURLConnection Delegate
@@ -247,7 +196,9 @@ typedef struct { unsigned char r, g, b, a; } RGBA;
 	images[mapType] = [UIGraphicsGetImageFromCurrentImageContext() retain];
 	UIGraphicsEndImageContext();
 		
-	[delegate cercaMapQuadDidFinishLoading:self];
+	[[CercaMapGenerator refreshNotificationCenter]
+		postNotificationName:[CercaMapGenerator refreshNotificationName]
+		object:self];
 }
 
 - (void)connection:(NSURLConnection *)connection

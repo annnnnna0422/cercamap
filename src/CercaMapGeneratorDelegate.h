@@ -1,5 +1,5 @@
 /*
- *  CercaMapQuadDelegate.h
+ *  CercaMapGeneratorDelegate.h
  *  Cerca
  *
  *  Created by Peter Zion on 11/03/09.
@@ -12,7 +12,7 @@
 #pragma mark Forward Declarations
 @class CercaMapQuad;
 
-@protocol CercaMapQuadDelegate <NSObject>
+@protocol CercaMapGeneratorDelegate
 
 @required
 
