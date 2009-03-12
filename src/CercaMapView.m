@@ -3,7 +3,7 @@
 //  Cerca
 //
 //  Created by Peter Zion on 10/03/09.
-//  Copyright 2009 __MyCompanyName__. All rights reserved.
+//  Copyright 2009 Peter Zion. All rights reserved.
 //
 
 #import "CercaMapView.h"
@@ -41,6 +41,8 @@
 
 -(void) initialize
 {
+	self.multipleTouchEnabled = YES;
+
 	[CercaMapGenerator addRefreshObserver:self selector:@selector(cercaMapGeneratorDidRefresh:)];
 	
 	CLLocationCoordinate2D coordinates;

@@ -3,7 +3,7 @@
 //  Cerca
 //
 //  Created by Peter Zion on 12/03/09.
-//  Copyright 2009 __MyCompanyName__. All rights reserved.
+//  Copyright 2009 Peter Zion. All rights reserved.
 //
 
 #import "CercaMapHelper.h"
