@@ -7,8 +7,9 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <CoreGraphics/CoreGraphics.h>
 #import <CoreLocation/CoreLocation.h>
-#import "CercaMapPoint.h"
+#import <CercaMap/CercaMapPoint.h>
 
 @interface CercaMapHelper : NSObject
 {

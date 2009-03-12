@@ -7,8 +7,8 @@
  *
  */
 
-#import "CercaMapPoint.h"
-#import "CercaMapSize.h"
+#import <CercaMap/CercaMapPoint.h>
+#import <CercaMap/CercaMapSize.h>
 
 #pragma mark CercaMapRect
 

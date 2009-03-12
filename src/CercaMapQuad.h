@@ -8,8 +8,9 @@
 
 #import <Foundation/Foundation.h>
 #import <CoreLocation/CoreLocation.h>
-#import "CercaMapRect.h"
-#import "CercaMapType.h"
+#import <UIKit/UIKit.h>
+#import <CercaMap/CercaMapRect.h>
+#import <CercaMap/CercaMapType.h>
 
 @interface CercaMapQuad : NSObject
 {

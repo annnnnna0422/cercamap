@@ -7,8 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "CercaMapPoint.h"
-#import "CercaMapType.h"
+#import <CercaMap/CercaMapType.h>
+#import <CercaMap/CercaMapPoint.h>
 
 #pragma mark Forward Declarations
 @protocol CercaMapViewDelegate;

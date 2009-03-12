@@ -7,8 +7,9 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "CercaMapPoint.h"
-#import "CercaMapType.h"
+#import <CoreGraphics/CoreGraphics.h>
+#import <CercaMap/CercaMapType.h>
+#import <CercaMap/CercaMapPoint.h>
 
 #pragma mark Forward Declarations
 @class CercaMapQuad;
