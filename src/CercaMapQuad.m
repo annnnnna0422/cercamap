@@ -47,6 +47,26 @@
 	return result;
 }
 
+-(void) outwardDrawToContext:(CGContextRef)contextRef
+	dstRect:(CGRect)dstRect
+	srcRect:(CercaMapRect)srcRect
+{
+	if ( image != nil )
+	{
+		CGRect subImageRect = CGRectMake(
+			(srcRect.origin.x - coverage.origin.x) >> (19-logZoom),
+			(srcRect.origin.y - coverage.origin.y) >> (19-logZoom),
+			srcRect.size.width >> (19-logZoom),
+			srcRect.size.height >> (19-logZoom)
+			);
+		CGImageRef subImage = CGImageCreateWithImageInRect( [image CGImage], subImageRect );
+		[[UIImage imageWithCGImage:subImage] drawInRect:dstRect];
+		CGImageRelease( subImage );
+	}
+	else
+		[parentQuad outwardDrawToContext:contextRef dstRect:dstRect srcRect:srcRect];
+}
+
 -(BOOL) inwardDrawToContext:(CGContextRef)contextRef
 	dstRect:(CGRect)dstRect
 	srcRect:(CercaMapRect)srcRect
@@ -65,14 +85,18 @@
 			CGImageRef subImage = CGImageCreateWithImageInRect( [image CGImage], subImageRect );
 			[[UIImage imageWithCGImage:subImage] drawInRect:dstRect];
 			CGImageRelease( subImage );
+			return YES;
 		}
-		else if ( connection == nil )
+		
+		if ( connection == nil )
 		{
 			NSString *urlString = [self urlString];
 			NSURL *url = [NSURL URLWithString:urlString];
 			NSURLRequest *urlRequest = [NSURLRequest requestWithURL:url];
 			connection = [[NSURLConnection connectionWithRequest:urlRequest delegate:self] retain];
 		}
+		
+		return NO;
 	}
 	else
 	{
@@ -149,10 +173,15 @@
 						dstRect.size.width * childSrcRect.size.width / srcRect.size.width,
 						dstRect.size.height * childSrcRect.size.height / srcRect.size.height
 						);
-					[childQuad inwardDrawToContext:contextRef
+					if ( ![childQuad inwardDrawToContext:contextRef
 						dstRect:childDstRect
 						srcRect:childSrcRect
-						zoomLevel:zoomLevel];
+						zoomLevel:zoomLevel] )
+					{
+						[self outwardDrawToContext:(CGContextRef)contextRef
+							dstRect:(CGRect)dstRect
+							srcRect:(CercaMapRect)srcRect];
+					}
 				}
 			}
 		}
