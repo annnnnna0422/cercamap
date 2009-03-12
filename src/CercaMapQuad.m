@@ -10,6 +10,8 @@
 #import "CercaMapQuadDelegate.h"
 #import <VirtualEarthKit/VECommonService.h>
 
+typedef struct { unsigned char r, g, b, a; } RGBA;
+
 @implementation CercaMapQuad
 
 #pragma mark Private
@@ -251,11 +253,32 @@
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)_
 {
-	image = [[UIImage imageWithData:imageData] retain];
-	[imageData release];
-	imageData = nil;
 	[connection autorelease];
 	connection = nil;
+
+	UIImage *origImage = [UIImage imageWithData:imageData];
+	[imageData release];
+	imageData = nil;
+	
+	CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
+	CGContextRef bitmapContext = CGBitmapContextCreate(
+		NULL,
+		origImage.size.width,
+		origImage.size.height,
+		8,
+		origImage.size.width * sizeof(RGBA),
+		colorSpace,
+		kCGImageAlphaNoneSkipLast
+		);
+	CGColorSpaceRelease(colorSpace);
+	
+	CGContextDrawImage( bitmapContext, CGRectMake(0,0,origImage.size.width,origImage.size.height), [origImage CGImage] );
+	CGImageRef bitmapImage = CGBitmapContextCreateImage( bitmapContext );
+	CGContextRelease(bitmapContext);
+	
+	image = [[UIImage imageWithCGImage:bitmapImage] retain];
+	CGImageRelease(bitmapImage);
+		
 	[delegate cercaMapQuadDidFinishLoading:self];
 }
 
