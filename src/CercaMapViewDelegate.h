@@ -17,8 +17,7 @@
 @required
 
 -(void) cercaMapView:(CercaMapView *)cercaMapView
-	drawToContext:(CGContextRef)contextRef
-	dstRect:(CGRect)dstRect;
+	drawToDstRect:(CGRect)dstRect;
 
 -(void) cercaMapView:(CercaMapView *)cercaMapView
 	didPanByDelta:(CercaMapPoint)delta;

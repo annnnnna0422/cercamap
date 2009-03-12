@@ -64,11 +64,9 @@
 #pragma mark CercaMapViewController
 
 -(void) cercaMapView:(CercaMapView *)cercaMapView
-	drawToContext:(CGContextRef)contextRef
-	dstRect:(CGRect)dstRect
+	drawToDstRect:(CGRect)dstRect
 {
-	[rootMapQuad drawToContext:contextRef
-		dstRect:dstRect
+	[rootMapQuad drawToDstRect:dstRect
 		centerPoint:center
 		zoomLevel:zoomLevel];
 }

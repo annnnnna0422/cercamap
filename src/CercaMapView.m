@@ -30,8 +30,7 @@
 -(void) drawRect:(CGRect)rect
 {
 	[delegate cercaMapView:self
-		drawToContext:UIGraphicsGetCurrentContext()
-		dstRect:self.bounds];
+		drawToDstRect:self.bounds];
 }
 
 -(void) touchesBegan:(NSSet*)touches withEvent:(UIEvent*)event

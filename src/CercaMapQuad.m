@@ -49,8 +49,7 @@ typedef struct { unsigned char r, g, b, a; } RGBA;
 	return result;
 }
 
--(void) outwardDrawToContext:(CGContextRef)contextRef
-	dstRect:(CGRect)dstRect
+-(void) outwardDrawToDstRect:(CGRect)dstRect
 	srcRect:(CercaMapRect)srcRect
 {
 	if ( image != nil )
@@ -66,11 +65,10 @@ typedef struct { unsigned char r, g, b, a; } RGBA;
 		CGImageRelease( subImage );
 	}
 	else
-		[parentQuad outwardDrawToContext:contextRef dstRect:dstRect srcRect:srcRect];
+		[parentQuad outwardDrawToDstRect:dstRect srcRect:srcRect];
 }
 
--(BOOL) inwardDrawToContext:(CGContextRef)contextRef
-	dstRect:(CGRect)dstRect
+-(BOOL) inwardDrawToDstRect:(CGRect)dstRect
 	srcRect:(CercaMapRect)srcRect
 	zoomLevel:(CGFloat)zoomLevel
 {
@@ -175,13 +173,11 @@ typedef struct { unsigned char r, g, b, a; } RGBA;
 						dstRect.size.width * childSrcRect.size.width / srcRect.size.width,
 						dstRect.size.height * childSrcRect.size.height / srcRect.size.height
 						);
-					if ( ![childQuad inwardDrawToContext:contextRef
-						dstRect:childDstRect
+					if ( ![childQuad inwardDrawToDstRect:childDstRect
 						srcRect:childSrcRect
 						zoomLevel:zoomLevel] )
 					{
-						[self outwardDrawToContext:(CGContextRef)contextRef
-							dstRect:(CGRect)dstRect
+						[self outwardDrawToDstRect:(CGRect)dstRect
 							srcRect:(CercaMapRect)srcRect];
 					}
 				}
@@ -220,8 +216,7 @@ typedef struct { unsigned char r, g, b, a; } RGBA;
 
 #pragma mark Public
 
--(void) drawToContext:(CGContextRef)contextRef
-	dstRect:(CGRect)dstRect
+-(void) drawToDstRect:(CGRect)dstRect
 	centerPoint:(CercaMapPoint)centerPoint
 	zoomLevel:(CGFloat)zoomLevel
 {
@@ -229,7 +224,7 @@ typedef struct { unsigned char r, g, b, a; } RGBA;
 	CGSize srcSize = CGSizeMake( CGRectGetWidth(dstRect)*mult, CGRectGetHeight(dstRect)*mult );
 	CercaMapRect srcRect = CercaMapRectMake( roundf( centerPoint.x - srcSize.width/2 ), roundf( centerPoint.y - srcSize.height/2 ),
 		roundf( srcSize.width ), roundf( srcSize.height ) );
-	[self inwardDrawToContext:contextRef dstRect:dstRect srcRect:srcRect zoomLevel:zoomLevel];
+	[self inwardDrawToDstRect:dstRect srcRect:srcRect zoomLevel:zoomLevel];
 }
 
 -(void) didReceiveMemoryWarning

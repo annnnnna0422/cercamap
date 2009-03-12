@@ -32,8 +32,7 @@
 
 -(id) initWithDelegate:(id <CercaMapQuadDelegate>)delegate;
 
--(void) drawToContext:(CGContextRef)contextRef
-	dstRect:(CGRect)dstRect
+-(void) drawToDstRect:(CGRect)dstRect
 	centerPoint:(CercaMapPoint)centerPoint
 	zoomLevel:(CGFloat)zoomLevel;
 
