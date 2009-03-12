@@ -94,9 +94,9 @@
 	didUpdateToLocation:(CLLocation *)newLocation
 	fromLocation:(CLLocation *)oldLocation
 {
-	CercaMapPoint newCenter = [self pixelForCoordinates:newLocation.coordinate];
-	CercaMapPoint delta = CercaMapPointMake( newCenter.x - center.x, newCenter.y - center.y );
-	[self panByDelta:delta];
+	center = [self pixelForCoordinates:newLocation.coordinate];
+	zoomLevel = 1<<14;
+	[mapView setNeedsDisplay];
 }
 
 - (void)locationManager:(CLLocationManager *)manager

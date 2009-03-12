@@ -37,8 +37,8 @@ typedef struct { unsigned char r, g, b, a; } RGBA;
 		urlBaseString = [_urlBaseString retain];
 		
 		logZoom = _logZoom;
-		zoomMin = powf( 2, logZoom-1 ) / sqrtf(2);
-		zoomMax = powf( 2, logZoom-1 ) * sqrtf(2);
+		zoomMin = powf( 2, logZoom-1 );
+		zoomMax = 2 * zoomMin;
 	}
 	return self;
 }	
@@ -72,7 +72,7 @@ typedef struct { unsigned char r, g, b, a; } RGBA;
 	srcRect:(CercaMapRect)srcRect
 	zoomLevel:(CGFloat)zoomLevel
 {
-	if ( image == nil && connection == nil )
+	if ( parentQuad != nil && image == nil && connection == nil )
 	{
 		NSString *urlString = [self urlString];
 		NSURL *url = [NSURL URLWithString:urlString];
@@ -226,7 +226,14 @@ typedef struct { unsigned char r, g, b, a; } RGBA;
 
 -(void) didReceiveMemoryWarning
 {
-	// [pzion 20090311] FIXME
+	for ( int i=0; i<2; ++i )
+	{
+		for ( int j=0; j<2; ++j )
+		{
+			[childQuads[i][j] release];
+			childQuads[i][j] = nil;
+		}
+	}
 }
 
 #pragma mark NSURLConnection Delegate
