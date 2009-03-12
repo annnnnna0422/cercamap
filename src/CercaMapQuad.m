@@ -68,10 +68,18 @@ typedef struct { unsigned char r, g, b, a; } RGBA;
 		[parentQuad outwardDrawToDstRect:dstRect srcRect:srcRect];
 }
 
--(BOOL) inwardDrawToDstRect:(CGRect)dstRect
+-(void) inwardDrawToDstRect:(CGRect)dstRect
 	srcRect:(CercaMapRect)srcRect
 	zoomLevel:(CGFloat)zoomLevel
 {
+	if ( image == nil && connection == nil )
+	{
+		NSString *urlString = [self urlString];
+		NSURL *url = [NSURL URLWithString:urlString];
+		NSURLRequest *urlRequest = [NSURLRequest requestWithURL:url];
+		connection = [[NSURLConnection connectionWithRequest:urlRequest delegate:self] retain];
+	}
+		
 	if ( zoomLevel >= zoomMin && zoomLevel < zoomMax )
 	{
 		if ( image != nil )
@@ -85,18 +93,12 @@ typedef struct { unsigned char r, g, b, a; } RGBA;
 			CGImageRef subImage = CGImageCreateWithImageInRect( [image CGImage], subImageRect );
 			[[UIImage imageWithCGImage:subImage] drawInRect:dstRect];
 			CGImageRelease( subImage );
-			return YES;
 		}
-		
-		if ( connection == nil )
+		else if ( parentQuad != nil )
 		{
-			NSString *urlString = [self urlString];
-			NSURL *url = [NSURL URLWithString:urlString];
-			NSURLRequest *urlRequest = [NSURLRequest requestWithURL:url];
-			connection = [[NSURLConnection connectionWithRequest:urlRequest delegate:self] retain];
+			[parentQuad outwardDrawToDstRect:(CGRect)dstRect
+				srcRect:(CercaMapRect)srcRect];
 		}
-		
-		return NO;
 	}
 	else
 	{
@@ -173,18 +175,13 @@ typedef struct { unsigned char r, g, b, a; } RGBA;
 						dstRect.size.width * childSrcRect.size.width / srcRect.size.width,
 						dstRect.size.height * childSrcRect.size.height / srcRect.size.height
 						);
-					if ( ![childQuad inwardDrawToDstRect:childDstRect
+					[childQuad inwardDrawToDstRect:childDstRect
 						srcRect:childSrcRect
-						zoomLevel:zoomLevel] )
-					{
-						[self outwardDrawToDstRect:(CGRect)dstRect
-							srcRect:(CercaMapRect)srcRect];
-					}
+						zoomLevel:zoomLevel];
 				}
 			}
 		}
 	}
-	return YES;
 }
 
 #pragma mark Lifecycle
