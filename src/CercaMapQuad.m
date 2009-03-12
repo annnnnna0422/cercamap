@@ -124,10 +124,10 @@ typedef struct { unsigned char r, g, b, a; } RGBA;
 			if ( quad->images[mapType] != nil )
 			{
 				CGRect subImageRect = CGRectMake(
-					(srcRect.origin.x - quad->coverage.origin.x) >> (19-quad->logZoom),
-					(srcRect.origin.y - quad->coverage.origin.y) >> (19-quad->logZoom),
-					srcRect.size.width >> (19-quad->logZoom),
-					srcRect.size.height >> (19-quad->logZoom)
+					(srcRect.origin.x - quad->coverage.origin.x + (1<<(18-quad->logZoom))) >> (19-quad->logZoom),
+					(srcRect.origin.y - quad->coverage.origin.y + (1<<(18-quad->logZoom))) >> (19-quad->logZoom),
+					(srcRect.size.width + (1<<(18-quad->logZoom))) >> (19-quad->logZoom),
+					(srcRect.size.height + (1<<(18-quad->logZoom))) >> (19-quad->logZoom)
 					);
 				CGImageRef subImage = CGImageCreateWithImageInRect( [quad->images[mapType] CGImage], subImageRect );
 				[[UIImage imageWithCGImage:subImage] drawInRect:dstRect];
