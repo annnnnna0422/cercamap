@@ -62,26 +62,6 @@ typedef struct { unsigned char r, g, b, a; } RGBA;
 	return result;
 }
 
--(void) outwardDrawToDstRect:(CGRect)dstRect
-	srcRect:(CercaMapRect)srcRect
-	mapType:(CercaMapType)mapType
-{
-	if ( images[mapType] != nil )
-	{
-		CGRect subImageRect = CGRectMake(
-			(srcRect.origin.x - coverage.origin.x) >> (19-logZoom),
-			(srcRect.origin.y - coverage.origin.y) >> (19-logZoom),
-			srcRect.size.width >> (19-logZoom),
-			srcRect.size.height >> (19-logZoom)
-			);
-		CGImageRef subImage = CGImageCreateWithImageInRect( [images[mapType] CGImage], subImageRect );
-		[[UIImage imageWithCGImage:subImage] drawInRect:dstRect];
-		CGImageRelease( subImage );
-	}
-	else
-		[parentQuad outwardDrawToDstRect:dstRect srcRect:srcRect mapType:mapType];
-}
-
 -(void) inwardDrawToDstRect:(CGRect)dstRect
 	srcRect:(CercaMapRect)srcRect
 	zoomLevel:(CGFloat)zoomLevel
@@ -97,21 +77,23 @@ typedef struct { unsigned char r, g, b, a; } RGBA;
 		
 	if ( zoomLevel >= zoomMin && zoomLevel < zoomMax )
 	{
-		if ( images[mapType] != nil )
+		CercaMapQuad *quad = self;
+		while ( quad != nil )
 		{
-			CGRect subImageRect = CGRectMake(
-				(srcRect.origin.x - coverage.origin.x) >> (19-logZoom),
-				(srcRect.origin.y - coverage.origin.y) >> (19-logZoom),
-				srcRect.size.width >> (19-logZoom),
-				srcRect.size.height >> (19-logZoom)
-				);
-			CGImageRef subImage = CGImageCreateWithImageInRect( [images[mapType] CGImage], subImageRect );
-			[[UIImage imageWithCGImage:subImage] drawInRect:dstRect];
-			CGImageRelease( subImage );
-		}
-		else if ( parentQuad != nil )
-		{
-			[parentQuad outwardDrawToDstRect:dstRect srcRect:srcRect mapType:mapType];
+			if ( quad->images[mapType] != nil )
+			{
+				CGRect subImageRect = CGRectMake(
+					(srcRect.origin.x - coverage.origin.x) >> (19-logZoom),
+					(srcRect.origin.y - coverage.origin.y) >> (19-logZoom),
+					srcRect.size.width >> (19-logZoom),
+					srcRect.size.height >> (19-logZoom)
+					);
+				CGImageRef subImage = CGImageCreateWithImageInRect( [quad->images[mapType] CGImage], subImageRect );
+				[[UIImage imageWithCGImage:subImage] drawInRect:dstRect];
+				CGImageRelease( subImage );
+				break;
+			}
+			quad = quad->parentQuad;
 		}
 	}
 	else
