@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "CercaMapViewDelegate.h"
+#import "CercaMapQuadDelegate.h"
 #import <CoreLocation/CoreLocation.h>
 #import "CercaMapPoint.h"
 
@@ -18,6 +19,7 @@
 
 @interface CercaNearbyViewController : UIViewController
 	<CercaMapViewDelegate,
+		CercaMapQuadDelegate,
 		CLLocationManagerDelegate>
 {
 @private

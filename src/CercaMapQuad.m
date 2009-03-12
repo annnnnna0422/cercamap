@@ -7,13 +7,15 @@
 //
 
 #import "CercaMapQuad.h"
+#import "CercaMapQuadDelegate.h"
 #import <VirtualEarthKit/VECommonService.h>
 
 @implementation CercaMapQuad
 
 #pragma mark Private
 
--(id) initWithParentQuad:(CercaMapQuad *)_parentQuad
+-(id) initWithDelegate:(id <CercaMapQuadDelegate>)_delegate
+	parentQuad:(CercaMapQuad *)_parentQuad
 	coverage:(CercaMapRect)_coverage
 	token:(NSString *)_token
 	urlBaseString:(NSString *)_urlBaseString
@@ -23,6 +25,7 @@
 	{
 		// [pzion 20090311] Assign here rather than retain, otherwise
 		// we get a reference loop
+		delegate = _delegate;
 		parentQuad = _parentQuad;
 		
 		coverage = _coverage;
@@ -52,6 +55,15 @@
 	{
 		NSLog( @"dstRect=(%.1f,%.1f+%.1f,%.1f)",
 			dstRect.origin.x, dstRect.origin.y, dstRect.size.width, dstRect.size.height );
+		if ( image != nil )
+			[image drawInRect:dstRect];
+		else if ( connection == nil )
+		{
+			NSString *urlString = [self urlString];
+			NSURL *url = [NSURL URLWithString:urlString];
+			NSURLRequest *urlRequest = [NSURLRequest requestWithURL:url];
+			connection = [[NSURLConnection connectionWithRequest:urlRequest delegate:self] retain];
+		}
 	}
 	else
 	{
@@ -110,7 +122,8 @@
 							childURLBaseString = [NSString stringWithFormat:@"%@3", urlBaseString];
 						}
 					}
-					childQuad = childQuads[i][j] = [[CercaMapQuad alloc] initWithParentQuad:self
+					childQuad = childQuads[i][j] = [[CercaMapQuad alloc] initWithDelegate:delegate
+						parentQuad:self
 						coverage:childCoverage
 						token:token
 						urlBaseString:childURLBaseString
@@ -140,12 +153,13 @@
 
 #pragma mark Lifecycle
 
--(id) init
+-(id) initWithDelegate:(id <CercaMapQuadDelegate>)_delegate
 {
 	VECommonService *commonService = [[[VECommonService alloc] init] autorelease];
 	[commonService getToken:&token forUserID:@"137913" password:@"!panChr0mat1c7" ipAddress:@"192.168.0.1"];
 	
-	return [self initWithParentQuad:nil
+	return [self initWithDelegate:_delegate
+		parentQuad:nil
 		coverage:CercaMapRectMake( 0, 0, 1<<27, 1<<27 )
 		token:token
 		urlBaseString:@"http://r0.ortho.tiles.virtualearth.net/tiles/r"
@@ -171,7 +185,7 @@
 	centerPoint:(CercaMapPoint)centerPoint
 	zoomLevel:(CGFloat)zoomLevel
 {
-	CGFloat mult = (1<<19) / zoomLevel;
+	CGFloat mult = (1<<18) / zoomLevel;
 	CGSize srcSize = CGSizeMake( CGRectGetWidth(dstRect)*mult, CGRectGetHeight(dstRect)*mult );
 	CercaMapRect srcRect = CercaMapRectMake( roundf( centerPoint.x - srcSize.width/2 ), roundf( centerPoint.y - srcSize.height/2 ),
 		roundf( srcSize.width ), roundf( srcSize.height ) );
@@ -181,6 +195,38 @@
 -(void) didReceiveMemoryWarning
 {
 	// [pzion 20090311] FIXME
+}
+
+#pragma mark NSURLConnection Delegate
+
+-(void) connection:(NSURLConnection *)connection
+	didReceiveResponse:(NSURLResponse *)response
+{
+	imageData = [[NSMutableData alloc] init];
+}
+
+-(void) connection:(NSURLConnection *)connection
+	didReceiveData:(NSData *)data
+{
+	[imageData appendData:data];
+}
+
+- (void)connectionDidFinishLoading:(NSURLConnection *)_
+{
+	image = [[UIImage imageWithData:imageData] retain];
+	[imageData release];
+	imageData = nil;
+	[connection autorelease];
+	connection = nil;
+	[delegate cercaMapQuadDidFinishLoading:self];
+}
+
+- (void)connection:(NSURLConnection *)_ didFailWithError:(NSError *)error
+{
+	[imageData release];
+	imageData = nil;
+	[connection autorelease];
+	connection = nil;
 }
 
 @end

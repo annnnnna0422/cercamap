@@ -17,17 +17,17 @@
 -(CercaMapPoint) pixelForCoordinates:(CLLocationCoordinate2D)coordinates
 {
 	CercaMapPoint pixel;
-	pixel.x = (int)roundf( ((coordinates.longitude + 180) / 360) * zoomLevel * 128 );
+	pixel.x = (int)roundf( ((coordinates.longitude + 180) / 360) * (1<<27) );
 	float sinLatitude = sinf( coordinates.latitude * M_PI / 180 );
 	float div = (1 + sinLatitude) / (1 - sinLatitude);
-	pixel.y = (int)roundf( (0.5 - log(div) / (4 * M_PI)) * zoomLevel * 128 );
+	pixel.y = (int)roundf( (0.5 - log(div) / (4 * M_PI)) * (1<<27) );
 	return pixel;
 }
 
 -(void) panByDelta:(CercaMapPoint)delta
 {
-	center.x += delta.x;
-	center.y += delta.y;
+	center.x += (1<<19)/zoomLevel*delta.x;
+	center.y += (1<<19)/zoomLevel*delta.y;
 
 	[mapView setNeedsDisplay];
 }
@@ -46,7 +46,7 @@
 
 -(void) viewDidLoad
 {
-	rootMapQuad = [[CercaMapQuad alloc] init];
+	rootMapQuad = [[CercaMapQuad alloc] initWithDelegate:self];
 	
 	CLLocationCoordinate2D coordinates;
 	coordinates.latitude = 44.23;
@@ -123,6 +123,13 @@
 		[locationManager startUpdatingLocation];
 		gpsBarButtonItem.style = UIBarButtonItemStyleDone;
 	}
+}
+
+#pragma mark CercaMapQuadDelegate
+
+-(void) cercaMapQuadDidFinishLoading:(CercaMapQuad *)cercaMapQuad
+{
+	[mapView setNeedsDisplay];
 }
 
 @end

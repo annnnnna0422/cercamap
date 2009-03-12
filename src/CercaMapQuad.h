@@ -9,9 +9,13 @@
 #import <Foundation/Foundation.h>
 #import "CercaMapRect.h"
 
+#pragma mark Forward Declarations
+@protocol CercaMapQuadDelegate;
+
 @interface CercaMapQuad : NSObject
 {
 @private
+	id <CercaMapQuadDelegate> delegate;
 	CercaMapQuad *parentQuad;
 	CercaMapQuad *childQuads[2][2];
 	CercaMapRect coverage;
@@ -24,6 +28,8 @@
 }
 
 #pragma mark Public
+
+-(id) initWithDelegate:(id <CercaMapQuadDelegate>)delegate;
 
 -(void) drawToContext:(CGContextRef)contextRef
 	dstRect:(CGRect)dstRect
