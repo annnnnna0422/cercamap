@@ -27,9 +27,11 @@
 
 #pragma mark UIView
 
--(void) layoutSubviews
+-(void) drawRect:(CGRect)rect
 {
-	[delegate cercaMapViewDidResize:self];
+	[delegate cercaMapView:self
+		drawToContext:UIGraphicsGetCurrentContext()
+		dstRect:self.bounds];
 }
 
 -(void) touchesBegan:(NSSet*)touches withEvent:(UIEvent*)event
@@ -41,15 +43,15 @@
         case 1:
 		{
 			mode = M_PANNING;
-			panStartPoint = CGPointApplyAffineTransform( [[[allTouches allObjects] objectAtIndex:0] locationInView:self], self.transform );
+			panStartPoint = [[[allTouches allObjects] objectAtIndex:0] locationInView:self];
         }
 		break;
 		
         case 2:
 		{
 			mode = M_ZOOMING;
-            CGPoint point1 = CGPointApplyAffineTransform( [[[allTouches allObjects] objectAtIndex:0] locationInView:self], self.transform );
-            CGPoint point2 = CGPointApplyAffineTransform( [[[allTouches allObjects] objectAtIndex:1] locationInView:self], self.transform );
+            CGPoint point1 = [[[allTouches allObjects] objectAtIndex:0] locationInView:self];
+            CGPoint point2 = [[[allTouches allObjects] objectAtIndex:1] locationInView:self];
             zoomStartDistance = [CercaMapView distanceFromPoint:point1 toPoint:point2];
 			zoomStartScale = self.transform.a;
         }
@@ -71,8 +73,8 @@
 		{
             if ( mode == M_PANNING )
 			{
-				CGPoint panEndPoint = CGPointApplyAffineTransform( [[[allTouches allObjects] objectAtIndex:0] locationInView:self], self.transform );
-				CercaMapPixel delta = CercaMapPixelMake( roundf(panStartPoint.x-panEndPoint.x), roundf(panStartPoint.y-panEndPoint.y) );
+				CGPoint panEndPoint = [[[allTouches allObjects] objectAtIndex:0] locationInView:self];
+				CercaMapPoint delta = CercaMapPointMake( roundf(panStartPoint.x-panEndPoint.x), roundf(panStartPoint.y-panEndPoint.y) );
 				[delegate cercaMapView:self didPanByDelta:delta];
 				panStartPoint = panEndPoint;
 			}
@@ -85,23 +87,10 @@
 	   {
 			if ( mode == M_ZOOMING )
 			{
-				CGPoint point1 = CGPointApplyAffineTransform( [[[allTouches allObjects] objectAtIndex:0] locationInView:self], self.transform );
-				CGPoint point2 = CGPointApplyAffineTransform( [[[allTouches allObjects] objectAtIndex:1] locationInView:self], self.transform );
+				CGPoint point1 = [[[allTouches allObjects] objectAtIndex:0] locationInView:self];
+				CGPoint point2 = [[[allTouches allObjects] objectAtIndex:1] locationInView:self];
 				CGFloat zoomEndDistance = [CercaMapView distanceFromPoint:point1 toPoint:point2];
-				CGFloat zoomEndScale = zoomStartScale * zoomEndDistance / zoomStartDistance;
-				if ( zoomEndScale >= 1.4142 )
-				{
-					[delegate cercaMapViewDidZoomIn:self];
-					zoomEndScale /= 2;
-					zoomStartScale /= 2;
-				}
-				else if ( zoomEndScale <= 0.5 )
-				{
-					[delegate cercaMapViewDidZoomOut:self];
-					zoomEndScale *= 2;
-					zoomStartScale *= 2;
-				}
-				self.transform = CGAffineTransformMake( zoomEndScale, 0, 0, zoomEndScale, 0, 0);
+				[delegate cercaMapView:self didZoomByScale:zoomEndDistance/zoomStartDistance];
 			}
 			else
 				mode = M_NONE;
@@ -122,7 +111,6 @@
 -(void) touchesCanceled
 {
     mode = M_NONE;
-	self.transform = CGAffineTransformIdentity;
 }
 
 @end

@@ -7,7 +7,7 @@
  *
  */
 
-#import "CercaMapPixel.h"
+#import "CercaMapPoint.h"
  
 #pragma mark Forward Declarations
 @class CercaMapView;
@@ -16,10 +16,13 @@
 
 @required
 
--(void) cercaMapViewDidResize:(CercaMapView *)circaMapView;
--(void) cercaMapView:(CercaMapView *)overlay
-	didPanByDelta:(CercaMapPixel)delta;
--(void) cercaMapViewDidZoomIn:(CercaMapView *)cercaMapView;
--(void) cercaMapViewDidZoomOut:(CercaMapView *)cercaMapView;
+-(void) cercaMapView:(CercaMapView *)cercaMapView
+	drawToContext:(CGContextRef)contextRef
+	dstRect:(CGRect)dstRect;
+
+-(void) cercaMapView:(CercaMapView *)cercaMapView
+	didPanByDelta:(CercaMapPoint)delta;
+-(void) cercaMapView:(CercaMapView *)cercaMapView
+	didZoomByScale:(CGFloat)scale;
 
 @end

@@ -1,5 +1,5 @@
 /*
- *  CercaMapPixel.h
+ *  CercaMapPoint.h
  *  Cerca
  *
  *  Created by Peter Zion on 10/03/09.
@@ -7,17 +7,17 @@
  *
  */
 
-#pragma mark CercaMapPixel
+#pragma mark CercaMapPoint
 
 typedef struct
 {
 	int x;
 	int y;
-} CercaMapPixel;
+} CercaMapPoint;
 
-static inline CercaMapPixel CercaMapPixelMake( int x, int y )
+static inline CercaMapPoint CercaMapPointMake( int x, int y )
 {
-	CercaMapPixel result = { x, y };
+	CercaMapPoint result = { x, y };
 	return result;
 }
 

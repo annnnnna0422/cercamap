@@ -9,11 +9,11 @@
 #import <UIKit/UIKit.h>
 #import "CercaMapViewDelegate.h"
 #import <CoreLocation/CoreLocation.h>
-#import "CercaMapPixel.h"
+#import "CercaMapPoint.h"
 
 #pragma mark Forward Declarations
 @class CercaMapView;
-@class CercaMapTileCache;
+@class CercaMapQuad;
 @class CLLocationManager;
 
 @interface CercaNearbyViewController : UIViewController
@@ -23,10 +23,9 @@
 @private
 	IBOutlet CercaMapView *mapView;
 	IBOutlet UIBarButtonItem *gpsBarButtonItem;
-	NSString *token;
-	NSMutableDictionary *tileCache;
-	CercaMapPixel center;
-	int zoomLevel;
+	CercaMapQuad *rootMapQuad;
+	CercaMapPoint center;
+	CGFloat zoomLevel;
 	CLLocationManager *locationManager;
 }
 

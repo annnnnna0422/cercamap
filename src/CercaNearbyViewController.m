@@ -8,127 +8,28 @@
 
 #import "CercaNearbyViewController.h"
 #import "CercaMapView.h"
-#import "CercaMapTile.h"
-
-#import <VirtualEarthKit/VECommonService.h>
+#import "CercaMapQuad.h"
 
 @implementation CercaNearbyViewController
 
 #pragma mark Private
 
--(CercaMapPixel) pixelForCoordinates:(CLLocationCoordinate2D)coordinates
+-(CercaMapPoint) pixelForCoordinates:(CLLocationCoordinate2D)coordinates
 {
-	CercaMapPixel pixel;
-	pixel.x = (int)roundf( ((coordinates.longitude + 180) / 360) * (1<<(zoomLevel+8)) );
+	CercaMapPoint pixel;
+	pixel.x = (int)roundf( ((coordinates.longitude + 180) / 360) * zoomLevel * 128 );
 	float sinLatitude = sinf( coordinates.latitude * M_PI / 180 );
 	float div = (1 + sinLatitude) / (1 - sinLatitude);
-	pixel.y = (int)roundf( (0.5 - log(div) / (4 * M_PI)) * (1<<(zoomLevel+8)) );
+	pixel.y = (int)roundf( (0.5 - log(div) / (4 * M_PI)) * zoomLevel * 128 );
 	return pixel;
 }
 
--(NSString *) tileURLStringForPixel:(CercaMapPixel)pixel
-{
-	NSMutableString *tileURLString = [NSMutableString stringWithString:@"http://r0.ortho.tiles.virtualearth.net/tiles/r"];
-	int mask = 1 << zoomLevel;
-	while ( mask != 1 )
-	{
-		mask = mask >> 1;
-		if ( pixel.y & (mask<<8) )
-		{
-			if ( pixel.x & (mask<<8) )
-				[tileURLString appendString:@"3"];
-			else
-				[tileURLString appendString:@"2"];
-		}
-		else
-		{
-			if ( pixel.x & (mask<<8) )
-				[tileURLString appendString:@"1"];
-			else
-				[tileURLString appendString:@"0"];
-		}
-	}
-	[tileURLString appendString:@".jpeg?g=131&token="];
-	[tileURLString appendString:token];
-	return tileURLString;
-}
-
--(CercaMapTile *) tileForMapPixel:(CercaMapPixel)pixel
-{
-	NSString *tileURLString = [self tileURLStringForPixel:pixel];
-	CercaMapTile *tile = [tileCache objectForKey:tileURLString];
-	if ( tile == nil )
-	{
-		NSURL *tileURL = [NSURL URLWithString:tileURLString];
-		tile = [CercaMapTile tileWithURL:tileURL];
-		[tileCache setObject:tile forKey:tileURLString];
-	}
-	return tile;
-}
-
--(void) clearTiles
-{
-	NSArray *tiles = mapView.subviews;
-	for ( UIView *tile in tiles )
-		[tile removeFromSuperview];
-}
-
--(void) refreshTiles
-{
-	CGRect bounds = mapView.bounds;
-	int width = CGRectGetWidth(bounds);
-	int height = CGRectGetHeight(bounds);
-	
-	CGRect megaBounds = CGRectInset( bounds, -width/2, -height/2 );
-	NSArray *tiles = mapView.subviews;
-	for ( UIView *tile in tiles )
-	{
-		CGRect intersection = CGRectIntersection( megaBounds, tile.frame );
-		if ( CGRectIsNull( intersection ) )
-			[tile removeFromSuperview];
-	}
-	tiles = mapView.subviews;
-	
-	CercaMapPixel originMapPixel = CercaMapPixelMake( center.x - width, center.y - height );
-	for ( int y = -(originMapPixel.y%256); y < height*2; y += 256 )
-	{
-		for ( int x = -(originMapPixel.x%256); x < width*2; x += 256 )
-		{
-			BOOL found = NO;
-			for ( UIView *tile in tiles )
-			{
-				if ( CGRectContainsPoint( tile.frame, CGPointMake( x, y ) ) )
-				{
-					found = YES;
-					break;
-				}
-			}
-			if ( found )
-				continue;
-			
-			CercaMapPixel tileMapPixel = CercaMapPixelMake( originMapPixel.x+x, originMapPixel.y+y );
-			CercaMapTile *tile = [self tileForMapPixel:tileMapPixel];
-			tile.frame = CGRectMake( x-width/2, y-height/2, 256, 256 );
-			[mapView addSubview:tile];
-		}
-	}
-}
-
--(void) panByDelta:(CercaMapPixel)delta
+-(void) panByDelta:(CercaMapPoint)delta
 {
 	center.x += delta.x;
 	center.y += delta.y;
 
-	NSArray *tiles = mapView.subviews;
-	for ( UIView *tile in tiles )
-	{
-		CGRect frame = tile.frame;
-		frame.origin.x -= delta.x;
-		frame.origin.y -= delta.y;
-		tile.frame = frame;
-	}
-	
-	[self refreshTiles];
+	[mapView setNeedsDisplay];
 }
 
 #pragma mark Lifecycle
@@ -136,8 +37,7 @@
 -(void) dealloc
 {
 	[locationManager release];
-	[tileCache release];
-	[token release];
+	[rootMapQuad release];
 	[mapView release];
 	[super dealloc];
 }
@@ -146,61 +46,48 @@
 
 -(void) viewDidLoad
 {
-	VECommonService *commonService = [[[VECommonService alloc] init] autorelease];
-	[commonService getToken:&token forUserID:@"137913" password:@"!panChr0mat1c7" ipAddress:@"192.168.0.1"];
-	[token retain];
-	
-	tileCache = [[NSMutableDictionary alloc] init];
+	rootMapQuad = [[CercaMapQuad alloc] init];
 	
 	CLLocationCoordinate2D coordinates;
 	coordinates.latitude = 44.23;
 	coordinates.longitude = -76.5;
 
-	zoomLevel = 14;
+	zoomLevel = 1 << 14;
 	center = [self pixelForCoordinates:coordinates];
 }
 
 -(void) didReceiveMemoryWarning
 {
-	[tileCache removeAllObjects];
+	[rootMapQuad didReceiveMemoryWarning];
 }
 
 #pragma mark CercaMapViewController
 
--(void) cercaMapViewDidResize:(CercaMapView *)circaMapView
+-(void) cercaMapView:(CercaMapView *)cercaMapView
+	drawToContext:(CGContextRef)contextRef
+	dstRect:(CGRect)dstRect
 {
-	[self clearTiles];
-	[self refreshTiles];
+	[rootMapQuad drawToContext:contextRef
+		dstRect:dstRect
+		centerPoint:center
+		zoomLevel:zoomLevel];
 }
 
 -(void) cercaMapView:(CercaMapView *)overlay
-	didPanByDelta:(CercaMapPixel)delta
+	didPanByDelta:(CercaMapPoint)delta
 {
 	[self panByDelta:delta];
 }
 	
--(void) cercaMapViewDidZoomIn:(CercaMapView *)cercaMapView
+-(void) cercaMapView:(CercaMapView *)cercaMapView
+	didZoomByScale:(CGFloat)scale
 {
-	if ( zoomLevel < 19 )
-	{
-		[self clearTiles];
-		++zoomLevel;
-		center.x *= 2;
-		center.y *= 2;
-		[self refreshTiles];
-	}
-}
-
--(void) cercaMapViewDidZoomOut:(CercaMapView *)cercaMapView
-{
-	if ( zoomLevel > 1 )
-	{
-		[self clearTiles];
-		--zoomLevel;
-		center.x /= 2;
-		center.y /= 2;
-		[self refreshTiles];
-	}
+	zoomLevel *= scale;
+	if ( zoomLevel < 1 )
+		zoomLevel = 1;
+	if ( zoomLevel > 19 )
+		zoomLevel = 19;
+	[mapView setNeedsDisplay];
 }
 
 #pragma mark CLLocationManagerDelegate
@@ -209,8 +96,8 @@
 	didUpdateToLocation:(CLLocation *)newLocation
 	fromLocation:(CLLocation *)oldLocation
 {
-	CercaMapPixel newCenter = [self pixelForCoordinates:newLocation.coordinate];
-	CercaMapPixel delta = CercaMapPixelMake( newCenter.x - center.x, newCenter.y - center.y );
+	CercaMapPoint newCenter = [self pixelForCoordinates:newLocation.coordinate];
+	CercaMapPoint delta = CercaMapPointMake( newCenter.x - center.x, newCenter.y - center.y );
 	[self panByDelta:delta];
 }
 
