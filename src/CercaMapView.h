@@ -18,7 +18,6 @@
 	enum { M_NONE, M_PANNING, M_ZOOMING } mode;
 	CGPoint panStartPoint;
 	CGFloat zoomStartDistance;
-	CGFloat zoomStartScale;
 }
 
 @end

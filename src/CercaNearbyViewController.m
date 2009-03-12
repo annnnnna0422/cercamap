@@ -26,8 +26,8 @@
 
 -(void) panByDelta:(CercaMapPoint)delta
 {
-	center.x += (1<<19)/zoomLevel*delta.x;
-	center.y += (1<<19)/zoomLevel*delta.y;
+	center.x += (1<<18)/zoomLevel*delta.x;
+	center.y += (1<<18)/zoomLevel*delta.y;
 
 	[mapView setNeedsDisplay];
 }
@@ -83,10 +83,10 @@
 	didZoomByScale:(CGFloat)scale
 {
 	zoomLevel *= scale;
-	if ( zoomLevel < 1 )
-		zoomLevel = 1;
-	if ( zoomLevel > 19 )
-		zoomLevel = 19;
+	if ( zoomLevel < (1<<1) )
+		zoomLevel = (1<<1);
+	if ( zoomLevel > (1<<19) )
+		zoomLevel = (1<<19);
 	[mapView setNeedsDisplay];
 }
 

@@ -53,8 +53,6 @@
 {
 	if ( zoomLevel >= zoomMin && zoomLevel < zoomMax )
 	{
-		NSLog( @"dstRect=(%.1f,%.1f+%.1f,%.1f)",
-			dstRect.origin.x, dstRect.origin.y, dstRect.size.width, dstRect.size.height );
 		if ( image != nil )
 			[image drawInRect:dstRect];
 		else if ( connection == nil )
