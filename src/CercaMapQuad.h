@@ -22,6 +22,7 @@
 	NSString *token;
 	NSString *urlBaseString;
 	CGFloat zoomMin, zoomMax;
+	int logZoom;
 	UIImage *image;
 	NSURLConnection *connection;
 	NSMutableData *imageData;

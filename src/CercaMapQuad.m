@@ -19,7 +19,7 @@
 	coverage:(CercaMapRect)_coverage
 	token:(NSString *)_token
 	urlBaseString:(NSString *)_urlBaseString
-	zoomMin:(CGFloat)_zoomMin
+	logZoom:(CGFloat)_logZoom
 {
 	if ( self = [super init] )
 	{
@@ -34,8 +34,9 @@
 		
 		urlBaseString = [_urlBaseString retain];
 		
-		zoomMin = _zoomMin;
-		zoomMax = 2.0*zoomMin;
+		logZoom = _logZoom;
+		zoomMin = powf( 2, logZoom-1 ) / sqrtf(2);
+		zoomMax = powf( 2, logZoom-1 ) * sqrtf(2);
 	}
 	return self;
 }	
@@ -54,7 +55,17 @@
 	if ( zoomLevel >= zoomMin && zoomLevel < zoomMax )
 	{
 		if ( image != nil )
-			[image drawInRect:dstRect];
+		{
+			CGRect subImageRect = CGRectMake(
+				(srcRect.origin.x - coverage.origin.x) >> (19-logZoom),
+				(srcRect.origin.y - coverage.origin.y) >> (19-logZoom),
+				srcRect.size.width >> (19-logZoom),
+				srcRect.size.height >> (19-logZoom)
+				);
+			CGImageRef subImage = CGImageCreateWithImageInRect( [image CGImage], subImageRect );
+			[[UIImage imageWithCGImage:subImage] drawInRect:dstRect];
+			CGImageRelease( subImage );
+		}
 		else if ( connection == nil )
 		{
 			NSString *urlString = [self urlString];
@@ -125,7 +136,7 @@
 						coverage:childCoverage
 						token:token
 						urlBaseString:childURLBaseString
-						zoomMin:zoomMax];
+						logZoom:logZoom+1];
 				}
 				CercaMapRect childSrcRect = CercaMapRectIntersect( srcRect, childQuad->coverage );
 				if ( CercaMapRectIsNonEmpty( childSrcRect ) )
@@ -161,7 +172,7 @@
 		coverage:CercaMapRectMake( 0, 0, 1<<27, 1<<27 )
 		token:token
 		urlBaseString:@"http://r0.ortho.tiles.virtualearth.net/tiles/r"
-		zoomMin:sqrt(2)/4];
+		logZoom:0];
 }
 
 -(void) dealloc
