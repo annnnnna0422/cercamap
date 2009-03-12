@@ -74,6 +74,10 @@
 
 #pragma mark CercaMapView
 
+@synthesize virtualEarthKitUsername;
+
+@synthesize virtualEarthKitPassword;
+
 @dynamic centerPoint;
 
 -(CercaMapPoint) centerPoint
@@ -120,7 +124,9 @@
 	[CercaMapGenerator drawToDstRect:self.bounds
 		centerPoint:centerPoint
 		zoomLevel:zoomLevel
-		mapType:mapType];
+		mapType:mapType
+		virtualEarthKitUsername:virtualEarthKitUsername
+		virtualEarthKitPassword:virtualEarthKitPassword];
 }
 
 -(void) touchesBegan:(NSSet*)touches withEvent:(UIEvent*)event

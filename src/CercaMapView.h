@@ -19,12 +19,16 @@
 	int numPoints;
 	CGPoint points[2];
 	CercaMapPoint centerPoint;
+	NSString *virtualEarthKitUsername;
+	NSString *virtualEarthKitPassword;
 	CGFloat zoomLevel;
 	CercaMapType mapType;
 }
 
 #pragma mark Public
 
+@property( retain ) NSString *virtualEarthKitUsername;
+@property( retain ) NSString *virtualEarthKitPassword;
 @property( assign ) CercaMapPoint centerPoint;
 @property( assign ) CGFloat zoomLevel;
 @property( assign ) CercaMapType mapType;

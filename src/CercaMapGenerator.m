@@ -19,13 +19,15 @@ static CercaMapQuad *rootMapQuad;
 	centerPoint:(CercaMapPoint)centerPoint
 	zoomLevel:(CGFloat)zoomLevel
 	mapType:(CercaMapType)mapType
+	virtualEarthKitUsername:(NSString *)username
+	virtualEarthKitPassword:(NSString *)password
 {
 	if ( rootMapQuad == nil )
 	{
 		if ( token == nil )
 		{
 			VECommonService *commonService = [[[VECommonService alloc] init] autorelease];
-			[commonService getToken:&token forUserID:@"137913" password:@"!panChr0mat1c7" ipAddress:@"192.168.0.1"];
+			[commonService getToken:&token forUserID:username password:password ipAddress:@"192.168.0.1"];
 		}
 		
 		rootMapQuad = [[CercaMapQuad alloc] initWithParentQuad:nil

@@ -22,7 +22,9 @@
 +(void) drawToDstRect:(CGRect)dstRect
 	centerPoint:(CercaMapPoint)centerPoint
 	zoomLevel:(CGFloat)zoomLevel
-	mapType:(CercaMapType)mapType;
+	mapType:(CercaMapType)mapType
+	virtualEarthKitUsername:(NSString *)username
+	virtualEarthKitPassword:(NSString *)password;
 
 +(NSNotificationCenter *) refreshNotificationCenter;
 +(NSString *) refreshNotificationName;
