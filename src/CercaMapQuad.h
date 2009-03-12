@@ -11,6 +11,7 @@
 #import <UIKit/UIKit.h>
 #import <CercaMap/CercaMapRect.h>
 #import <CercaMap/CercaMapType.h>
+#import <CercaMap/CercaMapZoomLevel.h>
 
 @interface CercaMapQuad : NSObject
 {
@@ -20,11 +21,11 @@
 	CercaMapRect coverage;
 	NSString *token;
 	NSString *urlBaseString;
-	CGFloat zoomMin, zoomMax;
+	CercaMapZoomLevel zoomMin, zoomMax;
 	int logZoom;
-	UIImage *images[CMT_NUM_TYPES];
-	NSURLConnection *connections[CMT_NUM_TYPES];
-	NSMutableData *imageDatas[CMT_NUM_TYPES];
+	UIImage *images[CM_NUM_MAP_TYPES];
+	NSURLConnection *connections[CM_NUM_MAP_TYPES];
+	NSMutableData *imageDatas[CM_NUM_MAP_TYPES];
 }
 
 #pragma mark Public
@@ -33,11 +34,11 @@
 	coverage:(CercaMapRect)_coverage
 	token:(NSString *)_token
 	urlBaseString:(NSString *)_urlBaseString
-	logZoom:(CGFloat)_logZoom;
+	logZoom:(int)_logZoom;
 
 -(void) drawToDstRect:(CGRect)dstRect
 	srcRect:(CercaMapRect)srcRect
-	zoomLevel:(CGFloat)zoomLevel
+	zoomLevel:(CercaMapZoomLevel)zoomLevel
 	mapType:(CercaMapType)mapType;
 
 @end

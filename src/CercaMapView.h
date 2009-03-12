@@ -7,8 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <CoreLocation/CoreLocation.h>
 #import <CercaMap/CercaMapType.h>
 #import <CercaMap/CercaMapPoint.h>
+#import <CercaMap/CercaMapZoomLevel.h>
 
 #pragma mark Forward Declarations
 @protocol CercaMapViewDelegate;
@@ -21,7 +23,7 @@
 	CercaMapPoint centerPoint;
 	NSString *virtualEarthKitUsername;
 	NSString *virtualEarthKitPassword;
-	CGFloat zoomLevel;
+	CercaMapZoomLevel zoomLevel;
 	CercaMapType mapType;
 }
 
@@ -30,7 +32,9 @@
 @property( retain ) NSString *virtualEarthKitUsername;
 @property( retain ) NSString *virtualEarthKitPassword;
 @property( assign ) CercaMapPoint centerPoint;
-@property( assign ) CGFloat zoomLevel;
+@property( assign ) CercaMapZoomLevel zoomLevel;
 @property( assign ) CercaMapType mapType;
+
+-(void) setCenterCoordinate:(CLLocationCoordinate2D)coordinate;
 
 @end

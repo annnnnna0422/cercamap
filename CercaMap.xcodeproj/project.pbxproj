@@ -26,6 +26,7 @@
 		DBCACD870F698CFA00054D18 /* VECommonService.m in Sources */ = {isa = PBXBuildFile; fileRef = DBC1CFA00F673EE70026BF9C /* VECommonService.m */; };
 		DBCACD8F0F698D2600054D18 /* VEService.m in Sources */ = {isa = PBXBuildFile; fileRef = DBC1CFBD0F673EE70026BF9C /* VEService.m */; };
 		DBCACD950F698D4600054D18 /* VESOAPRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = DBC1CFC20F673EE70026BF9C /* VESOAPRequest.m */; };
+		DBFD235A0F69CDAB00DA5280 /* CercaMapZoomLevel.h in Headers */ = {isa = PBXBuildFile; fileRef = DBFD23580F69CDAB00DA5280 /* CercaMapZoomLevel.h */; settings = {ATTRIBUTES = (Public, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -99,6 +100,7 @@
 		DBC1CFC30F673EE70026BF9C /* VEUserProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VEUserProfile.h; path = ThirdParty/VirtualEarthKit/VEUserProfile.h; sourceTree = "<group>"; };
 		DBC1CFC40F673EE70026BF9C /* VEUserProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VEUserProfile.m; path = ThirdParty/VirtualEarthKit/VEUserProfile.m; sourceTree = "<group>"; };
 		DBC1D2050F6767940026BF9C /* CercaMapPoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CercaMapPoint.h; path = src/CercaMapPoint.h; sourceTree = "<group>"; };
+		DBFD23580F69CDAB00DA5280 /* CercaMapZoomLevel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CercaMapZoomLevel.h; path = src/CercaMapZoomLevel.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -228,6 +230,7 @@
 				DBC1D2050F6767940026BF9C /* CercaMapPoint.h */,
 				DBA4D6110F685C2D001DC2A2 /* CercaMapSize.h */,
 				DBA4D6120F685C62001DC2A2 /* CercaMapRect.h */,
+				DBFD23580F69CDAB00DA5280 /* CercaMapZoomLevel.h */,
 				DBA4D9E30F68E064001DC2A2 /* CercaMapType.h */,
 				DBC1CF2D0F673BE00026BF9C /* CercaMapView.h */,
 				DBC1CF2E0F673BE00026BF9C /* CercaMapView.m */,
@@ -256,6 +259,7 @@
 				DBA4DD710F697668001DC2A2 /* CercaMapType.h in Headers */,
 				DBA4DD720F697668001DC2A2 /* CercaMapGenerator.h in Headers */,
 				DBA4DD730F697668001DC2A2 /* CercaMapHelper.h in Headers */,
+				DBFD235A0F69CDAB00DA5280 /* CercaMapZoomLevel.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

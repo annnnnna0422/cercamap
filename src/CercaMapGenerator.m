@@ -17,7 +17,7 @@ static CercaMapQuad *rootMapQuad;
 
 +(void) drawToDstRect:(CGRect)dstRect
 	centerPoint:(CercaMapPoint)centerPoint
-	zoomLevel:(CGFloat)zoomLevel
+	zoomLevel:(CercaMapZoomLevel)zoomLevel
 	mapType:(CercaMapType)mapType
 	virtualEarthKitUsername:(NSString *)username
 	virtualEarthKitPassword:(NSString *)password

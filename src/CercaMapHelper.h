@@ -10,6 +10,7 @@
 #import <CoreGraphics/CoreGraphics.h>
 #import <CoreLocation/CoreLocation.h>
 #import <CercaMap/CercaMapPoint.h>
+#import <CercaMap/CercaMapZoomLevel.h>
 
 @interface CercaMapHelper : NSObject
 {
@@ -19,9 +20,9 @@
 
 +(CercaMapPoint) mapPoint:(CercaMapPoint)mapPoint
 	pannedByPixelDelta:(CGPoint)delta
-	atZoomLevel:(CGFloat)zoomLevel;
+	atZoomLevel:(CercaMapZoomLevel)zoomLevel;
 	
-+(CGFloat) mapZoomLevel:(CGFloat)zoomLevel
++(CercaMapZoomLevel) mapZoomLevel:(CercaMapZoomLevel)zoomLevel
 	scaleByFactor:(CGFloat)scale;
 	
 @end

@@ -45,13 +45,13 @@
 
 	[CercaMapGenerator addRefreshObserver:self selector:@selector(cercaMapGeneratorDidRefresh:)];
 	
-	CLLocationCoordinate2D coordinates;
-	coordinates.latitude = 44.23;
-	coordinates.longitude = -76.5;
+	CLLocationCoordinate2D coordinate;
+	coordinate.latitude = 44.23;
+	coordinate.longitude = -76.5;
 
-	zoomLevel = 1 << 14;
-	centerPoint = [CercaMapHelper mapPointForCoordinate:coordinates];
-	mapType = CMT_ROADS;
+	zoomLevel = CM_ZOOM_LEVEL_NEIGHBORHOOD;
+	[self setCenterCoordinate:coordinate];
+	mapType = CM_MAP_TYPE_ROADS;
 }
 
 #pragma mark Lifecycle
@@ -119,12 +119,12 @@
 
 @dynamic zoomLevel;
 
--(CGFloat) zoomLevel
+-(CercaMapZoomLevel) zoomLevel
 {
 	return zoomLevel;
 }
 
--(void) setZoomLevel:(CGFloat)_
+-(void) setZoomLevel:(CercaMapZoomLevel)_
 {
 	zoomLevel = _;
 	[self setNeedsDisplay];
@@ -140,6 +140,12 @@
 -(void) setMapType:(CercaMapType)_
 {
 	mapType = _;
+	[self setNeedsDisplay];
+}
+
+-(void) setCenterCoordinate:(CLLocationCoordinate2D)coordinate
+{
+	centerPoint = [CercaMapHelper mapPointForCoordinate:coordinate];
 	[self setNeedsDisplay];
 }
 

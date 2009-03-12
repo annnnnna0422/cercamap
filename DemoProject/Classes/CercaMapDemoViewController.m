@@ -22,8 +22,8 @@
 	coordinate.longitude = -122.433333;
 
 	cercaMapView.zoomLevel = 1 << 14;
-	cercaMapView.centerPoint = [CercaMapHelper mapPointForCoordinate:coordinate];
-	cercaMapView.mapType = CMT_ROADS;
+	[cercaMapView setCenterCoordinate:coordinate];
+	cercaMapView.mapType = CM_MAP_TYPE_ROADS;
 }
 
 -(IBAction) segmentedControlValueChanged:(id)sender

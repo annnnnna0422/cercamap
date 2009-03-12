@@ -22,7 +22,7 @@
 
 +(CercaMapPoint) mapPoint:(CercaMapPoint)mapPoint
 	pannedByPixelDelta:(CGPoint)delta
-	atZoomLevel:(CGFloat)zoomLevel
+	atZoomLevel:(CercaMapZoomLevel)zoomLevel
 {
 	CercaMapPoint result = CercaMapPointMake(
 		mapPoint.x + (1<<18)*delta.x/zoomLevel,
@@ -31,7 +31,7 @@
 	return result;
 }
 
-+(CGFloat) mapZoomLevel:(CGFloat)zoomLevel
++(CercaMapZoomLevel) mapZoomLevel:(CercaMapZoomLevel)zoomLevel
 	scaleByFactor:(CGFloat)scale
 {
 	zoomLevel *= scale;

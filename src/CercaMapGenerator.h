@@ -10,6 +10,7 @@
 #import <CoreGraphics/CoreGraphics.h>
 #import <CercaMap/CercaMapType.h>
 #import <CercaMap/CercaMapPoint.h>
+#import <CercaMap/CercaMapZoomLevel.h>
 
 #pragma mark Forward Declarations
 @class CercaMapQuad;
@@ -21,7 +22,7 @@
 
 +(void) drawToDstRect:(CGRect)dstRect
 	centerPoint:(CercaMapPoint)centerPoint
-	zoomLevel:(CGFloat)zoomLevel
+	zoomLevel:(CercaMapZoomLevel)zoomLevel
 	mapType:(CercaMapType)mapType
 	virtualEarthKitUsername:(NSString *)username
 	virtualEarthKitPassword:(NSString *)password;

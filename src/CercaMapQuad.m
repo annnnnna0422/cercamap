@@ -20,13 +20,13 @@ typedef struct { unsigned char r, g, b, a; } RGBA;
 	NSString *prefix;
 	switch ( mapType )
 	{
-		case CMT_ROADS:
+		case CM_MAP_TYPE_ROADS:
 			prefix = @"http://r0.ortho.tiles.virtualearth.net/tiles/r";
 			break;
-		case CMT_ARIAL:
+		case CM_MAP_TYPE_ARIAL:
 			prefix = @"http://a0.ortho.tiles.virtualearth.net/tiles/a";
 			break;
-		case CMT_HYBRID:
+		case CM_MAP_TYPE_HYBRID:
 			prefix = @"http://h0.ortho.tiles.virtualearth.net/tiles/h";
 			break;
 	}
@@ -53,7 +53,7 @@ typedef struct { unsigned char r, g, b, a; } RGBA;
 
 -(CercaMapType) mapTypeForConnection:(NSURLConnection *)connection
 {
-	for ( CercaMapType i=0; i<CMT_NUM_TYPES; ++i )
+	for ( CercaMapType i=0; i<CM_NUM_MAP_TYPES; ++i )
 		if ( connections[i] == connection )
 			return i;
 	return -1;
@@ -65,7 +65,7 @@ typedef struct { unsigned char r, g, b, a; } RGBA;
 	coverage:(CercaMapRect)_coverage
 	token:(NSString *)_token
 	urlBaseString:(NSString *)_urlBaseString
-	logZoom:(CGFloat)_logZoom
+	logZoom:(int)_logZoom
 {
 	if ( self = [super init] )
 	{
@@ -88,7 +88,7 @@ typedef struct { unsigned char r, g, b, a; } RGBA;
 
 -(void) dealloc
 {
-	for ( CercaMapType i=0; i<CMT_NUM_TYPES; ++i )
+	for ( CercaMapType i=0; i<CM_NUM_MAP_TYPES; ++i )
 	{
 		[imageDatas[i] release];
 		[connections[i] release];
@@ -105,7 +105,7 @@ typedef struct { unsigned char r, g, b, a; } RGBA;
 
 -(void) drawToDstRect:(CGRect)dstRect
 	srcRect:(CercaMapRect)srcRect
-	zoomLevel:(CGFloat)zoomLevel
+	zoomLevel:(CercaMapZoomLevel)zoomLevel
 	mapType:(CercaMapType)mapType
 {
 	if ( parentQuad != nil && images[mapType] == nil && connections[mapType] == nil )
