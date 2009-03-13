@@ -19,21 +19,19 @@
 	CercaMapQuad *parentQuad;
 	CercaMapQuad *childQuads[2][2];
 	CercaMapRect coverage;
-	NSString *token;
 	NSString *urlBaseString;
-	CercaMapZoomLevel zoomMin, zoomMax;
 	int logZoom;
 	UIImage *images[CM_NUM_MAP_TYPES];
 	NSURLConnection *connections[CM_NUM_MAP_TYPES];
 	NSMutableData *imageDatas[CM_NUM_MAP_TYPES];
 	NSUInteger loadGenerations[CM_NUM_MAP_TYPES];
+	BOOL shouldPersistImage[CM_NUM_MAP_TYPES];
 }
 
 #pragma mark Public
 
 -(id) initWithParentQuad:(CercaMapQuad *)_parentQuad
 	coverage:(CercaMapRect)_coverage
-	token:(NSString *)_token
 	urlBaseString:(NSString *)_urlBaseString
 	logZoom:(int)_logZoom;
 

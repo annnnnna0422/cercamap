@@ -74,35 +74,7 @@
 	[super dealloc];
 }
 
-#pragma mark CercaMapView
-
-@dynamic virtualEarthKitUsername;
-
--(NSString *) virtualEarthKitUsername
-{
-	return virtualEarthKitUsername;
-}
-
--(void) setVirtualEarthKitUsername:(NSString *)_
-{
-	[virtualEarthKitUsername release];
-	virtualEarthKitUsername = [_ retain];
-	[self setNeedsDisplay];
-}
-
-@dynamic virtualEarthKitPassword;
-
--(NSString *) virtualEarthKitPassword
-{
-	return virtualEarthKitPassword;
-}
-
--(void) setVirtualEarthKitPassword:(NSString *)_
-{
-	[virtualEarthKitPassword release];
-	virtualEarthKitPassword = [_ retain];
-	[self setNeedsDisplay];
-}
+#pragma mark CercaMapView - Parameters
 
 @dynamic centerPoint;
 
@@ -153,13 +125,10 @@
 
 -(void) drawRect:(CGRect)rect
 {
-	if ( virtualEarthKitUsername != nil && virtualEarthKitPassword != nil )
-		[CercaMapGenerator drawToDstRect:self.bounds
-			centerPoint:centerPoint
-			zoomLevel:zoomLevel
-			mapType:mapType
-			virtualEarthKitUsername:virtualEarthKitUsername
-			virtualEarthKitPassword:virtualEarthKitPassword];
+	[CercaMapGenerator drawToDstRect:self.bounds
+		centerPoint:centerPoint
+		zoomLevel:zoomLevel
+		mapType:mapType];
 }
 
 -(void) touchesBegan:(NSSet*)touches withEvent:(UIEvent*)event

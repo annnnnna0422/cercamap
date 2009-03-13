@@ -8,6 +8,7 @@
 
 #import "CercaMapQuad.h"
 #import "CercaMapGenerator.h"
+#import <VirtualEarthKit/VECommonService.h>
 
 typedef struct { unsigned char r, g, b, a; } RGBA;
 
@@ -19,6 +20,21 @@ static NSUInteger globalLoadGeneration;
 
 -(NSString *) urlStringForMapType:(CercaMapType)mapType
 {
+	static NSString *token = nil;
+	if ( token == nil
+		&& [CercaMapGenerator mapServiceUsername] != nil
+		&& [CercaMapGenerator mapServicePassword] != nil )
+	{
+		VECommonService *commonService = [[[VECommonService alloc] init] autorelease];
+		[commonService getToken:&token
+			forUserID:[CercaMapGenerator mapServiceUsername]
+			password:[CercaMapGenerator mapServicePassword]
+			ipAddress:@"192.168.0.1"];
+	}
+	
+	if ( token == nil )
+		return nil;
+	
 	NSString *prefix;
 	switch ( mapType )
 	{
@@ -48,7 +64,6 @@ static NSUInteger globalLoadGeneration;
 	NSString *childURLBaseString = [NSString stringWithFormat:@"%@%@", urlBaseString, childURLBaseSuffixStrings[i][j]];
 	return [[[CercaMapQuad alloc] initWithParentQuad:self
 		coverage:childCoverage
-		token:token
 		urlBaseString:childURLBaseString
 		logZoom:logZoom+1] autorelease];
 }
@@ -61,11 +76,22 @@ static NSUInteger globalLoadGeneration;
 	return -1;
 }
 
++(UIImage *) uncompressedImageWithData:(NSData *)data
+{
+	UIImage *image = [UIImage imageWithData:data];
+	
+	UIGraphicsBeginImageContext(image.size);
+	[image drawAtPoint:CGPointMake(0,0)];
+	UIImage *uncompressedImage = UIGraphicsGetImageFromCurrentImageContext();
+	UIGraphicsEndImageContext();
+	
+	return uncompressedImage;
+}
+
 #pragma mark Lifecycle
 
 -(id) initWithParentQuad:(CercaMapQuad *)_parentQuad
 	coverage:(CercaMapRect)_coverage
-	token:(NSString *)_token
 	urlBaseString:(NSString *)_urlBaseString
 	logZoom:(int)_logZoom
 {
@@ -77,13 +103,9 @@ static NSUInteger globalLoadGeneration;
 		
 		coverage = _coverage;
 		
-		token = [_token retain];
-		
 		urlBaseString = [_urlBaseString retain];
 		
 		logZoom = _logZoom;
-		zoomMin = powf( 2, logZoom-1 );
-		zoomMax = 2 * zoomMin;
 	}
 	return self;
 }	
@@ -103,6 +125,90 @@ static NSUInteger globalLoadGeneration;
 	[super dealloc];
 }
 
+#pragma mark Persistence
+
+static NSString *childQuadPKs[2][2] =
+{
+	{ @"childQuad[0][0]_1", @"childQuad[0][1]_1" },
+	{ @"childQuad[1][0]_1", @"childQuad[1][1]_1" }
+};
+static NSString *coverageOriginXPK = @"coverageOriginX_1";
+static NSString *coverageOriginYPK = @"coverageOriginY_1";
+static NSString *coverageSizeWidthPK = @"coverageSizeWidth_1";
+static NSString *coverageSizeHeightPK = @"coverageSizeHeight_1";
+static NSString *urlBaseStringPK = @"urlBaseString_1";
+static NSString *logZoomPK = @"logZoom_1";
+static NSString *imagePKs[CM_NUM_MAP_TYPES] =
+{
+	@"roadsImage_1",
+	@"aerialImage_1",
+	@"hybridImage_1"
+};
+
+-(id) initWithCoder:(NSCoder *)decoder
+{
+	if ( self = [super init] )
+	{
+		for ( int i=0; i<2; ++i )
+		{
+			for ( int j=0; j<2; ++j )
+			{
+				childQuads[i][j] = [[decoder decodeObjectForKey:childQuadPKs[i][j]] retain];
+				if ( childQuads[i][j] != nil )
+					childQuads[i][j]->parentQuad = self;
+			}
+		}
+		
+		coverage = CercaMapRectMake(
+			[decoder decodeIntForKey:coverageOriginXPK],
+			[decoder decodeIntForKey:coverageOriginYPK],
+			[decoder decodeIntForKey:coverageSizeWidthPK],
+			[decoder decodeIntForKey:coverageSizeHeightPK]
+			);
+		
+		urlBaseString = [[decoder decodeObjectForKey:urlBaseStringPK] retain];
+		
+		logZoom = [decoder decodeIntForKey:logZoomPK];
+		
+		for ( int i=0; i<CM_NUM_MAP_TYPES; ++i )
+		{
+			NSData *imagePNGRepresentation = [decoder decodeObjectForKey:imagePKs[i]];
+			if ( imagePNGRepresentation != nil )
+			{
+				images[i] = [[CercaMapQuad uncompressedImageWithData:imagePNGRepresentation] retain];
+				shouldPersistImage[i] = YES;
+				loadGenerations[i] = globalLoadGeneration++;
+			}
+		}
+	}
+	return self;
+}
+
+- (void)encodeWithCoder:(NSCoder *)encoder
+{
+	for ( int i=0; i<2; ++i )
+		for ( int j=0; j<2; ++j )
+			[encoder encodeObject:childQuads[i][j]
+				forKey:childQuadPKs[i][j]];
+	
+	[encoder encodeInt:coverage.origin.x forKey:coverageOriginXPK];
+	[encoder encodeInt:coverage.origin.y forKey:coverageOriginYPK];
+	[encoder encodeInt:coverage.size.width forKey:coverageSizeWidthPK];
+	[encoder encodeInt:coverage.size.height forKey:coverageSizeHeightPK];
+	
+	[encoder encodeObject:urlBaseString forKey:urlBaseStringPK];
+
+	[encoder encodeInt:logZoom forKey:logZoomPK];
+	
+	for ( int i=0; i<CM_NUM_MAP_TYPES; ++i )
+	{
+		NSData *imagePNGRepresentation = nil;
+		if ( images[i] != nil && shouldPersistImage[i] )
+			imagePNGRepresentation = UIImagePNGRepresentation(images[i]);
+		[encoder encodeObject:imagePNGRepresentation forKey:imagePKs[i]];
+	}
+}
+
 #pragma mark CercaMapQuad
 
 -(void) drawToDstRect:(CGRect)dstRect
@@ -113,11 +219,16 @@ static NSUInteger globalLoadGeneration;
 	if ( parentQuad != nil && images[mapType] == nil && connections[mapType] == nil )
 	{
 		NSString *urlString = [self urlStringForMapType:mapType];
-		NSURL *url = [NSURL URLWithString:urlString];
-		NSURLRequest *urlRequest = [NSURLRequest requestWithURL:url];
-		connections[mapType] = [[NSURLConnection connectionWithRequest:urlRequest delegate:self] retain];
+		if ( urlString != nil )
+		{
+			NSURL *url = [NSURL URLWithString:urlString];
+			NSURLRequest *urlRequest = [NSURLRequest requestWithURL:url];
+			connections[mapType] = [[NSURLConnection connectionWithRequest:urlRequest delegate:self] retain];
+		}
 	}
 		
+	CercaMapZoomLevel zoomMin = 1 << (logZoom-1);
+	CercaMapZoomLevel zoomMax = 1 << logZoom;
 	if ( zoomLevel >= zoomMin && zoomLevel < zoomMax )
 	{
 		CercaMapQuad *quad = self;
@@ -209,7 +320,50 @@ static NSUInteger globalLoadGeneration;
 	didReceiveResponse:(NSURLResponse *)response
 {
 	CercaMapType mapType = [self mapTypeForConnection:connection];
-	imageDatas[mapType] = [[NSMutableData alloc] init];
+	NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
+	NSInteger httpStatusCode = [httpResponse statusCode];
+	if ( httpStatusCode >= 400 )
+	{
+		CGRect imageRect = CGRectMake(0,0,256,256);
+		UIFont *statusCodeDescFont = [UIFont systemFontOfSize:17];
+		
+		NSString *statusCodeDesc = [NSString stringWithFormat:@"HTTP status code %d\n(%@)",
+			httpStatusCode,
+			[NSHTTPURLResponse localizedStringForStatusCode:httpStatusCode]];
+		CGSize statusCodeDescSize = [statusCodeDesc
+			sizeWithFont:statusCodeDescFont
+			constrainedToSize:imageRect.size
+			lineBreakMode:UILineBreakModeWordWrap];
+		CGRect statusCodeDescRect = CGRectMake(
+			roundf( (imageRect.size.width - statusCodeDescSize.width) / 2),
+			roundf( (imageRect.size.height - statusCodeDescSize.height) / 2),
+			statusCodeDescSize.width,
+			statusCodeDescSize.height
+			);
+
+		UIGraphicsBeginImageContext(imageRect.size);
+		[[UIColor redColor] set];
+		UIRectFrame( imageRect );
+		[statusCodeDesc
+			drawInRect:statusCodeDescRect
+			withFont:statusCodeDescFont
+			lineBreakMode:UILineBreakModeWordWrap
+			alignment:UITextAlignmentCenter];
+		images[mapType] = [UIGraphicsGetImageFromCurrentImageContext() retain];
+		UIGraphicsEndImageContext();
+		
+		shouldPersistImage[mapType] = NO;
+
+		[connections[mapType] cancel];
+		[connections[mapType] autorelease];
+		connections[mapType] = nil;
+		
+		[[CercaMapGenerator refreshNotificationCenter]
+			postNotificationName:[CercaMapGenerator refreshNotificationName]
+			object:self];
+	}
+	else
+		imageDatas[mapType] = [[NSMutableData alloc] init];
 }
 
 -(void) connection:(NSURLConnection *)connection
@@ -226,17 +380,13 @@ static NSUInteger globalLoadGeneration;
 	[connections[mapType] autorelease];
 	connections[mapType] = nil;
 
-	UIImage *origImage = [UIImage imageWithData:imageDatas[mapType]];
+	images[mapType] = [[CercaMapQuad uncompressedImageWithData:imageDatas[mapType]] retain];
 	[imageDatas[mapType] release];
 	imageDatas[mapType] = nil;
 	
-	UIGraphicsBeginImageContext(origImage.size);
-	[origImage drawAtPoint:CGPointMake(0,0)];
-	images[mapType] = [UIGraphicsGetImageFromCurrentImageContext() retain];
-	UIGraphicsEndImageContext();
-	
 	loadGenerations[mapType] = globalLoadGeneration++;
-		
+	shouldPersistImage[mapType] = YES;
+	
 	[[CercaMapGenerator refreshNotificationCenter]
 		postNotificationName:[CercaMapGenerator refreshNotificationName]
 		object:self];

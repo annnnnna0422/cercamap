@@ -10,13 +10,12 @@
 
 @class CercaMapDemoViewController;
 
-@interface CercaMapDemoAppDelegate : NSObject <UIApplicationDelegate> {
-    UIWindow *window;
-    CercaMapDemoViewController *viewController;
+@interface CercaMapDemoAppDelegate : NSObject
+	<UIApplicationDelegate>
+{
+    IBOutlet UIWindow *window;
+    IBOutlet CercaMapDemoViewController *viewController;
 }
-
-@property (nonatomic, retain) IBOutlet UIWindow *window;
-@property (nonatomic, retain) IBOutlet CercaMapDemoViewController *viewController;
 
 @end
 

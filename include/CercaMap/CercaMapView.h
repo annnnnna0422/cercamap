@@ -21,20 +21,14 @@
 	int numPoints;
 	CGPoint points[2];
 	CercaMapPoint centerPoint;
-	NSString *virtualEarthKitUsername;
-	NSString *virtualEarthKitPassword;
 	CercaMapZoomLevel zoomLevel;
 	CercaMapType mapType;
 }
 
-#pragma mark Public
-
-@property( retain ) NSString *virtualEarthKitUsername;
-@property( retain ) NSString *virtualEarthKitPassword;
+#pragma mark CercaMapView - Parameters
 @property( assign ) CercaMapPoint centerPoint;
 @property( assign ) CercaMapZoomLevel zoomLevel;
 @property( assign ) CercaMapType mapType;
-
 -(void) setCenterCoordinate:(CLLocationCoordinate2D)coordinate;
 
 @end

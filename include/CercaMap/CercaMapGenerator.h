@@ -20,19 +20,29 @@
 {
 }
 
+#pragma mark CercaMapGenerator - Authentication
++(void) setMapServiceUsername:(NSString *)_username password:(NSString *)_password;
++(NSString *) mapServiceUsername;
++(NSString *) mapServicePassword;
+
+#pragma mark CercaMapGenerator - Drawing Maps
 +(void) drawToDstRect:(CGRect)dstRect
 	centerPoint:(CercaMapPoint)centerPoint
 	zoomLevel:(CercaMapZoomLevel)zoomLevel
-	mapType:(CercaMapType)mapType
-	virtualEarthKitUsername:(NSString *)username
-	virtualEarthKitPassword:(NSString *)password;
+	mapType:(CercaMapType)mapType;
 
+#pragma mark CercaMapGenerator - Refresh Notifications
 +(NSNotificationCenter *) refreshNotificationCenter;
 +(NSString *) refreshNotificationName;
 +(void) addRefreshObserver:(id)observer
 	selector:(SEL)selector;
 +(void) removeRefreshObserver:(id)observer;
 
+#pragma mark CercaMapGenerator - Memory Warnings
 +(void) didReceiveMemoryWarning;
+
+#pragma mark CercaMapGenerator - Persistence
++(void) loadState;
++(void) saveState;
 
 @end

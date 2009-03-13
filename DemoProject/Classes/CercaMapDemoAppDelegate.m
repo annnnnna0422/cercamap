@@ -8,26 +8,29 @@
 
 #import "CercaMapDemoAppDelegate.h"
 #import "CercaMapDemoViewController.h"
+#import <CercaMap/CercaMap.h>
+#import "config.h"
 
 @implementation CercaMapDemoAppDelegate
 
-@synthesize window;
-@synthesize viewController;
-
-
-- (void)applicationDidFinishLaunching:(UIApplication *)application {    
-    
-    // Override point for customization after app launch    
+-(void) applicationDidFinishLaunching:(UIApplication *)application
+{
+	[CercaMapGenerator setMapServiceUsername:@VIRTUAL_EARTH_KIT_USERNAME
+		password:@VIRTUAL_EARTH_KIT_PASSWORD];
+	[CercaMapGenerator loadState];
     [window addSubview:viewController.view];
     [window makeKeyAndVisible];
 }
 
+-(void) applicationWillTerminate:(UIApplication *)application
+{
+	[CercaMapGenerator saveState];
+}
 
-- (void)dealloc {
+-(void) dealloc {
     [viewController release];
     [window release];
     [super dealloc];
 }
-
 
 @end

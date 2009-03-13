@@ -8,15 +8,11 @@
 
 #import "CercaMapDemoViewController.h"
 #import <CercaMap/CercaMap.h>
-#import "config.h"
 
 @implementation CercaMapDemoViewController
 
 -(void) viewDidLoad
 {
-	cercaMapView.virtualEarthKitUsername = @VIRTUAL_EARTH_KIT_USERNAME;
-	cercaMapView.virtualEarthKitPassword = @VIRTUAL_EARTH_KIT_PASSWORD;
-
 	CLLocationCoordinate2D coordinate;
 	coordinate.latitude = 37.766667;
 	coordinate.longitude = -122.433333;

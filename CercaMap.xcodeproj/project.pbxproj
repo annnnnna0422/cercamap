@@ -7,14 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		DBA4DD6C0F697668001DC2A2 /* CercaMap.h in Headers */ = {isa = PBXBuildFile; fileRef = DBA4DCC70F696D6A001DC2A2 /* CercaMap.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		DBA4DD6D0F697668001DC2A2 /* CercaMapView.h in Headers */ = {isa = PBXBuildFile; fileRef = DBC1CF2D0F673BE00026BF9C /* CercaMapView.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		DBA4DD6E0F697668001DC2A2 /* CercaMapPoint.h in Headers */ = {isa = PBXBuildFile; fileRef = DBC1D2050F6767940026BF9C /* CercaMapPoint.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		DBA4DD6F0F697668001DC2A2 /* CercaMapSize.h in Headers */ = {isa = PBXBuildFile; fileRef = DBA4D6110F685C2D001DC2A2 /* CercaMapSize.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		DBA4DD700F697668001DC2A2 /* CercaMapRect.h in Headers */ = {isa = PBXBuildFile; fileRef = DBA4D6120F685C62001DC2A2 /* CercaMapRect.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		DBA4DD710F697668001DC2A2 /* CercaMapType.h in Headers */ = {isa = PBXBuildFile; fileRef = DBA4D9E30F68E064001DC2A2 /* CercaMapType.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		DBA4DD720F697668001DC2A2 /* CercaMapGenerator.h in Headers */ = {isa = PBXBuildFile; fileRef = DBA4DA880F6954A2001DC2A2 /* CercaMapGenerator.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		DBA4DD730F697668001DC2A2 /* CercaMapHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = DBA4DA8F0F6956E2001DC2A2 /* CercaMapHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		DBA4DD740F697680001DC2A2 /* CercaMapView.m in Sources */ = {isa = PBXBuildFile; fileRef = DBC1CF2E0F673BE00026BF9C /* CercaMapView.m */; };
 		DBA4DD750F697680001DC2A2 /* CercaMapGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = DBA4DA890F6954A2001DC2A2 /* CercaMapGenerator.m */; };
 		DBA4DD760F697680001DC2A2 /* CercaMapQuad.m in Sources */ = {isa = PBXBuildFile; fileRef = DBA4D60F0F685BB2001DC2A2 /* CercaMapQuad.m */; };
@@ -26,20 +20,44 @@
 		DBCACD870F698CFA00054D18 /* VECommonService.m in Sources */ = {isa = PBXBuildFile; fileRef = DBC1CFA00F673EE70026BF9C /* VECommonService.m */; };
 		DBCACD8F0F698D2600054D18 /* VEService.m in Sources */ = {isa = PBXBuildFile; fileRef = DBC1CFBD0F673EE70026BF9C /* VEService.m */; };
 		DBCACD950F698D4600054D18 /* VESOAPRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = DBC1CFC20F673EE70026BF9C /* VESOAPRequest.m */; };
-		DBFD235A0F69CDAB00DA5280 /* CercaMapZoomLevel.h in Headers */ = {isa = PBXBuildFile; fileRef = DBFD23580F69CDAB00DA5280 /* CercaMapZoomLevel.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		DBFD24E90F6AEAAE00DA5280 /* CercaMap.h in Headers */ = {isa = PBXBuildFile; fileRef = DBFD24E20F6AEAAE00DA5280 /* CercaMap.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		DBFD24EA0F6AEAAE00DA5280 /* CercaMapGenerator.h in Headers */ = {isa = PBXBuildFile; fileRef = DBFD24E30F6AEAAE00DA5280 /* CercaMapGenerator.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		DBFD24EB0F6AEAAE00DA5280 /* CercaMapHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = DBFD24E40F6AEAAE00DA5280 /* CercaMapHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		DBFD24EC0F6AEAAE00DA5280 /* CercaMapPoint.h in Headers */ = {isa = PBXBuildFile; fileRef = DBFD24E50F6AEAAE00DA5280 /* CercaMapPoint.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		DBFD24ED0F6AEAAE00DA5280 /* CercaMapType.h in Headers */ = {isa = PBXBuildFile; fileRef = DBFD24E60F6AEAAE00DA5280 /* CercaMapType.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		DBFD24EE0F6AEAAE00DA5280 /* CercaMapView.h in Headers */ = {isa = PBXBuildFile; fileRef = DBFD24E70F6AEAAE00DA5280 /* CercaMapView.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		DBFD24EF0F6AEAAE00DA5280 /* CercaMapZoomLevel.h in Headers */ = {isa = PBXBuildFile; fileRef = DBFD24E80F6AEAAE00DA5280 /* CercaMapZoomLevel.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		DBFD266C0F6B0E5E00DA5280 /* CercaMapDemoAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = DBFD26690F6B0E5E00DA5280 /* CercaMapDemoAppDelegate.m */; };
+		DBFD266D0F6B0E5E00DA5280 /* CercaMapDemoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DBFD266B0F6B0E5E00DA5280 /* CercaMapDemoViewController.m */; };
+		DBFD26750F6B0E8500DA5280 /* CercaMapDemoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = DBFD26710F6B0E8500DA5280 /* CercaMapDemoViewController.xib */; };
+		DBFD26760F6B0E8500DA5280 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = DBFD26720F6B0E8500DA5280 /* Info.plist */; };
+		DBFD26770F6B0E8500DA5280 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = DBFD26730F6B0E8500DA5280 /* main.m */; };
+		DBFD26780F6B0E8500DA5280 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = DBFD26740F6B0E8500DA5280 /* MainWindow.xib */; };
+		DBFD268D0F6B0F3B00DA5280 /* libxml2.2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = DBC1CF7F0F673EA00026BF9C /* libxml2.2.dylib */; };
+		DBFD26940F6B0F4300DA5280 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DBA4DE6B0F6978D1001DC2A2 /* CoreLocation.framework */; };
+		DBFD26950F6B0F4800DA5280 /* libxml2.2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = DBC1CF7F0F673EA00026BF9C /* libxml2.2.dylib */; };
+		DBFD26CB0F6B0F4E00DA5280 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DBA4DE2D0F697844001DC2A2 /* UIKit.framework */; };
+		DBFD26EB0F6B0F5300DA5280 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DBA4DE0C0F697837001DC2A2 /* CoreGraphics.framework */; };
+		DBFD27330F6B0F5800DA5280 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DBA4DDC30F69781D001DC2A2 /* Foundation.framework */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		DBFD266E0F6B0E6C00DA5280 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = DBA4DD680F69765C001DC2A2;
+			remoteInfo = CercaMap;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		DBA4D60E0F685BB2001DC2A2 /* CercaMapQuad.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CercaMapQuad.h; path = src/CercaMapQuad.h; sourceTree = "<group>"; };
 		DBA4D60F0F685BB2001DC2A2 /* CercaMapQuad.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CercaMapQuad.m; path = src/CercaMapQuad.m; sourceTree = "<group>"; };
 		DBA4D6110F685C2D001DC2A2 /* CercaMapSize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CercaMapSize.h; path = src/CercaMapSize.h; sourceTree = "<group>"; };
 		DBA4D6120F685C62001DC2A2 /* CercaMapRect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CercaMapRect.h; path = src/CercaMapRect.h; sourceTree = "<group>"; };
-		DBA4D9E30F68E064001DC2A2 /* CercaMapType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CercaMapType.h; path = src/CercaMapType.h; sourceTree = "<group>"; };
-		DBA4DA880F6954A2001DC2A2 /* CercaMapGenerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CercaMapGenerator.h; path = src/CercaMapGenerator.h; sourceTree = "<group>"; };
 		DBA4DA890F6954A2001DC2A2 /* CercaMapGenerator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CercaMapGenerator.m; path = src/CercaMapGenerator.m; sourceTree = "<group>"; };
-		DBA4DA8F0F6956E2001DC2A2 /* CercaMapHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CercaMapHelper.h; path = src/CercaMapHelper.h; sourceTree = "<group>"; };
 		DBA4DA900F6956E2001DC2A2 /* CercaMapHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CercaMapHelper.m; path = src/CercaMapHelper.m; sourceTree = "<group>"; };
-		DBA4DCC70F696D6A001DC2A2 /* CercaMap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CercaMap.h; path = src/CercaMap.h; sourceTree = "<group>"; };
 		DBA4DD690F69765C001DC2A2 /* libCercaMap.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libCercaMap.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		DBA4DDC30F69781D001DC2A2 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		DBA4DE0C0F697837001DC2A2 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -47,7 +65,6 @@
 		DBA4DE6B0F6978D1001DC2A2 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		DBA4DE970F698062001DC2A2 /* SDKSettings-iphoneos.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "SDKSettings-iphoneos.plist"; path = "rsrc/SDKSettings-iphoneos.plist"; sourceTree = "<group>"; };
 		DBA4DE980F698062001DC2A2 /* SDKSettings-iphonesimulator.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "SDKSettings-iphonesimulator.plist"; path = "rsrc/SDKSettings-iphonesimulator.plist"; sourceTree = "<group>"; };
-		DBC1CF2D0F673BE00026BF9C /* CercaMapView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CercaMapView.h; path = src/CercaMapView.h; sourceTree = "<group>"; };
 		DBC1CF2E0F673BE00026BF9C /* CercaMapView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CercaMapView.m; path = src/CercaMapView.m; sourceTree = "<group>"; };
 		DBC1CF340F673BFC0026BF9C /* CercaMap_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CercaMap_Prefix.pch; sourceTree = "<group>"; };
 		DBC1CF7F0F673EA00026BF9C /* libxml2.2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.2.dylib; path = usr/lib/libxml2.2.dylib; sourceTree = SDKROOT; };
@@ -99,8 +116,25 @@
 		DBC1CFC20F673EE70026BF9C /* VESOAPRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VESOAPRequest.m; path = ThirdParty/VirtualEarthKit/VESOAPRequest.m; sourceTree = "<group>"; };
 		DBC1CFC30F673EE70026BF9C /* VEUserProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VEUserProfile.h; path = ThirdParty/VirtualEarthKit/VEUserProfile.h; sourceTree = "<group>"; };
 		DBC1CFC40F673EE70026BF9C /* VEUserProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VEUserProfile.m; path = ThirdParty/VirtualEarthKit/VEUserProfile.m; sourceTree = "<group>"; };
-		DBC1D2050F6767940026BF9C /* CercaMapPoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CercaMapPoint.h; path = src/CercaMapPoint.h; sourceTree = "<group>"; };
-		DBFD23580F69CDAB00DA5280 /* CercaMapZoomLevel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CercaMapZoomLevel.h; path = src/CercaMapZoomLevel.h; sourceTree = "<group>"; };
+		DBFD24E20F6AEAAE00DA5280 /* CercaMap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CercaMap.h; path = include/CercaMap/CercaMap.h; sourceTree = "<group>"; };
+		DBFD24E30F6AEAAE00DA5280 /* CercaMapGenerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CercaMapGenerator.h; path = include/CercaMap/CercaMapGenerator.h; sourceTree = "<group>"; };
+		DBFD24E40F6AEAAE00DA5280 /* CercaMapHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CercaMapHelper.h; path = include/CercaMap/CercaMapHelper.h; sourceTree = "<group>"; };
+		DBFD24E50F6AEAAE00DA5280 /* CercaMapPoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CercaMapPoint.h; path = include/CercaMap/CercaMapPoint.h; sourceTree = "<group>"; };
+		DBFD24E60F6AEAAE00DA5280 /* CercaMapType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CercaMapType.h; path = include/CercaMap/CercaMapType.h; sourceTree = "<group>"; };
+		DBFD24E70F6AEAAE00DA5280 /* CercaMapView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CercaMapView.h; path = include/CercaMap/CercaMapView.h; sourceTree = "<group>"; };
+		DBFD24E80F6AEAAE00DA5280 /* CercaMapZoomLevel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CercaMapZoomLevel.h; path = include/CercaMap/CercaMapZoomLevel.h; sourceTree = "<group>"; };
+		DBFD26610F6B0E2300DA5280 /* CercaMapDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CercaMapDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		DBFD26630F6B0E2300DA5280 /* CercaMapDemo-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "CercaMapDemo-Info.plist"; sourceTree = "<group>"; };
+		DBFD26680F6B0E5E00DA5280 /* CercaMapDemoAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CercaMapDemoAppDelegate.h; path = DemoProject/Classes/CercaMapDemoAppDelegate.h; sourceTree = "<group>"; };
+		DBFD26690F6B0E5E00DA5280 /* CercaMapDemoAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CercaMapDemoAppDelegate.m; path = DemoProject/Classes/CercaMapDemoAppDelegate.m; sourceTree = "<group>"; };
+		DBFD266A0F6B0E5E00DA5280 /* CercaMapDemoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CercaMapDemoViewController.h; path = DemoProject/Classes/CercaMapDemoViewController.h; sourceTree = "<group>"; };
+		DBFD266B0F6B0E5E00DA5280 /* CercaMapDemoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CercaMapDemoViewController.m; path = DemoProject/Classes/CercaMapDemoViewController.m; sourceTree = "<group>"; };
+		DBFD26700F6B0E8500DA5280 /* CercaMapDemo_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CercaMapDemo_Prefix.pch; path = DemoProject/CercaMapDemo_Prefix.pch; sourceTree = "<group>"; };
+		DBFD26710F6B0E8500DA5280 /* CercaMapDemoViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = CercaMapDemoViewController.xib; path = DemoProject/CercaMapDemoViewController.xib; sourceTree = "<group>"; };
+		DBFD26720F6B0E8500DA5280 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = DemoProject/Info.plist; sourceTree = "<group>"; };
+		DBFD26730F6B0E8500DA5280 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = DemoProject/main.m; sourceTree = "<group>"; };
+		DBFD26740F6B0E8500DA5280 /* MainWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = MainWindow.xib; path = DemoProject/MainWindow.xib; sourceTree = "<group>"; };
+		DBFD267B0F6B0EB900DA5280 /* config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = config.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -112,6 +146,19 @@
 				DBA4DE0D0F697837001DC2A2 /* CoreGraphics.framework in Frameworks */,
 				DBA4DE2E0F697844001DC2A2 /* UIKit.framework in Frameworks */,
 				DBA4DE6C0F6978D1001DC2A2 /* CoreLocation.framework in Frameworks */,
+				DBFD26950F6B0F4800DA5280 /* libxml2.2.dylib in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DBFD265F0F6B0E2300DA5280 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DBFD268D0F6B0F3B00DA5280 /* libxml2.2.dylib in Frameworks */,
+				DBFD26940F6B0F4300DA5280 /* CoreLocation.framework in Frameworks */,
+				DBFD26CB0F6B0F4E00DA5280 /* UIKit.framework in Frameworks */,
+				DBFD26EB0F6B0F5300DA5280 /* CoreGraphics.framework in Frameworks */,
+				DBFD27330F6B0F5800DA5280 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -122,6 +169,7 @@
 			isa = PBXGroup;
 			children = (
 				DBA4DD690F69765C001DC2A2 /* libCercaMap.a */,
+				DBFD26610F6B0E2300DA5280 /* CercaMapDemo.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -131,9 +179,11 @@
 			children = (
 				DBC1D1310F6750030026BF9C /* Sources */,
 				DBA4DE8D0F697C21001DC2A2 /* Resources */,
+				DBFD26670F6B0E3000DA5280 /* Demo */,
 				DBC1CF930F673ED00026BF9C /* Third Party */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
+				DBFD26630F6B0E2300DA5280 /* CercaMapDemo-Info.plist */,
 			);
 			name = CustomTemplate;
 			sourceTree = "<group>";
@@ -225,23 +275,40 @@
 		DBC1D1310F6750030026BF9C /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				DBFD24E20F6AEAAE00DA5280 /* CercaMap.h */,
 				DBC1CF340F673BFC0026BF9C /* CercaMap_Prefix.pch */,
-				DBA4DCC70F696D6A001DC2A2 /* CercaMap.h */,
-				DBC1D2050F6767940026BF9C /* CercaMapPoint.h */,
+				DBFD24E50F6AEAAE00DA5280 /* CercaMapPoint.h */,
 				DBA4D6110F685C2D001DC2A2 /* CercaMapSize.h */,
 				DBA4D6120F685C62001DC2A2 /* CercaMapRect.h */,
-				DBFD23580F69CDAB00DA5280 /* CercaMapZoomLevel.h */,
-				DBA4D9E30F68E064001DC2A2 /* CercaMapType.h */,
-				DBC1CF2D0F673BE00026BF9C /* CercaMapView.h */,
+				DBFD24E60F6AEAAE00DA5280 /* CercaMapType.h */,
+				DBFD24E80F6AEAAE00DA5280 /* CercaMapZoomLevel.h */,
+				DBFD24E70F6AEAAE00DA5280 /* CercaMapView.h */,
 				DBC1CF2E0F673BE00026BF9C /* CercaMapView.m */,
-				DBA4DA880F6954A2001DC2A2 /* CercaMapGenerator.h */,
+				DBFD24E30F6AEAAE00DA5280 /* CercaMapGenerator.h */,
 				DBA4DA890F6954A2001DC2A2 /* CercaMapGenerator.m */,
 				DBA4D60E0F685BB2001DC2A2 /* CercaMapQuad.h */,
 				DBA4D60F0F685BB2001DC2A2 /* CercaMapQuad.m */,
-				DBA4DA8F0F6956E2001DC2A2 /* CercaMapHelper.h */,
+				DBFD24E40F6AEAAE00DA5280 /* CercaMapHelper.h */,
 				DBA4DA900F6956E2001DC2A2 /* CercaMapHelper.m */,
 			);
 			name = Sources;
+			sourceTree = "<group>";
+		};
+		DBFD26670F6B0E3000DA5280 /* Demo */ = {
+			isa = PBXGroup;
+			children = (
+				DBFD26720F6B0E8500DA5280 /* Info.plist */,
+				DBFD26730F6B0E8500DA5280 /* main.m */,
+				DBFD26700F6B0E8500DA5280 /* CercaMapDemo_Prefix.pch */,
+				DBFD26680F6B0E5E00DA5280 /* CercaMapDemoAppDelegate.h */,
+				DBFD26690F6B0E5E00DA5280 /* CercaMapDemoAppDelegate.m */,
+				DBFD266A0F6B0E5E00DA5280 /* CercaMapDemoViewController.h */,
+				DBFD266B0F6B0E5E00DA5280 /* CercaMapDemoViewController.m */,
+				DBFD26740F6B0E8500DA5280 /* MainWindow.xib */,
+				DBFD26710F6B0E8500DA5280 /* CercaMapDemoViewController.xib */,
+				DBFD267B0F6B0EB900DA5280 /* config.h */,
+			);
+			name = Demo;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -251,15 +318,15 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DBA4DD6C0F697668001DC2A2 /* CercaMap.h in Headers */,
-				DBA4DD6D0F697668001DC2A2 /* CercaMapView.h in Headers */,
-				DBA4DD6E0F697668001DC2A2 /* CercaMapPoint.h in Headers */,
 				DBA4DD6F0F697668001DC2A2 /* CercaMapSize.h in Headers */,
 				DBA4DD700F697668001DC2A2 /* CercaMapRect.h in Headers */,
-				DBA4DD710F697668001DC2A2 /* CercaMapType.h in Headers */,
-				DBA4DD720F697668001DC2A2 /* CercaMapGenerator.h in Headers */,
-				DBA4DD730F697668001DC2A2 /* CercaMapHelper.h in Headers */,
-				DBFD235A0F69CDAB00DA5280 /* CercaMapZoomLevel.h in Headers */,
+				DBFD24E90F6AEAAE00DA5280 /* CercaMap.h in Headers */,
+				DBFD24EA0F6AEAAE00DA5280 /* CercaMapGenerator.h in Headers */,
+				DBFD24EB0F6AEAAE00DA5280 /* CercaMapHelper.h in Headers */,
+				DBFD24EC0F6AEAAE00DA5280 /* CercaMapPoint.h in Headers */,
+				DBFD24ED0F6AEAAE00DA5280 /* CercaMapType.h in Headers */,
+				DBFD24EE0F6AEAAE00DA5280 /* CercaMapView.h in Headers */,
+				DBFD24EF0F6AEAAE00DA5280 /* CercaMapZoomLevel.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -283,6 +350,24 @@
 			productReference = DBA4DD690F69765C001DC2A2 /* libCercaMap.a */;
 			productType = "com.apple.product-type.library.static";
 		};
+		DBFD26600F6B0E2300DA5280 /* CercaMapDemo */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DBFD26660F6B0E2400DA5280 /* Build configuration list for PBXNativeTarget "CercaMapDemo" */;
+			buildPhases = (
+				DBFD265D0F6B0E2300DA5280 /* Resources */,
+				DBFD265E0F6B0E2300DA5280 /* Sources */,
+				DBFD265F0F6B0E2300DA5280 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				DBFD266F0F6B0E6C00DA5280 /* PBXTargetDependency */,
+			);
+			name = CercaMapDemo;
+			productName = CercaMapDemo;
+			productReference = DBFD26610F6B0E2300DA5280 /* CercaMapDemo.app */;
+			productType = "com.apple.product-type.application";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -302,10 +387,24 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
+				DBFD26600F6B0E2300DA5280 /* CercaMapDemo */,
 				DBA4DD680F69765C001DC2A2 /* CercaMap */,
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		DBFD265D0F6B0E2300DA5280 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DBFD26750F6B0E8500DA5280 /* CercaMapDemoViewController.xib in Resources */,
+				DBFD26760F6B0E8500DA5280 /* Info.plist in Resources */,
+				DBFD26780F6B0E8500DA5280 /* MainWindow.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		DBA4DD660F69765C001DC2A2 /* Sources */ = {
@@ -322,7 +421,25 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		DBFD265E0F6B0E2300DA5280 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DBFD266C0F6B0E5E00DA5280 /* CercaMapDemoAppDelegate.m in Sources */,
+				DBFD266D0F6B0E5E00DA5280 /* CercaMapDemoViewController.m in Sources */,
+				DBFD26770F6B0E8500DA5280 /* main.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		DBFD266F0F6B0E6C00DA5280 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = DBA4DD680F69765C001DC2A2 /* CercaMap */;
+			targetProxy = DBFD266E0F6B0E6C00DA5280 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		C01FCF4F08A954540054247B /* Debug */ = {
@@ -335,7 +452,11 @@
 				GCC_PREPROCESSOR_DEFINITIONS = __IPHONE;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = "${SDKROOT}/usr/include/libxml2/";
+				HEADER_SEARCH_PATHS = (
+					include/,
+					ThirdParty/,
+					"${SDKROOT}/usr/include/libxml2/",
+				);
 				ONLY_ACTIVE_ARCH = YES;
 				PREBINDING = NO;
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "B2667342-4468-4C75-BF69-C3E9A9A7ABED";
@@ -354,7 +475,11 @@
 				GCC_PREPROCESSOR_DEFINITIONS = __IPHONE;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = "${SDKROOT}/usr/include/libxml2/";
+				HEADER_SEARCH_PATHS = (
+					include/,
+					ThirdParty/,
+					"${SDKROOT}/usr/include/libxml2/",
+				);
 				PREBINDING = NO;
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "B2667342-4468-4C75-BF69-C3E9A9A7ABED";
 				SDKROOT = iphoneos2.0;
@@ -369,10 +494,6 @@
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
-				HEADER_SEARCH_PATHS = (
-					ThirdParty/,
-					"${SDKROOT}/usr/include/libxml2/",
-				);
 				INSTALL_PATH = /usr/local/lib;
 				PREBINDING = NO;
 				PRIVATE_HEADERS_FOLDER_PATH = /usr/local/include/CercaMap;
@@ -388,15 +509,64 @@
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
-				HEADER_SEARCH_PATHS = (
-					ThirdParty/,
-					"${SDKROOT}/usr/include/libxml2/",
-				);
 				INSTALL_PATH = /usr/local/lib;
 				PREBINDING = NO;
 				PRIVATE_HEADERS_FOLDER_PATH = /usr/local/include/CercaMap;
 				PRODUCT_NAME = CercaMap;
 				PUBLIC_HEADERS_FOLDER_PATH = /usr/local/include/CercaMap;
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
+		DBFD26640F6B0E2300DA5280 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
+				INFOPLIST_FILE = "CercaMapDemo-Info.plist";
+				INSTALL_PATH = "$(HOME)/Applications";
+				OTHER_LDFLAGS = (
+					"-framework",
+					Foundation,
+					"-framework",
+					UIKit,
+					"-ObjC",
+					"-lCercaMap",
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = CercaMapDemo;
+				SDKROOT = iphoneos2.2.1;
+			};
+			name = Debug;
+		};
+		DBFD26650F6B0E2300DA5280 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
+				INFOPLIST_FILE = "CercaMapDemo-Info.plist";
+				INSTALL_PATH = "$(HOME)/Applications";
+				OTHER_LDFLAGS = (
+					"-framework",
+					Foundation,
+					"-framework",
+					UIKit,
+					"-ObjC",
+					"-lCercaMap",
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = CercaMapDemo;
+				SDKROOT = iphoneos2.2.1;
 				ZERO_LINK = NO;
 			};
 			name = Release;
@@ -418,6 +588,15 @@
 			buildConfigurations = (
 				DBA4DD6A0F69765D001DC2A2 /* Debug */,
 				DBA4DD6B0F69765D001DC2A2 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		DBFD26660F6B0E2400DA5280 /* Build configuration list for PBXNativeTarget "CercaMapDemo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DBFD26640F6B0E2300DA5280 /* Debug */,
+				DBFD26650F6B0E2300DA5280 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

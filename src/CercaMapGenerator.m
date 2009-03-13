@@ -8,31 +8,55 @@
 
 #import "CercaMapGenerator.h"
 #import "CercaMapQuad.h"
-#import <VirtualEarthKit/VECommonService.h>
 
 @implementation CercaMapGenerator
 
-static NSString *token;
 static CercaMapQuad *rootMapQuad;
+
+#pragma mark Private
+
++(NSString *) keyedArchiveFilename
+{
+	NSArray *documentDirectories = NSSearchPathForDirectoriesInDomains( NSDocumentDirectory, NSUserDomainMask, YES );
+	NSString *documentDirectory = [documentDirectories objectAtIndex:0];
+	return [documentDirectory stringByAppendingPathComponent:@"CercaMapGeneratorState.keyedArchive"];
+}
+
+#pragma mark CercaMapGenerator - Authentication
+
+static NSString *mapServiceUsername;
+static NSString *mapServicePassword;
+
++(void) setMapServiceUsername:(NSString *)_username password:(NSString *)_password
+{
+	[mapServiceUsername release];
+	mapServiceUsername = [_username retain];
+	
+	[mapServicePassword release];
+	mapServicePassword = [_password retain];
+}
+
++(NSString *) mapServiceUsername
+{
+	return mapServiceUsername;
+}
+
++(NSString *) mapServicePassword
+{
+	return mapServicePassword;
+}
+
+#pragma mark CercaMapGenerator - Drawing Maps
 
 +(void) drawToDstRect:(CGRect)dstRect
 	centerPoint:(CercaMapPoint)centerPoint
 	zoomLevel:(CercaMapZoomLevel)zoomLevel
 	mapType:(CercaMapType)mapType
-	virtualEarthKitUsername:(NSString *)username
-	virtualEarthKitPassword:(NSString *)password
 {
 	if ( rootMapQuad == nil )
 	{
-		if ( token == nil )
-		{
-			VECommonService *commonService = [[[VECommonService alloc] init] autorelease];
-			[commonService getToken:&token forUserID:username password:password ipAddress:@"192.168.0.1"];
-		}
-		
 		rootMapQuad = [[CercaMapQuad alloc] initWithParentQuad:nil
 			coverage:CercaMapRectMake( 0, 0, 1<<27, 1<<27 )
-			token:token
 			urlBaseString:@""
 			logZoom:0];
 	}
@@ -42,6 +66,8 @@ static CercaMapQuad *rootMapQuad;
 		roundf( srcSize.width ), roundf( srcSize.height ) );
 	[rootMapQuad drawToDstRect:dstRect srcRect:srcRect zoomLevel:zoomLevel mapType:mapType];
 }
+
+#pragma mark CercaMapGenerator - Refresh Notifications
 
 +(NSNotificationCenter *) refreshNotificationCenter
 {
@@ -71,9 +97,34 @@ static CercaMapQuad *rootMapQuad;
 		object:nil];
 }
 
+#pragma mark CercaMapGenerator - Memory Warnings
+
 +(void) didReceiveMemoryWarning
 {
 	[rootMapQuad shouldKeepAfterPurgingMemory];
+}
+
+#pragma mark CercaMapGenerator - Persistence
+
+static NSString *rootMapQuadPK = @"rootMapQuad_1";
+
++(void) loadState
+{
+	NSString *keyedArchiveFilename = [self keyedArchiveFilename];
+	NSData *keyedArchiveData = [NSData dataWithContentsOfFile:keyedArchiveFilename];
+	NSKeyedUnarchiver *keyedUnarchiver = [[[NSKeyedUnarchiver alloc] initForReadingWithData:keyedArchiveData] autorelease];
+	rootMapQuad = [[keyedUnarchiver decodeObjectForKey:rootMapQuadPK] retain];
+	[keyedUnarchiver finishDecoding];
+}
+
++(void) saveState
+{
+	NSMutableData *keyedArchiveData = [NSMutableData data];
+	NSKeyedArchiver *keyedArchiver = [[[NSKeyedArchiver alloc] initForWritingWithMutableData:keyedArchiveData] autorelease];
+	[keyedArchiver encodeObject:rootMapQuad forKey:rootMapQuadPK];
+	[keyedArchiver finishEncoding];
+	NSString *keyedArchiveFilename = [self keyedArchiveFilename];
+	[keyedArchiveData writeToFile:keyedArchiveFilename atomically:YES];
 }
 
 @end
