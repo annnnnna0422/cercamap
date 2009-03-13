@@ -73,8 +73,7 @@ static CercaMapQuad *rootMapQuad;
 
 +(void) didReceiveMemoryWarning
 {
-	[rootMapQuad release];
-	rootMapQuad = nil;
+	[rootMapQuad shouldKeepAfterPurgingMemory];
 }
 
 @end

@@ -13,6 +13,8 @@ typedef struct { unsigned char r, g, b, a; } RGBA;
 
 @implementation CercaMapQuad
 
+static NSUInteger globalLoadGeneration;
+
 #pragma mark Private
 
 -(NSString *) urlStringForMapType:(CercaMapType)mapType
@@ -164,6 +166,43 @@ typedef struct { unsigned char r, g, b, a; } RGBA;
 	}
 }
 
+-(BOOL) shouldKeepAfterPurgingMemory
+{
+	BOOL keep = NO;
+
+	for ( int i=0; i<CM_NUM_MAP_TYPES; ++i )
+	{
+		if ( imageDatas[i] != nil )
+		{
+			if ( globalLoadGeneration - loadGenerations[i] > 8 )
+			{
+				[imageDatas[i] release];
+				imageDatas[i] = nil;
+			}
+			else
+				keep = YES;
+		}
+		else if ( connections[i] != nil )
+			keep = YES;
+	}
+	
+	for ( int i=0; i<2; ++i )
+	{
+		for ( int j=0; j<2; ++j )
+		{
+			if ( [childQuads[i][j] shouldKeepAfterPurgingMemory] )
+				keep = YES;
+			else
+			{
+				[childQuads[i][j] release];
+				childQuads[i][j] = nil;
+			}
+		}
+	}
+	
+	return keep;
+}
+
 #pragma mark NSURLConnection Delegate
 
 -(void) connection:(NSURLConnection *)connection
@@ -195,6 +234,8 @@ typedef struct { unsigned char r, g, b, a; } RGBA;
 	[origImage drawAtPoint:CGPointMake(0,0)];
 	images[mapType] = [UIGraphicsGetImageFromCurrentImageContext() retain];
 	UIGraphicsEndImageContext();
+	
+	loadGenerations[mapType] = globalLoadGeneration++;
 		
 	[[CercaMapGenerator refreshNotificationCenter]
 		postNotificationName:[CercaMapGenerator refreshNotificationName]
