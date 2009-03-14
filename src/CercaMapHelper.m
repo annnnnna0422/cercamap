@@ -35,10 +35,10 @@
 	scaleByFactor:(CGFloat)scale
 {
 	zoomLevel *= scale;
-	if ( zoomLevel < (1<<1) )
-		zoomLevel = (1<<1);
-	if ( zoomLevel > (1<<19) )
-		zoomLevel = (1<<19);
+	if ( zoomLevel < CM_ZOOM_LEVEL_MIN )
+		zoomLevel = CM_ZOOM_LEVEL_MIN;
+	if ( zoomLevel > CM_ZOOM_LEVEL_MAX )
+		zoomLevel = CM_ZOOM_LEVEL_MAX;
 	return zoomLevel;
 }
 

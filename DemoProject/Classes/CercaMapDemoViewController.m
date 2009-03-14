@@ -17,7 +17,7 @@
 	coordinate.latitude = 37.766667;
 	coordinate.longitude = -122.433333;
 
-	cercaMapView.zoomLevel = 1 << 14;
+	cercaMapView.zoomLevel = CM_ZOOM_LEVEL_NEIGHBORHOOD;
 	[cercaMapView setCenterCoordinate:coordinate];
 	cercaMapView.mapType = CM_MAP_TYPE_ROADS;
 }

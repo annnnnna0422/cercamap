@@ -27,7 +27,8 @@ static CercaMapQuad *rootMapQuad;
 static NSString *mapServiceUsername;
 static NSString *mapServicePassword;
 
-+(void) setMapServiceUsername:(NSString *)_username password:(NSString *)_password
++(void) setMapServiceUsername:(NSString *)_username
+	password:(NSString *)_password
 {
 	[mapServiceUsername release];
 	mapServiceUsername = [_username retain];
@@ -60,7 +61,7 @@ static NSString *mapServicePassword;
 			urlBaseString:@""
 			logZoom:0];
 	}
-	CGFloat mult = (1<<18) / zoomLevel;
+	CGFloat mult = (1<<19) / zoomLevel;
 	CGSize srcSize = CGSizeMake( CGRectGetWidth(dstRect)*mult, CGRectGetHeight(dstRect)*mult );
 	CercaMapRect srcRect = CercaMapRectMake( roundf( centerPoint.x - srcSize.width/2 ), roundf( centerPoint.y - srcSize.height/2 ),
 		roundf( srcSize.width ), roundf( srcSize.height ) );

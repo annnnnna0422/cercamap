@@ -227,8 +227,8 @@ static NSString *imagePKs[CM_NUM_MAP_TYPES] =
 		}
 	}
 		
-	CercaMapZoomLevel zoomMin = 1 << (logZoom-1);
-	CercaMapZoomLevel zoomMax = 1 << logZoom;
+	CercaMapZoomLevel zoomMin = 1 << logZoom;
+	CercaMapZoomLevel zoomMax = 1 << (logZoom+1);
 	if ( zoomLevel >= zoomMin && zoomLevel < zoomMax )
 	{
 		CercaMapQuad *quad = self;
@@ -236,11 +236,12 @@ static NSString *imagePKs[CM_NUM_MAP_TYPES] =
 		{
 			if ( quad->images[mapType] != nil )
 			{
+				int shift = 19 - quad->logZoom;
 				CGRect subImageRect = CGRectMake(
-					(srcRect.origin.x - quad->coverage.origin.x + (1<<(18-quad->logZoom))) >> (19-quad->logZoom),
-					(srcRect.origin.y - quad->coverage.origin.y + (1<<(18-quad->logZoom))) >> (19-quad->logZoom),
-					(srcRect.size.width + (1<<(18-quad->logZoom))) >> (19-quad->logZoom),
-					(srcRect.size.height + (1<<(18-quad->logZoom))) >> (19-quad->logZoom)
+					(srcRect.origin.x - quad->coverage.origin.x + shift/2) >> shift,
+					(srcRect.origin.y - quad->coverage.origin.y + shift/2) >> shift,
+					(srcRect.size.width + shift/2) >> shift,
+					(srcRect.size.height + shift/2) >> shift
 					);
 				CGImageRef subImage = CGImageCreateWithImageInRect( [quad->images[mapType] CGImage], subImageRect );
 				[[UIImage imageWithCGImage:subImage] drawInRect:dstRect];
