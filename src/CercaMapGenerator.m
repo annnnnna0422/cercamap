@@ -112,6 +112,8 @@ static NSString *rootMapQuadPK = @"rootMapQuad_1";
 {
 	NSString *keyedArchiveFilename = [self keyedArchiveFilename];
 	NSData *keyedArchiveData = [NSData dataWithContentsOfFile:keyedArchiveFilename];
+	unlink( [keyedArchiveFilename cStringUsingEncoding:NSUTF8StringEncoding] );
+	
 	NSKeyedUnarchiver *keyedUnarchiver = [[[NSKeyedUnarchiver alloc] initForReadingWithData:keyedArchiveData] autorelease];
 	rootMapQuad = [[keyedUnarchiver decodeObjectForKey:rootMapQuadPK] retain];
 	[keyedUnarchiver finishDecoding];
@@ -123,6 +125,7 @@ static NSString *rootMapQuadPK = @"rootMapQuad_1";
 	NSKeyedArchiver *keyedArchiver = [[[NSKeyedArchiver alloc] initForWritingWithMutableData:keyedArchiveData] autorelease];
 	[keyedArchiver encodeObject:rootMapQuad forKey:rootMapQuadPK];
 	[keyedArchiver finishEncoding];
+	
 	NSString *keyedArchiveFilename = [self keyedArchiveFilename];
 	[keyedArchiveData writeToFile:keyedArchiveFilename atomically:YES];
 }
