@@ -24,7 +24,7 @@
 	UIImage *images[CM_NUM_MAP_TYPES];
 	NSURLConnection *connections[CM_NUM_MAP_TYPES];
 	NSMutableData *imageDatas[CM_NUM_MAP_TYPES];
-	NSUInteger loadGenerations[CM_NUM_MAP_TYPES];
+	NSUInteger displayGenerations[CM_NUM_MAP_TYPES];
 }
 
 #pragma mark Public

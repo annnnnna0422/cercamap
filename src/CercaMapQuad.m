@@ -14,7 +14,7 @@ typedef struct { unsigned char r, g, b, a; } RGBA;
 
 @implementation CercaMapQuad
 
-static NSUInteger globalLoadGeneration;
+static NSUInteger globalDisplayGeneration;
 
 #pragma mark Private
 
@@ -174,10 +174,7 @@ static NSString *imagePKs[CM_NUM_MAP_TYPES] =
 		{
 			NSData *imagePNGRepresentation = [decoder decodeObjectForKey:imagePKs[i]];
 			if ( imagePNGRepresentation != nil )
-			{
 				images[i] = [[CercaMapQuad uncompressedImageWithData:imagePNGRepresentation] retain];
-				loadGenerations[i] = globalLoadGeneration++;
-			}
 		}
 	}
 	return self;
@@ -185,6 +182,8 @@ static NSString *imagePKs[CM_NUM_MAP_TYPES] =
 
 - (void)encodeWithCoder:(NSCoder *)encoder
 {
+	static const NSUInteger displayGenerationsToEncode = 8;
+	
 	for ( int i=0; i<2; ++i )
 		for ( int j=0; j<2; ++j )
 			[encoder encodeObject:childQuads[i][j]
@@ -202,7 +201,7 @@ static NSString *imagePKs[CM_NUM_MAP_TYPES] =
 	for ( int i=0; i<CM_NUM_MAP_TYPES; ++i )
 	{
 		NSData *imagePNGRepresentation = nil;
-		if ( images[i] != nil )
+		if ( images[i] != nil && globalDisplayGeneration - displayGenerations[i] <= displayGenerationsToEncode )
 			imagePNGRepresentation = UIImagePNGRepresentation(images[i]);
 		[encoder encodeObject:imagePNGRepresentation forKey:imagePKs[i]];
 	}
@@ -245,6 +244,7 @@ static NSString *imagePKs[CM_NUM_MAP_TYPES] =
 				CGImageRef subImage = CGImageCreateWithImageInRect( [quad->images[mapType] CGImage], subImageRect );
 				[[UIImage imageWithCGImage:subImage] drawInRect:dstRect];
 				CGImageRelease( subImage );
+				displayGenerations[mapType] = globalDisplayGeneration++;
 				break;
 			}
 			quad = quad->parentQuad;
@@ -279,13 +279,14 @@ static NSString *imagePKs[CM_NUM_MAP_TYPES] =
 
 -(BOOL) shouldKeepAfterPurgingMemory
 {
+	static const NSUInteger displayGenerationsToKeep = 8;
 	BOOL keep = NO;
 
 	for ( int i=0; i<CM_NUM_MAP_TYPES; ++i )
 	{
 		if ( imageDatas[i] != nil )
 		{
-			if ( globalLoadGeneration - loadGenerations[i] > 8 )
+			if ( globalDisplayGeneration - displayGenerations[i] > displayGenerationsToKeep )
 			{
 				[imageDatas[i] release];
 				imageDatas[i] = nil;
@@ -354,7 +355,7 @@ static NSString *imagePKs[CM_NUM_MAP_TYPES] =
 	[imageDatas[mapType] release];
 	imageDatas[mapType] = nil;
 	
-	loadGenerations[mapType] = globalLoadGeneration++;
+	displayGenerations[mapType] = globalDisplayGeneration++;
 	
 	[[CercaMapGenerator refreshNotificationCenter]
 		postNotificationName:[CercaMapGenerator refreshNotificationName]
