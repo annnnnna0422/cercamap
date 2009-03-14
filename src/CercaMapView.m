@@ -78,12 +78,12 @@
 
 @dynamic centerPoint;
 
--(CercaMapPoint) centerPoint
+-(CercaMapLocation) centerPoint
 {
 	return centerPoint;
 }
 
--(void) setCenterPoint:(CercaMapPoint)_
+-(void) setCenterPoint:(CercaMapLocation)_
 {
 	centerPoint = _;
 	[self setNeedsDisplay];
@@ -182,10 +182,10 @@
 				endPoint = newPoints[0];
 			}
 		}
-		CGPoint delta = CGPointMake( startPoint.x - endPoint.x, startPoint.y - endPoint.y );
-		if ( delta.x != 0 || delta.y != 0 )
+		CGPoint pointDelta = CGPointMake( startPoint.x - endPoint.x, startPoint.y - endPoint.y );
+		if ( pointDelta.x != 0 || pointDelta.y != 0 )
 		{
-			centerPoint = [CercaMapHelper mapPoint:centerPoint pannedByPixelDelta:delta atZoomLevel:zoomLevel];
+			centerPoint = [CercaMapHelper mapLocation:centerPoint pannedByPointDelta:pointDelta atZoomLevel:zoomLevel];
 			[self setNeedsDisplay];
 		}
 	}

@@ -7,20 +7,20 @@
  *
  */
 
-#import <CercaMap/CercaMapPoint.h>
+#import <CercaMap/CercaMapLocation.h>
 #import <CercaMap/CercaMapSize.h>
 
 #pragma mark CercaMapRect
 
 typedef struct
 {
-	CercaMapPoint origin;
+	CercaMapLocation origin;
 	CercaMapSize size;
 } CercaMapRect;
 
 static inline CercaMapRect CercaMapRectMake( int x, int y, int w, int h )
 {
-	CercaMapRect result = { CercaMapPointMake( x, y ), CercaMapSizeMake( w, h ) };
+	CercaMapRect result = { CercaMapLocationMake( x, y ), CercaMapSizeMake( w, h ) };
 	return result;
 }
 

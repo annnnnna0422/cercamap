@@ -9,7 +9,7 @@
 
 #import <CercaMap/CercaMapView.h>
 #import <CercaMap/CercaMapType.h>
-#import <CercaMap/CercaMapPoint.h>
+#import <CercaMap/CercaMapLocation.h>
 #import <CercaMap/CercaMapSize.h>
 #import <CercaMap/CercaMapRect.h>
 #import <CercaMap/CercaMapGenerator.h>

@@ -22,7 +22,7 @@
 		DB2B23170F6B2636003F6147 /* CercaMap.h in Headers */ = {isa = PBXBuildFile; fileRef = DB2B23100F6B2636003F6147 /* CercaMap.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		DB2B23180F6B2636003F6147 /* CercaMapGenerator.h in Headers */ = {isa = PBXBuildFile; fileRef = DB2B23110F6B2636003F6147 /* CercaMapGenerator.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		DB2B23190F6B2636003F6147 /* CercaMapHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = DB2B23120F6B2636003F6147 /* CercaMapHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		DB2B231A0F6B2636003F6147 /* CercaMapPoint.h in Headers */ = {isa = PBXBuildFile; fileRef = DB2B23130F6B2636003F6147 /* CercaMapPoint.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		DB2B231A0F6B2636003F6147 /* CercaMapLocation.h in Headers */ = {isa = PBXBuildFile; fileRef = DB2B23130F6B2636003F6147 /* CercaMapLocation.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		DB2B231B0F6B2636003F6147 /* CercaMapType.h in Headers */ = {isa = PBXBuildFile; fileRef = DB2B23140F6B2636003F6147 /* CercaMapType.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		DB2B231C0F6B2636003F6147 /* CercaMapView.h in Headers */ = {isa = PBXBuildFile; fileRef = DB2B23150F6B2636003F6147 /* CercaMapView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		DB2B231D0F6B2636003F6147 /* CercaMapZoomLevel.h in Headers */ = {isa = PBXBuildFile; fileRef = DB2B23160F6B2636003F6147 /* CercaMapZoomLevel.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -61,7 +61,7 @@
 		DB2B23100F6B2636003F6147 /* CercaMap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CercaMap.h; path = include/CercaMap/CercaMap.h; sourceTree = "<group>"; };
 		DB2B23110F6B2636003F6147 /* CercaMapGenerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CercaMapGenerator.h; path = include/CercaMap/CercaMapGenerator.h; sourceTree = "<group>"; };
 		DB2B23120F6B2636003F6147 /* CercaMapHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CercaMapHelper.h; path = include/CercaMap/CercaMapHelper.h; sourceTree = "<group>"; };
-		DB2B23130F6B2636003F6147 /* CercaMapPoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CercaMapPoint.h; path = include/CercaMap/CercaMapPoint.h; sourceTree = "<group>"; };
+		DB2B23130F6B2636003F6147 /* CercaMapLocation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CercaMapLocation.h; path = include/CercaMap/CercaMapLocation.h; sourceTree = "<group>"; };
 		DB2B23140F6B2636003F6147 /* CercaMapType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CercaMapType.h; path = include/CercaMap/CercaMapType.h; sourceTree = "<group>"; };
 		DB2B23150F6B2636003F6147 /* CercaMapView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CercaMapView.h; path = include/CercaMap/CercaMapView.h; sourceTree = "<group>"; };
 		DB2B23160F6B2636003F6147 /* CercaMapZoomLevel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CercaMapZoomLevel.h; path = include/CercaMap/CercaMapZoomLevel.h; sourceTree = "<group>"; };
@@ -161,7 +161,7 @@
 			isa = PBXGroup;
 			children = (
 				DB2B23100F6B2636003F6147 /* CercaMap.h */,
-				DB2B23130F6B2636003F6147 /* CercaMapPoint.h */,
+				DB2B23130F6B2636003F6147 /* CercaMapLocation.h */,
 				DB2B23230F6B266B003F6147 /* CercaMapSize.h */,
 				DB2B23220F6B266B003F6147 /* CercaMapRect.h */,
 				DB2B23160F6B2636003F6147 /* CercaMapZoomLevel.h */,
@@ -206,7 +206,7 @@
 				DB2B23170F6B2636003F6147 /* CercaMap.h in Headers */,
 				DB2B23180F6B2636003F6147 /* CercaMapGenerator.h in Headers */,
 				DB2B23190F6B2636003F6147 /* CercaMapHelper.h in Headers */,
-				DB2B231A0F6B2636003F6147 /* CercaMapPoint.h in Headers */,
+				DB2B231A0F6B2636003F6147 /* CercaMapLocation.h in Headers */,
 				DB2B231B0F6B2636003F6147 /* CercaMapType.h in Headers */,
 				DB2B231C0F6B2636003F6147 /* CercaMapView.h in Headers */,
 				DB2B231D0F6B2636003F6147 /* CercaMapZoomLevel.h in Headers */,

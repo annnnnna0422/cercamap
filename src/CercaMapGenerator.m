@@ -49,7 +49,7 @@ static NSString *mapServicePassword;
 #pragma mark CercaMapGenerator - Drawing Maps
 
 +(void) drawToDstRect:(CGRect)dstRect
-	centerPoint:(CercaMapPoint)centerPoint
+	centerPoint:(CercaMapLocation)centerPoint
 	zoomLevel:(CercaMapZoomLevel)zoomLevel
 	mapType:(CercaMapType)mapType
 {

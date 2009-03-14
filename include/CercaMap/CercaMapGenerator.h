@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <CoreGraphics/CoreGraphics.h>
 #import <CercaMap/CercaMapType.h>
-#import <CercaMap/CercaMapPoint.h>
+#import <CercaMap/CercaMapLocation.h>
 #import <CercaMap/CercaMapZoomLevel.h>
 
 #pragma mark Forward Declarations
@@ -27,7 +27,7 @@
 
 #pragma mark CercaMapGenerator - Drawing Maps
 +(void) drawToDstRect:(CGRect)dstRect
-	centerPoint:(CercaMapPoint)centerPoint
+	centerPoint:(CercaMapLocation)centerPoint
 	zoomLevel:(CercaMapZoomLevel)zoomLevel
 	mapType:(CercaMapType)mapType;
 

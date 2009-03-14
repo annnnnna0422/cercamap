@@ -9,17 +9,17 @@
 #import <Foundation/Foundation.h>
 #import <CoreGraphics/CoreGraphics.h>
 #import <CoreLocation/CoreLocation.h>
-#import <CercaMap/CercaMapPoint.h>
+#import <CercaMap/CercaMapLocation.h>
 #import <CercaMap/CercaMapZoomLevel.h>
 
 @interface CercaMapHelper : NSObject
 {
 }
 
-+(CercaMapPoint) mapPointForCoordinate:(CLLocationCoordinate2D)coordinates;
++(CercaMapLocation) mapPointForCoordinate:(CLLocationCoordinate2D)coordinates;
 
-+(CercaMapPoint) mapPoint:(CercaMapPoint)mapPoint
-	pannedByPixelDelta:(CGPoint)delta
++(CercaMapLocation) mapLocation:(CercaMapLocation)mapLocation
+	pannedByPointDelta:(CGPoint)pointDelta
 	atZoomLevel:(CercaMapZoomLevel)zoomLevel;
 	
 +(CercaMapZoomLevel) mapZoomLevel:(CercaMapZoomLevel)zoomLevel

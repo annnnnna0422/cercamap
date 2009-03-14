@@ -10,9 +10,9 @@
 
 @implementation CercaMapHelper
 
-+(CercaMapPoint) mapPointForCoordinate:(CLLocationCoordinate2D)coordinates
++(CercaMapLocation) mapPointForCoordinate:(CLLocationCoordinate2D)coordinates
 {
-	CercaMapPoint pixel;
+	CercaMapLocation pixel;
 	pixel.x = (int)roundf( ((coordinates.longitude + 180) / 360) * (1<<27) );
 	float sinLatitude = sinf( coordinates.latitude * M_PI / 180 );
 	float div = (1 + sinLatitude) / (1 - sinLatitude);
@@ -20,13 +20,13 @@
 	return pixel;
 }
 
-+(CercaMapPoint) mapPoint:(CercaMapPoint)mapPoint
-	pannedByPixelDelta:(CGPoint)delta
++(CercaMapLocation) mapLocation:(CercaMapLocation)mapLocation
+	pannedByPointDelta:(CGPoint)pointDelta
 	atZoomLevel:(CercaMapZoomLevel)zoomLevel
 {
-	CercaMapPoint result = CercaMapPointMake(
-		mapPoint.x + (1<<18)*delta.x/zoomLevel,
-		mapPoint.y + (1<<18)*delta.y/zoomLevel
+	CercaMapLocation result = CercaMapLocationMake(
+		mapLocation.x + (1<<18)*pointDelta.x/zoomLevel,
+		mapLocation.y + (1<<18)*pointDelta.y/zoomLevel
 		);
 	return result;
 }

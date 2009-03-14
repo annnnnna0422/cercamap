@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import <CoreLocation/CoreLocation.h>
 #import <CercaMap/CercaMapType.h>
-#import <CercaMap/CercaMapPoint.h>
+#import <CercaMap/CercaMapLocation.h>
 #import <CercaMap/CercaMapZoomLevel.h>
 
 #pragma mark Forward Declarations
@@ -20,13 +20,13 @@
 @private
 	int numPoints;
 	CGPoint points[2];
-	CercaMapPoint centerPoint;
+	CercaMapLocation centerPoint;
 	CercaMapZoomLevel zoomLevel;
 	CercaMapType mapType;
 }
 
 #pragma mark CercaMapView - Parameters
-@property( assign ) CercaMapPoint centerPoint;
+@property( assign ) CercaMapLocation centerPoint;
 @property( assign ) CercaMapZoomLevel zoomLevel;
 @property( assign ) CercaMapType mapType;
 -(void) setCenterCoordinate:(CLLocationCoordinate2D)coordinate;
