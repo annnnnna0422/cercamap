@@ -33,13 +33,17 @@
 }
 
 +(CercaMapZoomLevel) mapZoomLevel:(CercaMapZoomLevel)zoomLevel
-	scaleByFactor:(CGFloat)scale
+	scaleByStartPointDistance:(CGFloat)startPointDistance
+	endPointDistance:(CGFloat)endPointDistance;
 {
-	zoomLevel *= scale;
-	if ( zoomLevel < CM_ZOOM_LEVEL_MIN )
-		zoomLevel = CM_ZOOM_LEVEL_MIN;
-	if ( zoomLevel > CM_ZOOM_LEVEL_MAX )
-		zoomLevel = CM_ZOOM_LEVEL_MAX;
+	if ( startPointDistance >= 1.0 )
+	{
+		zoomLevel *= endPointDistance / startPointDistance;
+		if ( zoomLevel < CM_ZOOM_LEVEL_MIN )
+			zoomLevel = CM_ZOOM_LEVEL_MIN;
+		if ( zoomLevel > CM_ZOOM_LEVEL_MAX )
+			zoomLevel = CM_ZOOM_LEVEL_MAX;
+	}
 	return zoomLevel;
 }
 

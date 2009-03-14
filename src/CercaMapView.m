@@ -194,12 +194,8 @@
 	{
 		CGFloat startDistance = [CercaMapView distanceFromPoint:points[0] toPoint:points[1]];
 		CGFloat endDistance = [CercaMapView distanceFromPoint:newPoints[0] toPoint:newPoints[1]];
-		if ( startDistance > 1 )
-		{
-			CGFloat scale = endDistance/startDistance;
-			zoomLevel = [CercaMapHelper mapZoomLevel:zoomLevel scaleByFactor:scale];
-			[self setNeedsDisplay];
-		}
+		zoomLevel = [CercaMapHelper mapZoomLevel:zoomLevel scaleByStartPointDistance:startDistance endPointDistance:endDistance];
+		[self setNeedsDisplay];
 	}
 
 	numPoints = newNumPoints;

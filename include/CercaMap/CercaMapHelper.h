@@ -23,6 +23,7 @@
 	atZoomLevel:(CercaMapZoomLevel)zoomLevel;
 	
 +(CercaMapZoomLevel) mapZoomLevel:(CercaMapZoomLevel)zoomLevel
-	scaleByFactor:(CGFloat)scale;
+	scaleByStartPointDistance:(CGFloat)startPointDistance
+	endPointDistance:(CGFloat)endPointDistance;
 	
 @end
