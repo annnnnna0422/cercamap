@@ -237,10 +237,10 @@ static NSString *imagePKs[CM_NUM_MAP_TYPES] =
 			{
 				int shift = 19 - quad->logZoom;
 				CGRect subImageRect = CGRectMake(
-					(srcRect.origin.x - quad->coverage.origin.x + shift/2) >> shift,
-					(srcRect.origin.y - quad->coverage.origin.y + shift/2) >> shift,
-					(srcRect.size.width + shift/2) >> shift,
-					(srcRect.size.height + shift/2) >> shift
+					(srcRect.origin.x - quad->coverage.origin.x) >> shift,
+					(srcRect.origin.y - quad->coverage.origin.y) >> shift,
+					(srcRect.size.width) >> shift,
+					(srcRect.size.height) >> shift
 					);
 				CGImageRef subImage = CGImageCreateWithImageInRect( [quad->images[mapType] CGImage], subImageRect );
 				[[UIImage imageWithCGImage:subImage] drawInRect:dstRect];
@@ -263,12 +263,12 @@ static NSString *imagePKs[CM_NUM_MAP_TYPES] =
 				if ( CercaMapRectIsNonEmpty( childSrcRect ) )
 				{
 					CGRect childDstRect = CGRectMake(
-						(dstRect.origin.x * (srcRect.origin.x + srcRect.size.width - childSrcRect.origin.x)
-							+ (dstRect.origin.x + dstRect.size.width) * (childSrcRect.origin.x - srcRect.origin.x)) / srcRect.size.width,
-						(dstRect.origin.y * (srcRect.origin.y + srcRect.size.height - childSrcRect.origin.y)
-							+ (dstRect.origin.y + dstRect.size.height) * (childSrcRect.origin.y - srcRect.origin.y)) / srcRect.size.height,
-						dstRect.size.width * childSrcRect.size.width / srcRect.size.width,
-						dstRect.size.height * childSrcRect.size.height / srcRect.size.height
+						roundf( (dstRect.origin.x * (srcRect.origin.x + srcRect.size.width - childSrcRect.origin.x)
+							+ (dstRect.origin.x + dstRect.size.width) * (childSrcRect.origin.x - srcRect.origin.x)) / srcRect.size.width ),
+						roundf( (dstRect.origin.y * (srcRect.origin.y + srcRect.size.height - childSrcRect.origin.y)
+							+ (dstRect.origin.y + dstRect.size.height) * (childSrcRect.origin.y - srcRect.origin.y)) / srcRect.size.height ),
+						roundf( dstRect.size.width * childSrcRect.size.width / srcRect.size.width ),
+						roundf( dstRect.size.height * childSrcRect.size.height / srcRect.size.height )
 						);
 					[childQuad drawToDstRect:childDstRect srcRect:childSrcRect zoomLevel:zoomLevel mapType:mapType];
 				}
