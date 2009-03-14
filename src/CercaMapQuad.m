@@ -14,7 +14,60 @@ typedef struct { unsigned char r, g, b, a; } RGBA;
 
 @implementation CercaMapQuad
 
-static NSUInteger globalDisplayGeneration;
+struct CercaMapQuadMRU_struct
+{
+	CercaMapQuadMRU *prev, *next;
+};
+static CercaMapQuadMRU *frontMRU;
+
+static inline CercaMapQuadMRU *allocMRU()
+{
+	CercaMapQuadMRU *mru = malloc( sizeof(CercaMapQuadMRU) );
+	mru->prev = NULL;
+	mru->next = NULL;
+	return mru;
+}
+
+static inline void moveMRUToFront( CercaMapQuadMRU *mru )
+{
+	if ( frontMRU != mru )
+	{
+		if ( mru->prev != NULL )
+			mru->prev->next = mru->next;
+		if ( mru->next != NULL )
+			mru->next->prev = mru->prev;
+		
+		mru->prev = NULL;
+		mru->next = frontMRU;
+		if ( frontMRU != NULL )
+			frontMRU->prev = mru;
+		frontMRU = mru;
+	}
+}
+
+static inline void freeMRU( CercaMapQuadMRU *mru )
+{
+	if ( mru->prev != NULL )
+		mru->prev->next = mru->next;
+	else
+		frontMRU = mru->next;
+	if ( mru->next != NULL )
+		mru->next->prev = mru->prev;
+	free( mru );
+}
+
+static inline NSUInteger indexForMRU( CercaMapQuadMRU *mru, NSUInteger cutoff )
+{
+	// [pzion 20090314] We wrap around intentionally here, so that we return
+	// the maximum NSUInteger value in the case that mru is NULL
+	NSInteger result = -1;
+	while ( mru != NULL && result < (NSInteger)cutoff )
+	{
+		++result;
+		mru = mru->prev;
+	}
+	return (NSUInteger)result;
+}
 
 #pragma mark Private
 
@@ -117,6 +170,7 @@ static NSUInteger globalDisplayGeneration;
 		[imageDatas[i] release];
 		[connections[i] release];
 		[images[i] release];
+		freeMRU( displayMRUs[i] );
 	}
 	[urlBaseString release];
 	for ( int i=0; i<2; ++i )
@@ -182,7 +236,7 @@ static NSString *imagePKs[CM_NUM_MAP_TYPES] =
 
 - (void)encodeWithCoder:(NSCoder *)encoder
 {
-	static const NSUInteger displayGenerationsToEncode = 8;
+	static const NSUInteger displayMRUsToEncode = 8;
 	
 	for ( int i=0; i<2; ++i )
 		for ( int j=0; j<2; ++j )
@@ -201,7 +255,7 @@ static NSString *imagePKs[CM_NUM_MAP_TYPES] =
 	for ( int i=0; i<CM_NUM_MAP_TYPES; ++i )
 	{
 		NSData *imagePNGRepresentation = nil;
-		if ( images[i] != nil && globalDisplayGeneration - displayGenerations[i] <= displayGenerationsToEncode )
+		if ( images[i] != nil && indexForMRU( displayMRUs[i], displayMRUsToEncode ) < displayMRUsToEncode )
 			imagePNGRepresentation = UIImagePNGRepresentation(images[i]);
 		[encoder encodeObject:imagePNGRepresentation forKey:imagePKs[i]];
 	}
@@ -244,7 +298,9 @@ static NSString *imagePKs[CM_NUM_MAP_TYPES] =
 				CGImageRef subImage = CGImageCreateWithImageInRect( [quad->images[mapType] CGImage], subImageRect );
 				[[UIImage imageWithCGImage:subImage] drawInRect:dstRect];
 				CGImageRelease( subImage );
-				displayGenerations[mapType] = globalDisplayGeneration++;
+				if ( quad->displayMRUs[mapType] == NULL )
+					quad->displayMRUs[mapType] = allocMRU();
+				moveMRUToFront( quad->displayMRUs[mapType] );
 				break;
 			}
 			quad = quad->parentQuad;
@@ -279,17 +335,22 @@ static NSString *imagePKs[CM_NUM_MAP_TYPES] =
 
 -(BOOL) shouldKeepAfterPurgingMemory
 {
-	static const NSUInteger displayGenerationsToKeep = 8;
+	static const NSUInteger displayMRUsToKeep = 8;
 	BOOL keep = NO;
 
 	for ( int i=0; i<CM_NUM_MAP_TYPES; ++i )
 	{
-		if ( imageDatas[i] != nil )
+		if ( images[i] != nil )
 		{
-			if ( globalDisplayGeneration - displayGenerations[i] > displayGenerationsToKeep )
+			if ( indexForMRU( displayMRUs[i], displayMRUsToKeep ) >= displayMRUsToKeep )
 			{
-				[imageDatas[i] release];
-				imageDatas[i] = nil;
+				if ( displayMRUs[i] != NULL )
+				{
+					freeMRU( displayMRUs[i] );
+					displayMRUs[i] = NULL;
+				}
+				[images[i] release];
+				images[i] = nil;
 			}
 			else
 				keep = YES;
@@ -354,8 +415,6 @@ static NSString *imagePKs[CM_NUM_MAP_TYPES] =
 	images[mapType] = [[CercaMapQuad uncompressedImageWithData:imageDatas[mapType]] retain];
 	[imageDatas[mapType] release];
 	imageDatas[mapType] = nil;
-	
-	displayGenerations[mapType] = globalDisplayGeneration++;
 	
 	[[CercaMapGenerator refreshNotificationCenter]
 		postNotificationName:[CercaMapGenerator refreshNotificationName]

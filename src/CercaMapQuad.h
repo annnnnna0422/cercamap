@@ -13,6 +13,9 @@
 #import <CercaMap/CercaMapType.h>
 #import <CercaMap/CercaMapZoomLevel.h>
 
+#pragma mark Forward Declarations
+typedef struct CercaMapQuadMRU_struct CercaMapQuadMRU;
+
 @interface CercaMapQuad : NSObject
 {
 @private
@@ -24,7 +27,7 @@
 	UIImage *images[CM_NUM_MAP_TYPES];
 	NSURLConnection *connections[CM_NUM_MAP_TYPES];
 	NSMutableData *imageDatas[CM_NUM_MAP_TYPES];
-	NSUInteger displayGenerations[CM_NUM_MAP_TYPES];
+	CercaMapQuadMRU *displayMRUs[CM_NUM_MAP_TYPES];
 }
 
 #pragma mark Public
