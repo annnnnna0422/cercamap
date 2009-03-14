@@ -61,11 +61,43 @@ static NSString *mapServicePassword;
 			urlBaseString:@""
 			logZoom:0];
 	}
+	
 	CGFloat mult = (1<<19) / zoomLevel;
 	CGSize srcSize = CGSizeMake( CGRectGetWidth(dstRect)*mult, CGRectGetHeight(dstRect)*mult );
 	CercaMapRect srcRect = CercaMapRectMake( roundf( centerPoint.x - srcSize.width/2 ), roundf( centerPoint.y - srcSize.height/2 ),
 		roundf( srcSize.width ), roundf( srcSize.height ) );
 	[rootMapQuad drawToDstRect:dstRect srcRect:srcRect zoomLevel:zoomLevel mapType:mapType];
+
+#ifdef CERCA_MAP_TRIAL
+	UIFont *font = [UIFont systemFontOfSize:30];
+	NSString *text = @"CercaMap\nTrial\nVersion";
+	CGSize textSize = [text
+		sizeWithFont:font
+		constrainedToSize:dstRect.size
+		lineBreakMode:UILineBreakModeWordWrap];
+	CGRect topLeftTextRect = CGRectMake(
+		dstRect.origin.x,
+		dstRect.origin.y,
+		textSize.width,
+		textSize.height
+		);
+	[[UIColor colorWithWhite:0 alpha:0.25] set];
+	[text drawInRect:topLeftTextRect
+		withFont:font
+		lineBreakMode:UILineBreakModeWordWrap
+		alignment:UITextAlignmentLeft];
+	CGRect bottomRightTextRect = CGRectMake(
+		dstRect.origin.x + dstRect.size.width - textSize.width,
+		dstRect.origin.y + dstRect.size.height - textSize.height,
+		textSize.width,
+		textSize.height
+		);
+	[[UIColor colorWithWhite:0 alpha:0.25] set];
+	[text drawInRect:bottomRightTextRect
+		withFont:font
+		lineBreakMode:UILineBreakModeWordWrap
+		alignment:UITextAlignmentRight];
+#endif
 }
 
 #pragma mark CercaMapGenerator - Refresh Notifications
