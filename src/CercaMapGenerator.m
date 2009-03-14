@@ -60,11 +60,10 @@ static NSString *mapServicePassword;
 		rootMapQuad = [[CercaMapQuad alloc] initWithParentQuad:nil
 			coverage:CercaMapRectMake( 0, 0, CM_TOTAL_PIXELS, CM_TOTAL_PIXELS )
 			urlBaseString:@""
-			logZoom:0];
+			logZoom:CM_ZOOM_LEVEL_LOG_MAX+1];
 	}
 	
-	CGFloat mult = CM_ZOOM_LEVEL_MAX / zoomLevel;
-	CGSize srcSize = CGSizeMake( CGRectGetWidth(dstRect)*mult, CGRectGetHeight(dstRect)*mult );
+	CGSize srcSize = CGSizeMake( CGRectGetWidth(dstRect)*zoomLevel, CGRectGetHeight(dstRect)*zoomLevel );
 	CercaMapRect srcRect = CercaMapRectMake( roundf( centerPoint.x - srcSize.width/2 ), roundf( centerPoint.y - srcSize.height/2 ),
 		roundf( srcSize.width ), roundf( srcSize.height ) );
 	[rootMapQuad drawToDstRect:dstRect srcRect:srcRect zoomLevel:zoomLevel mapType:mapType];

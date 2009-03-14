@@ -26,8 +26,8 @@
 	atZoomLevel:(CercaMapZoomLevel)zoomLevel
 {
 	CercaMapLocation result = CercaMapLocationMake(
-		mapLocation.x + CM_ZOOM_LEVEL_MAX*pointDelta.x/zoomLevel,
-		mapLocation.y + CM_ZOOM_LEVEL_MAX*pointDelta.y/zoomLevel
+		mapLocation.x + pointDelta.x * zoomLevel,
+		mapLocation.y + pointDelta.y * zoomLevel
 		);
 	return result;
 }
@@ -38,7 +38,7 @@
 {
 	if ( startPointDistance >= 1.0 )
 	{
-		zoomLevel *= endPointDistance / startPointDistance;
+		zoomLevel *= startPointDistance / endPointDistance;
 		if ( zoomLevel < CM_ZOOM_LEVEL_MIN )
 			zoomLevel = CM_ZOOM_LEVEL_MIN;
 		if ( zoomLevel > CM_ZOOM_LEVEL_MAX )

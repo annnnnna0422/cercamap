@@ -118,7 +118,7 @@ static inline NSUInteger indexForMRU( CercaMapQuadMRU *mru, NSUInteger cutoff )
 	return [[[CercaMapQuad alloc] initWithParentQuad:self
 		coverage:childCoverage
 		urlBaseString:childURLBaseString
-		logZoom:logZoom+1] autorelease];
+		logZoom:logZoom-1] autorelease];
 }
 
 -(CercaMapType) mapTypeForConnection:(NSURLConnection *)connection
@@ -170,7 +170,8 @@ static inline NSUInteger indexForMRU( CercaMapQuadMRU *mru, NSUInteger cutoff )
 		[imageDatas[i] release];
 		[connections[i] release];
 		[images[i] release];
-		freeMRU( displayMRUs[i] );
+		if ( displayMRUs[i] != NULL )
+			freeMRU( displayMRUs[i] );
 	}
 	[urlBaseString release];
 	for ( int i=0; i<2; ++i )
@@ -279,16 +280,16 @@ static NSString *imagePKs[CM_NUM_MAP_TYPES] =
 		}
 	}
 		
-	CercaMapZoomLevel zoomMin = 1 << logZoom;
-	CercaMapZoomLevel zoomMax = 1 << (logZoom+1);
-	if ( zoomLevel >= zoomMin && zoomLevel < zoomMax )
+	CercaMapZoomLevel zoomMin = 1 << (logZoom-1);
+	CercaMapZoomLevel zoomMax = 1 << (logZoom);
+	if ( zoomLevel > zoomMin && zoomLevel <= zoomMax )
 	{
 		CercaMapQuad *quad = self;
 		while ( quad != nil )
 		{
 			if ( quad->images[mapType] != nil )
 			{
-				int shift = 19 - quad->logZoom;
+				int shift = quad->logZoom;
 				CGRect subImageRect = CGRectMake(
 					(srcRect.origin.x - quad->coverage.origin.x) >> shift,
 					(srcRect.origin.y - quad->coverage.origin.y) >> shift,
