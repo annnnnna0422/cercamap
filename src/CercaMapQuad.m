@@ -176,7 +176,6 @@ static NSString *imagePKs[CM_NUM_MAP_TYPES] =
 			if ( imagePNGRepresentation != nil )
 			{
 				images[i] = [[CercaMapQuad uncompressedImageWithData:imagePNGRepresentation] retain];
-				shouldPersistImage[i] = YES;
 				loadGenerations[i] = globalLoadGeneration++;
 			}
 		}
@@ -203,7 +202,7 @@ static NSString *imagePKs[CM_NUM_MAP_TYPES] =
 	for ( int i=0; i<CM_NUM_MAP_TYPES; ++i )
 	{
 		NSData *imagePNGRepresentation = nil;
-		if ( images[i] != nil && shouldPersistImage[i] )
+		if ( images[i] != nil )
 			imagePNGRepresentation = UIImagePNGRepresentation(images[i]);
 		[encoder encodeObject:imagePNGRepresentation forKey:imagePKs[i]];
 	}
@@ -325,36 +324,6 @@ static NSString *imagePKs[CM_NUM_MAP_TYPES] =
 	NSInteger httpStatusCode = [httpResponse statusCode];
 	if ( httpStatusCode >= 400 )
 	{
-		CGRect imageRect = CGRectMake(0,0,256,256);
-		UIFont *statusCodeDescFont = [UIFont systemFontOfSize:17];
-		
-		NSString *statusCodeDesc = [NSString stringWithFormat:@"HTTP status code %d\n(%@)",
-			httpStatusCode,
-			[NSHTTPURLResponse localizedStringForStatusCode:httpStatusCode]];
-		CGSize statusCodeDescSize = [statusCodeDesc
-			sizeWithFont:statusCodeDescFont
-			constrainedToSize:imageRect.size
-			lineBreakMode:UILineBreakModeWordWrap];
-		CGRect statusCodeDescRect = CGRectMake(
-			roundf( (imageRect.size.width - statusCodeDescSize.width) / 2),
-			roundf( (imageRect.size.height - statusCodeDescSize.height) / 2),
-			statusCodeDescSize.width,
-			statusCodeDescSize.height
-			);
-
-		UIGraphicsBeginImageContext(imageRect.size);
-		[[UIColor redColor] set];
-		UIRectFrame( imageRect );
-		[statusCodeDesc
-			drawInRect:statusCodeDescRect
-			withFont:statusCodeDescFont
-			lineBreakMode:UILineBreakModeWordWrap
-			alignment:UITextAlignmentCenter];
-		images[mapType] = [UIGraphicsGetImageFromCurrentImageContext() retain];
-		UIGraphicsEndImageContext();
-		
-		shouldPersistImage[mapType] = NO;
-
 		[connections[mapType] cancel];
 		[connections[mapType] autorelease];
 		connections[mapType] = nil;
@@ -386,7 +355,6 @@ static NSString *imagePKs[CM_NUM_MAP_TYPES] =
 	imageDatas[mapType] = nil;
 	
 	loadGenerations[mapType] = globalLoadGeneration++;
-	shouldPersistImage[mapType] = YES;
 	
 	[[CercaMapGenerator refreshNotificationCenter]
 		postNotificationName:[CercaMapGenerator refreshNotificationName]

@@ -25,7 +25,6 @@
 	NSURLConnection *connections[CM_NUM_MAP_TYPES];
 	NSMutableData *imageDatas[CM_NUM_MAP_TYPES];
 	NSUInteger loadGenerations[CM_NUM_MAP_TYPES];
-	BOOL shouldPersistImage[CM_NUM_MAP_TYPES];
 }
 
 #pragma mark Public
