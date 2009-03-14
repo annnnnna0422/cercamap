@@ -7,16 +7,17 @@
 //
 
 #import "CercaMapHelper.h"
+#import "CercaMapInternal.h"
 
 @implementation CercaMapHelper
 
 +(CercaMapLocation) mapPointForCoordinate:(CLLocationCoordinate2D)coordinates
 {
 	CercaMapLocation pixel;
-	pixel.x = (int)roundf( ((coordinates.longitude + 180) / 360) * (1<<27) );
+	pixel.x = (int)roundf( ((coordinates.longitude + 180) / 360) * CM_TOTAL_PIXELS );
 	float sinLatitude = sinf( coordinates.latitude * M_PI / 180 );
 	float div = (1 + sinLatitude) / (1 - sinLatitude);
-	pixel.y = (int)roundf( (0.5 - log(div) / (4 * M_PI)) * (1<<27) );
+	pixel.y = (int)roundf( (0.5 - log(div) / (4 * M_PI)) * CM_TOTAL_PIXELS );
 	return pixel;
 }
 

@@ -8,6 +8,7 @@
 
 #import "CercaMapGenerator.h"
 #import "CercaMapQuad.h"
+#import "CercaMapInternal.h"
 
 @implementation CercaMapGenerator
 
@@ -57,12 +58,12 @@ static NSString *mapServicePassword;
 	if ( rootMapQuad == nil )
 	{
 		rootMapQuad = [[CercaMapQuad alloc] initWithParentQuad:nil
-			coverage:CercaMapRectMake( 0, 0, 1<<27, 1<<27 )
+			coverage:CercaMapRectMake( 0, 0, CM_TOTAL_PIXELS, CM_TOTAL_PIXELS )
 			urlBaseString:@""
 			logZoom:0];
 	}
 	
-	CGFloat mult = (1<<19) / zoomLevel;
+	CGFloat mult = CM_ZOOM_LEVEL_MAX / zoomLevel;
 	CGSize srcSize = CGSizeMake( CGRectGetWidth(dstRect)*mult, CGRectGetHeight(dstRect)*mult );
 	CercaMapRect srcRect = CercaMapRectMake( roundf( centerPoint.x - srcSize.width/2 ), roundf( centerPoint.y - srcSize.height/2 ),
 		roundf( srcSize.width ), roundf( srcSize.height ) );

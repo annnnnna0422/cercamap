@@ -44,6 +44,7 @@
 		DB2B23420F6B26B3003F6147 /* CercaMapDemoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DB2B23400F6B26B3003F6147 /* CercaMapDemoViewController.m */; };
 		DB2B23580F6B27C4003F6147 /* libxml2.2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = DB2B23570F6B27C3003F6147 /* libxml2.2.dylib */; };
 		DB2B23590F6B27C4003F6147 /* libxml2.2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = DB2B23570F6B27C3003F6147 /* libxml2.2.dylib */; };
+		DB2B24D00F6B48BB003F6147 /* CercaMapInternal.h in Headers */ = {isa = PBXBuildFile; fileRef = DB2B24CF0F6B48BB003F6147 /* CercaMapInternal.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -84,6 +85,7 @@
 		DB2B233F0F6B26B3003F6147 /* CercaMapDemoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CercaMapDemoViewController.h; path = DemoProject/Classes/CercaMapDemoViewController.h; sourceTree = "<group>"; };
 		DB2B23400F6B26B3003F6147 /* CercaMapDemoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CercaMapDemoViewController.m; path = DemoProject/Classes/CercaMapDemoViewController.m; sourceTree = "<group>"; };
 		DB2B23570F6B27C3003F6147 /* libxml2.2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.2.dylib; path = usr/lib/libxml2.2.dylib; sourceTree = SDKROOT; };
+		DB2B24CF0F6B48BB003F6147 /* CercaMapInternal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CercaMapInternal.h; path = src/CercaMapInternal.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -172,6 +174,7 @@
 				DB2B231E0F6B266B003F6147 /* CercaMapGenerator.m */,
 				DB2B23120F6B2636003F6147 /* CercaMapHelper.h */,
 				DB2B231F0F6B266B003F6147 /* CercaMapHelper.m */,
+				DB2B24CF0F6B48BB003F6147 /* CercaMapInternal.h */,
 				DB2B23200F6B266B003F6147 /* CercaMapQuad.h */,
 				DB2B23210F6B266B003F6147 /* CercaMapQuad.m */,
 				DB2B23300F6B2677003F6147 /* SDKSettings-iphoneos.plist */,
@@ -213,6 +216,7 @@
 				DB2B232B0F6B266B003F6147 /* CercaMapQuad.h in Headers */,
 				DB2B232D0F6B266B003F6147 /* CercaMapRect.h in Headers */,
 				DB2B232E0F6B266B003F6147 /* CercaMapSize.h in Headers */,
+				DB2B24D00F6B48BB003F6147 /* CercaMapInternal.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

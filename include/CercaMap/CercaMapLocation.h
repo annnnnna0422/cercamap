@@ -20,4 +20,3 @@ static inline CercaMapLocation CercaMapLocationMake( int x, int y )
 	CercaMapLocation result = { x, y };
 	return result;
 }
-
