@@ -23,31 +23,6 @@ static CercaMapQuad *rootMapQuad;
 	return [documentDirectory stringByAppendingPathComponent:@"CercaMapGeneratorState.keyedArchive"];
 }
 
-#pragma mark CercaMapGenerator - Authentication
-
-static NSString *mapServiceUsername;
-static NSString *mapServicePassword;
-
-+(void) setMapServiceUsername:(NSString *)_username
-	password:(NSString *)_password
-{
-	[mapServiceUsername release];
-	mapServiceUsername = [_username retain];
-	
-	[mapServicePassword release];
-	mapServicePassword = [_password retain];
-}
-
-+(NSString *) mapServiceUsername
-{
-	return mapServiceUsername;
-}
-
-+(NSString *) mapServicePassword
-{
-	return mapServicePassword;
-}
-
 #pragma mark CercaMapGenerator - Drawing Maps
 
 +(void) drawToDstRect:(CGRect)dstRect

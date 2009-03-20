@@ -20,11 +20,6 @@
 {
 }
 
-#pragma mark CercaMapGenerator - Authentication
-+(void) setMapServiceUsername:(NSString *)_username password:(NSString *)_password;
-+(NSString *) mapServiceUsername;
-+(NSString *) mapServicePassword;
-
 #pragma mark CercaMapGenerator - Drawing Maps
 +(void) drawToDstRect:(CGRect)dstRect
 	centerPoint:(CercaMapLocation)centerPoint

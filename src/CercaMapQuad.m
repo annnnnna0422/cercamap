@@ -73,35 +73,11 @@ static inline NSUInteger indexForMRU( CercaMapQuadMRU *mru, NSUInteger cutoff )
 
 -(NSString *) urlStringForMapType:(CercaMapType)mapType
 {
-	static NSString *token = nil;
-	if ( token == nil
-		&& [CercaMapGenerator mapServiceUsername] != nil
-		&& [CercaMapGenerator mapServicePassword] != nil )
-	{
-		VECommonService *commonService = [[[VECommonService alloc] init] autorelease];
-		[commonService getToken:&token
-			forUserID:[CercaMapGenerator mapServiceUsername]
-			password:[CercaMapGenerator mapServicePassword]
-			ipAddress:@"192.168.0.1"];
-	}
-	
-	if ( token == nil )
-		return nil;
-	
-	NSString *prefix;
-	switch ( mapType )
-	{
-		case CM_MAP_TYPE_ROADS:
-			prefix = @"http://r0.ortho.tiles.virtualearth.net/tiles/r";
-			break;
-		case CM_MAP_TYPE_ARIAL:
-			prefix = @"http://a0.ortho.tiles.virtualearth.net/tiles/a";
-			break;
-		case CM_MAP_TYPE_HYBRID:
-			prefix = @"http://h0.ortho.tiles.virtualearth.net/tiles/h";
-			break;
-	}
-	NSString *result = [NSString stringWithFormat:@"%@%@%@%@", prefix, urlBaseString, @".jpeg?g=131&token=", token];
+	NSString *result = [NSString stringWithFormat:@"http://tile.openstreetmap.org/%d/%d/%d.png",
+		CM_ZOOM_LEVEL_LOG_MAX-logZoom,
+		coverage.origin.x >> (logZoom + 8),
+		coverage.origin.y >> (logZoom + 8)];
+	NSLog( @"%d,%d+%d,%d: %@", coverage.origin.x, coverage.origin.y, coverage.size.width, coverage.size.height, result );
 	return result;
 }
 

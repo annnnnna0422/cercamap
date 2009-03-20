@@ -15,8 +15,6 @@
 
 -(void) applicationDidFinishLaunching:(UIApplication *)application
 {
-	[CercaMapGenerator setMapServiceUsername:@VIRTUAL_EARTH_KIT_USERNAME
-		password:@VIRTUAL_EARTH_KIT_PASSWORD];
 	[CercaMapGenerator loadState];
     [window addSubview:viewController.view];
     [window makeKeyAndVisible];

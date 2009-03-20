@@ -8,4 +8,4 @@
  */
 
 #define CM_QUAD_PIXELS (1<<8)
-#define CM_TOTAL_PIXELS (1<<27)
+#define CM_TOTAL_PIXELS (1<<26)
