@@ -420,55 +420,6 @@
 			};
 			name = Release;
 		};
-		DB2B24960F6B43D0003F6147 /* Release Trial */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				GCC_C_LANGUAGE_STANDARD = c99;
-				GCC_PREPROCESSOR_DEFINITIONS = CERCA_MAP_TRIAL;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = (
-					include/,
-					ThirdParty/,
-					"$(SDKROOT)/usr/include/libxml2/",
-				);
-				PREBINDING = NO;
-				SDKROOT = iphoneos2.0;
-			};
-			name = "Release Trial";
-		};
-		DB2B24970F6B43D0003F6147 /* Release Trial */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				COPY_PHASE_STRIP = YES;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = CercaMap_Prefix.pch;
-				INFOPLIST_FILE = DemoProject/Info.plist;
-				PRODUCT_NAME = CercaMapDemo;
-			};
-			name = "Release Trial";
-		};
-		DB2B24980F6B43D0003F6147 /* Release Trial */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				COPY_PHASE_STRIP = YES;
-				CURRENT_PROJECT_VERSION = 1.0;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_ENABLE_FIX_AND_CONTINUE = NO;
-				PREBINDING = NO;
-				PRIVATE_HEADERS_FOLDER_PATH = /usr/local/include/CercaMap;
-				PRODUCT_NAME = CercaMap;
-				PUBLIC_HEADERS_FOLDER_PATH = /usr/local/include/CercaMap;
-				SKIP_INSTALL = NO;
-				VERSIONING_SYSTEM = "apple-generic";
-				ZERO_LINK = NO;
-			};
-			name = "Release Trial";
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -477,7 +428,6 @@
 			buildConfigurations = (
 				1D6058940D05DD3E006BFB54 /* Debug */,
 				1D6058950D05DD3E006BFB54 /* Release */,
-				DB2B24970F6B43D0003F6147 /* Release Trial */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -487,7 +437,6 @@
 			buildConfigurations = (
 				C01FCF4F08A954540054247B /* Debug */,
 				C01FCF5008A954540054247B /* Release */,
-				DB2B24960F6B43D0003F6147 /* Release Trial */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -497,7 +446,6 @@
 			buildConfigurations = (
 				DB2B22FB0F6B25EF003F6147 /* Debug */,
 				DB2B22FC0F6B25EF003F6147 /* Release */,
-				DB2B24980F6B43D0003F6147 /* Release Trial */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
