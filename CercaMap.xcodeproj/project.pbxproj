@@ -33,8 +33,6 @@
 		DB2B233C0F6B26A3003F6147 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = DB2B23380F6B26A3003F6147 /* MainWindow.xib */; };
 		DB2B23410F6B26B3003F6147 /* CercaMapDemoAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = DB2B233E0F6B26B3003F6147 /* CercaMapDemoAppDelegate.m */; };
 		DB2B23420F6B26B3003F6147 /* CercaMapDemoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DB2B23400F6B26B3003F6147 /* CercaMapDemoViewController.m */; };
-		DB2B23580F6B27C4003F6147 /* libxml2.2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = DB2B23570F6B27C3003F6147 /* libxml2.2.dylib */; };
-		DB2B23590F6B27C4003F6147 /* libxml2.2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = DB2B23570F6B27C3003F6147 /* libxml2.2.dylib */; };
 		DB2B24D00F6B48BB003F6147 /* CercaMapInternal.h in Headers */ = {isa = PBXBuildFile; fileRef = DB2B24CF0F6B48BB003F6147 /* CercaMapInternal.h */; };
 /* End PBXBuildFile section */
 
@@ -69,7 +67,6 @@
 		DB2B233E0F6B26B3003F6147 /* CercaMapDemoAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CercaMapDemoAppDelegate.m; path = DemoProject/Classes/CercaMapDemoAppDelegate.m; sourceTree = "<group>"; };
 		DB2B233F0F6B26B3003F6147 /* CercaMapDemoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CercaMapDemoViewController.h; path = DemoProject/Classes/CercaMapDemoViewController.h; sourceTree = "<group>"; };
 		DB2B23400F6B26B3003F6147 /* CercaMapDemoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CercaMapDemoViewController.m; path = DemoProject/Classes/CercaMapDemoViewController.m; sourceTree = "<group>"; };
-		DB2B23570F6B27C3003F6147 /* libxml2.2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.2.dylib; path = usr/lib/libxml2.2.dylib; sourceTree = SDKROOT; };
 		DB2B24CF0F6B48BB003F6147 /* CercaMapInternal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CercaMapInternal.h; path = src/CercaMapInternal.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -81,7 +78,6 @@
 				1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */,
 				1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */,
 				288765A50DF7441C002DB57D /* CoreGraphics.framework in Frameworks */,
-				DB2B23580F6B27C4003F6147 /* libxml2.2.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -89,7 +85,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DB2B23590F6B27C4003F6147 /* libxml2.2.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -119,7 +114,6 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				DB2B23570F6B27C3003F6147 /* libxml2.2.dylib */,
 				1DF5F4DF0D08C38300B7A737 /* UIKit.framework */,
 				1D30AB110D05D00D00671497 /* Foundation.framework */,
 				288765A40DF7441C002DB57D /* CoreGraphics.framework */,
@@ -318,11 +312,7 @@
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = (
-					include/,
-					ThirdParty/,
-					"$(SDKROOT)/usr/include/libxml2/",
-				);
+				HEADER_SEARCH_PATHS = include/;
 				ONLY_ACTIVE_ARCH = YES;
 				PREBINDING = NO;
 				SDKROOT = iphoneos2.0;
@@ -337,11 +327,7 @@
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = (
-					include/,
-					ThirdParty/,
-					"$(SDKROOT)/usr/include/libxml2/",
-				);
+				HEADER_SEARCH_PATHS = include/;
 				PREBINDING = NO;
 				SDKROOT = iphoneos2.0;
 			};
