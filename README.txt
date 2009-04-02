@@ -1,7 +1,7 @@
 HOW TO BUILD THE CERCAMAP LIBRARY
 
 1. Run ./build.sh from the root directory of the source tree.  This will
-   create the file build/CercaMap-Release-1.0.dmg
+   create the disk image build/CercaMap-Release-1.0.dmg.
 
 HOW TO INSTALL CERCAMAP LIBRARY
 
