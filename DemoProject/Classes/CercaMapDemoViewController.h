@@ -16,7 +16,5 @@
 	IBOutlet UISegmentedControl *segmentedControl;
 }
 
--(IBAction) segmentedControlValueChanged:(id)sender;
-
 @end
 

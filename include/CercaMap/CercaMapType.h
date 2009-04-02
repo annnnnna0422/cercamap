@@ -11,9 +11,7 @@
 
 typedef enum
 {
-	CM_MAP_TYPE_ROADS,
-	CM_MAP_TYPE_ARIAL,
-	CM_MAP_TYPE_HYBRID,
+	CM_MAP_TYPE_DEFAULT,
 	CM_NUM_MAP_TYPES
 } CercaMapType;
 

@@ -19,12 +19,6 @@
 
 	cercaMapView.zoomLevel = CM_ZOOM_LEVEL_CITY;
 	[cercaMapView setCenterCoordinate:coordinate];
-	cercaMapView.mapType = CM_MAP_TYPE_ROADS;
-}
-
--(IBAction) segmentedControlValueChanged:(id)sender
-{
-	cercaMapView.mapType = segmentedControl.selectedSegmentIndex;
 }
 
 @end

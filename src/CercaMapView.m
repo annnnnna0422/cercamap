@@ -51,7 +51,7 @@
 
 	zoomLevel = CM_ZOOM_LEVEL_NEIGHBORHOOD;
 	[self setCenterCoordinate:coordinate];
-	mapType = CM_MAP_TYPE_ROADS;
+	mapType = CM_MAP_TYPE_DEFAULT;
 }
 
 #pragma mark Lifecycle

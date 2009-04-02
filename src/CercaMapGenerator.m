@@ -34,7 +34,6 @@ static CercaMapQuad *rootMapQuad;
 	{
 		rootMapQuad = [[CercaMapQuad alloc] initWithParentQuad:nil
 			coverage:CercaMapRectMake( 0, 0, CM_TOTAL_PIXELS, CM_TOTAL_PIXELS )
-			urlBaseString:@""
 			logZoom:CM_ZOOM_LEVEL_LOG_MAX+1];
 	}
 	

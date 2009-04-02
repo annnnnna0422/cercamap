@@ -89,10 +89,8 @@ static inline NSUInteger indexForMRU( CercaMapQuadMRU *mru, NSUInteger cutoff )
 		coverage.size.height/2
 		);
 	static NSString *childURLBaseSuffixStrings[2][2] = { { @"0", @"1" }, { @"2", @"3" } };
-	NSString *childURLBaseString = [NSString stringWithFormat:@"%@%@", urlBaseString, childURLBaseSuffixStrings[i][j]];
 	return [[[CercaMapQuad alloc] initWithParentQuad:self
 		coverage:childCoverage
-		urlBaseString:childURLBaseString
 		logZoom:logZoom-1] autorelease];
 }
 
@@ -120,7 +118,6 @@ static inline NSUInteger indexForMRU( CercaMapQuadMRU *mru, NSUInteger cutoff )
 
 -(id) initWithParentQuad:(CercaMapQuad *)_parentQuad
 	coverage:(CercaMapRect)_coverage
-	urlBaseString:(NSString *)_urlBaseString
 	logZoom:(int)_logZoom
 {
 	if ( self = [super init] )
@@ -130,8 +127,6 @@ static inline NSUInteger indexForMRU( CercaMapQuadMRU *mru, NSUInteger cutoff )
 		parentQuad = _parentQuad;
 		
 		coverage = _coverage;
-		
-		urlBaseString = [_urlBaseString retain];
 		
 		logZoom = _logZoom;
 	}
@@ -148,7 +143,6 @@ static inline NSUInteger indexForMRU( CercaMapQuadMRU *mru, NSUInteger cutoff )
 		if ( displayMRUs[i] != NULL )
 			freeMRU( displayMRUs[i] );
 	}
-	[urlBaseString release];
 	for ( int i=0; i<2; ++i )
 		for ( int j=0; j<2; ++j )
 			[childQuads[i][j] release];
@@ -166,13 +160,10 @@ static NSString *coverageOriginXPK = @"coverageOriginX_1";
 static NSString *coverageOriginYPK = @"coverageOriginY_1";
 static NSString *coverageSizeWidthPK = @"coverageSizeWidth_1";
 static NSString *coverageSizeHeightPK = @"coverageSizeHeight_1";
-static NSString *urlBaseStringPK = @"urlBaseString_1";
 static NSString *logZoomPK = @"logZoom_1";
 static NSString *imagePKs[CM_NUM_MAP_TYPES] =
 {
-	@"roadsImage_1",
-	@"aerialImage_1",
-	@"hybridImage_1"
+	@"defaultImage_1",
 };
 
 -(id) initWithCoder:(NSCoder *)decoder
@@ -195,8 +186,6 @@ static NSString *imagePKs[CM_NUM_MAP_TYPES] =
 			[decoder decodeIntForKey:coverageSizeWidthPK],
 			[decoder decodeIntForKey:coverageSizeHeightPK]
 			);
-		
-		urlBaseString = [[decoder decodeObjectForKey:urlBaseStringPK] retain];
 		
 		logZoom = [decoder decodeIntForKey:logZoomPK];
 		
@@ -224,8 +213,6 @@ static NSString *imagePKs[CM_NUM_MAP_TYPES] =
 	[encoder encodeInt:coverage.size.width forKey:coverageSizeWidthPK];
 	[encoder encodeInt:coverage.size.height forKey:coverageSizeHeightPK];
 	
-	[encoder encodeObject:urlBaseString forKey:urlBaseStringPK];
-
 	[encoder encodeInt:logZoom forKey:logZoomPK];
 	
 	for ( int i=0; i<CM_NUM_MAP_TYPES; ++i )

@@ -22,7 +22,6 @@ typedef struct CercaMapQuadMRU_struct CercaMapQuadMRU;
 	CercaMapQuad *parentQuad;
 	CercaMapQuad *childQuads[2][2];
 	CercaMapRect coverage;
-	NSString *urlBaseString;
 	int logZoom;
 	UIImage *images[CM_NUM_MAP_TYPES];
 	NSURLConnection *connections[CM_NUM_MAP_TYPES];
@@ -34,7 +33,6 @@ typedef struct CercaMapQuadMRU_struct CercaMapQuadMRU;
 
 -(id) initWithParentQuad:(CercaMapQuad *)_parentQuad
 	coverage:(CercaMapRect)_coverage
-	urlBaseString:(NSString *)_urlBaseString
 	logZoom:(int)_logZoom;
 
 -(void) drawToDstRect:(CGRect)dstRect
