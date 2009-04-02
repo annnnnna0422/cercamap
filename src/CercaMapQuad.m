@@ -8,7 +8,6 @@
 
 #import "CercaMapQuad.h"
 #import "CercaMapGenerator.h"
-#import <VirtualEarthKit/VECommonService.h>
 
 typedef struct { unsigned char r, g, b, a; } RGBA;
 

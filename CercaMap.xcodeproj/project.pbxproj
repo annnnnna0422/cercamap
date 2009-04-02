@@ -10,15 +10,6 @@
 		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
 		288765A50DF7441C002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765A40DF7441C002DB57D /* CoreGraphics.framework */; };
-		DB2B23070F6B2626003F6147 /* VECommonService.m in Sources */ = {isa = PBXBuildFile; fileRef = DB2B23020F6B2626003F6147 /* VECommonService.m */; };
-		DB2B23080F6B2626003F6147 /* VEService.m in Sources */ = {isa = PBXBuildFile; fileRef = DB2B23040F6B2626003F6147 /* VEService.m */; };
-		DB2B23090F6B2626003F6147 /* VESOAPRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = DB2B23060F6B2626003F6147 /* VESOAPRequest.m */; };
-		DB2B230A0F6B2626003F6147 /* VECommonService.h in Headers */ = {isa = PBXBuildFile; fileRef = DB2B23010F6B2626003F6147 /* VECommonService.h */; };
-		DB2B230B0F6B2626003F6147 /* VECommonService.m in Sources */ = {isa = PBXBuildFile; fileRef = DB2B23020F6B2626003F6147 /* VECommonService.m */; };
-		DB2B230C0F6B2626003F6147 /* VEService.h in Headers */ = {isa = PBXBuildFile; fileRef = DB2B23030F6B2626003F6147 /* VEService.h */; };
-		DB2B230D0F6B2626003F6147 /* VEService.m in Sources */ = {isa = PBXBuildFile; fileRef = DB2B23040F6B2626003F6147 /* VEService.m */; };
-		DB2B230E0F6B2626003F6147 /* VESOAPRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = DB2B23050F6B2626003F6147 /* VESOAPRequest.h */; };
-		DB2B230F0F6B2626003F6147 /* VESOAPRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = DB2B23060F6B2626003F6147 /* VESOAPRequest.m */; };
 		DB2B23170F6B2636003F6147 /* CercaMap.h in Headers */ = {isa = PBXBuildFile; fileRef = DB2B23100F6B2636003F6147 /* CercaMap.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		DB2B23180F6B2636003F6147 /* CercaMapGenerator.h in Headers */ = {isa = PBXBuildFile; fileRef = DB2B23110F6B2636003F6147 /* CercaMapGenerator.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		DB2B23190F6B2636003F6147 /* CercaMapHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = DB2B23120F6B2636003F6147 /* CercaMapHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -53,12 +44,6 @@
 		1DF5F4DF0D08C38300B7A737 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		288765A40DF7441C002DB57D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		DB2B22FA0F6B25EF003F6147 /* libCercaMap.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libCercaMap.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		DB2B23010F6B2626003F6147 /* VECommonService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VECommonService.h; path = ThirdParty/VirtualEarthKit/VECommonService.h; sourceTree = "<group>"; };
-		DB2B23020F6B2626003F6147 /* VECommonService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VECommonService.m; path = ThirdParty/VirtualEarthKit/VECommonService.m; sourceTree = "<group>"; };
-		DB2B23030F6B2626003F6147 /* VEService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VEService.h; path = ThirdParty/VirtualEarthKit/VEService.h; sourceTree = "<group>"; };
-		DB2B23040F6B2626003F6147 /* VEService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VEService.m; path = ThirdParty/VirtualEarthKit/VEService.m; sourceTree = "<group>"; };
-		DB2B23050F6B2626003F6147 /* VESOAPRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VESOAPRequest.h; path = ThirdParty/VirtualEarthKit/VESOAPRequest.h; sourceTree = "<group>"; };
-		DB2B23060F6B2626003F6147 /* VESOAPRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VESOAPRequest.m; path = ThirdParty/VirtualEarthKit/VESOAPRequest.m; sourceTree = "<group>"; };
 		DB2B23100F6B2636003F6147 /* CercaMap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CercaMap.h; path = include/CercaMap/CercaMap.h; sourceTree = "<group>"; };
 		DB2B23110F6B2636003F6147 /* CercaMapGenerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CercaMapGenerator.h; path = include/CercaMap/CercaMapGenerator.h; sourceTree = "<group>"; };
 		DB2B23120F6B2636003F6147 /* CercaMapHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CercaMapHelper.h; path = include/CercaMap/CercaMapHelper.h; sourceTree = "<group>"; };
@@ -123,7 +108,6 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
-				DB2B23000F6B260E003F6147 /* ThirdParty */,
 				DB2B22FF0F6B2608003F6147 /* CercaMap */,
 				DB2B22FE0F6B2601003F6147 /* CercaMapDemo */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
@@ -183,19 +167,6 @@
 			name = CercaMap;
 			sourceTree = "<group>";
 		};
-		DB2B23000F6B260E003F6147 /* ThirdParty */ = {
-			isa = PBXGroup;
-			children = (
-				DB2B23010F6B2626003F6147 /* VECommonService.h */,
-				DB2B23020F6B2626003F6147 /* VECommonService.m */,
-				DB2B23030F6B2626003F6147 /* VEService.h */,
-				DB2B23040F6B2626003F6147 /* VEService.m */,
-				DB2B23050F6B2626003F6147 /* VESOAPRequest.h */,
-				DB2B23060F6B2626003F6147 /* VESOAPRequest.m */,
-			);
-			name = ThirdParty;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -203,9 +174,6 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DB2B230A0F6B2626003F6147 /* VECommonService.h in Headers */,
-				DB2B230C0F6B2626003F6147 /* VEService.h in Headers */,
-				DB2B230E0F6B2626003F6147 /* VESOAPRequest.h in Headers */,
 				DB2B23170F6B2636003F6147 /* CercaMap.h in Headers */,
 				DB2B23180F6B2636003F6147 /* CercaMapGenerator.h in Headers */,
 				DB2B23190F6B2636003F6147 /* CercaMapHelper.h in Headers */,
@@ -292,9 +260,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DB2B23070F6B2626003F6147 /* VECommonService.m in Sources */,
-				DB2B23080F6B2626003F6147 /* VEService.m in Sources */,
-				DB2B23090F6B2626003F6147 /* VESOAPRequest.m in Sources */,
 				DB2B23250F6B266B003F6147 /* CercaMapGenerator.m in Sources */,
 				DB2B23260F6B266B003F6147 /* CercaMapHelper.m in Sources */,
 				DB2B23270F6B266B003F6147 /* CercaMapQuad.m in Sources */,
@@ -309,9 +274,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DB2B230B0F6B2626003F6147 /* VECommonService.m in Sources */,
-				DB2B230D0F6B2626003F6147 /* VEService.m in Sources */,
-				DB2B230F0F6B2626003F6147 /* VESOAPRequest.m in Sources */,
 				DB2B23290F6B266B003F6147 /* CercaMapGenerator.m in Sources */,
 				DB2B232A0F6B266B003F6147 /* CercaMapHelper.m in Sources */,
 				DB2B232C0F6B266B003F6147 /* CercaMapQuad.m in Sources */,
