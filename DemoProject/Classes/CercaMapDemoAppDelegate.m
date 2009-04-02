@@ -20,6 +20,11 @@
     [window makeKeyAndVisible];
 }
 
+-(void) applicationDidReceiveMemoryWarning:(UIApplication *)application
+{
+	[CercaMapGenerator didReceiveMemoryWarning];
+}
+
 -(void) applicationWillTerminate:(UIApplication *)application
 {
 	[CercaMapGenerator saveState];

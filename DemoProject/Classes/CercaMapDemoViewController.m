@@ -21,9 +21,4 @@
 	[cercaMapView setCenterCoordinate:coordinate];
 }
 
--(void) didReceiveMemoryWarning
-{
-	[CercaMapGenerator didReceiveMemoryWarning];
-}
-
 @end
