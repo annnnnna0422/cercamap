@@ -73,10 +73,9 @@ static inline NSUInteger indexForMRU( CercaMapQuadMRU *mru, NSUInteger cutoff )
 -(NSString *) urlStringForMapType:(CercaMapType)mapType
 {
 	NSString *result = [NSString stringWithFormat:@"http://tile.openstreetmap.org/%d/%d/%d.png",
-		CM_ZOOM_LEVEL_LOG_MAX-logZoom,
+		CM_ZOOM_LEVEL_LOG_MAX-logZoom+1,
 		coverage.origin.x >> (logZoom + 8),
 		coverage.origin.y >> (logZoom + 8)];
-	NSLog( @"%d,%d+%d,%d: %@", coverage.origin.x, coverage.origin.y, coverage.size.width, coverage.size.height, result );
 	return result;
 }
 
@@ -88,7 +87,6 @@ static inline NSUInteger indexForMRU( CercaMapQuadMRU *mru, NSUInteger cutoff )
 		coverage.size.width/2,
 		coverage.size.height/2
 		);
-	static NSString *childURLBaseSuffixStrings[2][2] = { { @"0", @"1" }, { @"2", @"3" } };
 	return [[[CercaMapQuad alloc] initWithParentQuad:self
 		coverage:childCoverage
 		logZoom:logZoom-1] autorelease];

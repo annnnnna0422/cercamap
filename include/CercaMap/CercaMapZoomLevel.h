@@ -13,7 +13,7 @@
 typedef CGFloat CercaMapZoomLevel;
 
 #define CM_ZOOM_LEVEL_LOG_MIN (0)
-#define CM_ZOOM_LEVEL_LOG_MAX (18)
+#define CM_ZOOM_LEVEL_LOG_MAX (17)
 
 #define CM_ZOOM_LEVEL_MAX ((CercaMapZoomLevel)(1<<CM_ZOOM_LEVEL_LOG_MAX))
 #define CM_ZOOM_LEVEL_STATES ((CercaMapZoomLevel)(1<<14))
