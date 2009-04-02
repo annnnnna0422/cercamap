@@ -34,6 +34,7 @@
 		DB2B23410F6B26B3003F6147 /* CercaMapDemoAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = DB2B233E0F6B26B3003F6147 /* CercaMapDemoAppDelegate.m */; };
 		DB2B23420F6B26B3003F6147 /* CercaMapDemoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DB2B23400F6B26B3003F6147 /* CercaMapDemoViewController.m */; };
 		DB2B24D00F6B48BB003F6147 /* CercaMapInternal.h in Headers */ = {isa = PBXBuildFile; fileRef = DB2B24CF0F6B48BB003F6147 /* CercaMapInternal.h */; };
+		DBBD9F790F84F57C005C1AD4 /* Entitlements.plist in Resources */ = {isa = PBXBuildFile; fileRef = DBBD9F780F84F57C005C1AD4 /* Entitlements.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -68,6 +69,7 @@
 		DB2B233F0F6B26B3003F6147 /* CercaMapDemoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CercaMapDemoViewController.h; path = DemoProject/Classes/CercaMapDemoViewController.h; sourceTree = "<group>"; };
 		DB2B23400F6B26B3003F6147 /* CercaMapDemoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CercaMapDemoViewController.m; path = DemoProject/Classes/CercaMapDemoViewController.m; sourceTree = "<group>"; };
 		DB2B24CF0F6B48BB003F6147 /* CercaMapInternal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CercaMapInternal.h; path = src/CercaMapInternal.h; sourceTree = "<group>"; };
+		DBBD9F780F84F57C005C1AD4 /* Entitlements.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Entitlements.plist; path = DemoProject/Entitlements.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -130,6 +132,7 @@
 				DB2B23400F6B26B3003F6147 /* CercaMapDemoViewController.m */,
 				DB2B23350F6B26A3003F6147 /* CercaMapDemoViewController.xib */,
 				DB2B23360F6B26A3003F6147 /* Info.plist */,
+				DBBD9F780F84F57C005C1AD4 /* Entitlements.plist */,
 				DB2B23370F6B26A3003F6147 /* main.m */,
 				DB2B23380F6B26A3003F6147 /* MainWindow.xib */,
 				DB2B23340F6B2695003F6147 /* config.h */,
@@ -244,6 +247,7 @@
 			files = (
 				DB2B23390F6B26A3003F6147 /* CercaMapDemoViewController.xib in Resources */,
 				DB2B233C0F6B26A3003F6147 /* MainWindow.xib in Resources */,
+				DBBD9F790F84F57C005C1AD4 /* Entitlements.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -333,6 +337,53 @@
 			};
 			name = Release;
 		};
+		DB1D8A400F84F4D500064401 /* Distribution */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = include/;
+				PREBINDING = NO;
+				SDKROOT = iphoneos2.0;
+			};
+			name = Distribution;
+		};
+		DB1D8A410F84F4D500064401 /* Distribution */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CODE_SIGN_ENTITLEMENTS = DemoProject/Entitlements.plist;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Peter Zion";
+				COPY_PHASE_STRIP = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = CercaMap_Prefix.pch;
+				INFOPLIST_FILE = DemoProject/Info.plist;
+				PRODUCT_NAME = CercaMapDemo;
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "02384E65-AA86-4C21-B43E-9BE3F51A03B3";
+			};
+			name = Distribution;
+		};
+		DB1D8A420F84F4D500064401 /* Distribution */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = YES;
+				CURRENT_PROJECT_VERSION = 1.0;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				PREBINDING = NO;
+				PRIVATE_HEADERS_FOLDER_PATH = /usr/local/include/CercaMap;
+				PRODUCT_NAME = CercaMap;
+				PUBLIC_HEADERS_FOLDER_PATH = /usr/local/include/CercaMap;
+				SKIP_INSTALL = NO;
+				VERSIONING_SYSTEM = "apple-generic";
+				ZERO_LINK = NO;
+			};
+			name = Distribution;
+		};
 		DB2B22FB0F6B25EF003F6147 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -376,6 +427,7 @@
 			buildConfigurations = (
 				1D6058940D05DD3E006BFB54 /* Debug */,
 				1D6058950D05DD3E006BFB54 /* Release */,
+				DB1D8A410F84F4D500064401 /* Distribution */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -385,6 +437,7 @@
 			buildConfigurations = (
 				C01FCF4F08A954540054247B /* Debug */,
 				C01FCF5008A954540054247B /* Release */,
+				DB1D8A400F84F4D500064401 /* Distribution */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -394,6 +447,7 @@
 			buildConfigurations = (
 				DB2B22FB0F6B25EF003F6147 /* Debug */,
 				DB2B22FC0F6B25EF003F6147 /* Release */,
+				DB1D8A420F84F4D500064401 /* Distribution */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
